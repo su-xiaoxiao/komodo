@@ -8,6 +8,7 @@ import ResourceNotFound from "@/resources/not-found";
 import ExportToml from "@/components/export-toml";
 import ServerShowStats from "@/resources/server/show-stats";
 import ResourceTable from "@/resources/table";
+import { t } from "@/localization/runtime";
 
 export default function Resources({ _type }: { _type?: UsableResource }) {
   const __type = useResourceParamType()!;
@@ -28,7 +29,7 @@ export default function Resources({ _type }: { _type?: UsableResource }) {
 
   return (
     <Page
-      title={`${name}s`}
+      title={t(`${name}s`)}
       icon={RC.Icon}
       description={<RC.Description />}
       oppositeTitle={

@@ -4,6 +4,7 @@ import { SIDEBAR_RESOURCES } from "@/resources";
 import { Button, Divider, ScrollArea, Stack, Text } from "@mantine/core";
 import { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { t } from "@/localization/runtime";
 
 const Sidebar = ({ close }: { close: () => void }) => {
   const location = useLocation().pathname;
@@ -52,7 +53,7 @@ const Sidebar = ({ close }: { close: () => void }) => {
             return (
               <SidebarLink
                 key={type}
-                label={type === "ResourceSync" ? "Syncs" : type + "s"}
+                label={t(type === "ResourceSync" ? "Syncs" : type + "s")}
                 icon={<Icon size="1rem" />}
                 to={`/${usableResourcePath(type)}`}
                 {...linkProps}

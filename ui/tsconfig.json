@@ -22,6 +22,7 @@
     "noFallthroughCasesInSwitch": true,
     /* Module resolution */
     "paths": {
+      "komodo-shared-ui": ["./node_modules/mogh_ui/dist/index.d.ts"],
       "@/*": [
         "./src/*"
       ]

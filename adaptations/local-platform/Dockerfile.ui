@@ -1,0 +1,8 @@
+# Build ui/dist with the repository's pinned Yarn lockfile before this step.
+FROM ghcr.io/moghtech/komodo-core:2.3.3@sha256:bca73d0eee143066228fb9b80c38a5a2726e573ad2758f7aa92b5c91a8aef1c7
+ARG DOWNSTREAM_SOURCE_SHA256
+COPY ui/dist/ /app/ui/
+LABEL org.opencontainers.image.source="https://github.com/su-xiaoxiao/komodo"
+LABEL org.opencontainers.image.revision="780ac68b992094a9fccd5fffb760e0c84fd3c3d1"
+LABEL local.platform.source-snapshot=$DOWNSTREAM_SOURCE_SHA256
+LABEL local.platform.source-kind="upstream-with-local-adaptations"

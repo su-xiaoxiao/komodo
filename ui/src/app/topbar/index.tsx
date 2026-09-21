@@ -19,6 +19,7 @@ import { useRead } from "@/lib/hooks";
 import TopbarLink from "./link";
 import TopbarAlerts from "./alerts";
 import KeyboardShortcuts from "./keyboard-shortcuts";
+import LanguageSwitch from "@/localization/language-switch";
 
 const Topbar = ({
   opened,
@@ -81,6 +82,7 @@ const Topbar = ({
           <OmniSearch />
         </Box>
         <TopbarLink to="/docs">API</TopbarLink>
+        <TopbarLink to={import.meta.env.VITE_MCP_MANAGER_URL || "http://127.0.0.1:28789"}>MCP Manager</TopbarLink>
         <TopbarLink to="https://komo.do/docs/intro">Docs</TopbarLink>
         {version && (
           <TopbarLink to="https://github.com/moghtech/komodo/releases">
@@ -92,6 +94,7 @@ const Topbar = ({
         <TopbarAlerts />
         <TopbarUpdates />
         <ThemeToggle />
+        <LanguageSwitch />
         <UserDropdown />
       </Group>
     </AppShell.Header>

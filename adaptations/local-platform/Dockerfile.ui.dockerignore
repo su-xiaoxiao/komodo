@@ -1,0 +1,7 @@
+**
+!ui/
+!ui/dist/
+!ui/dist/**
+!adaptations/
+!adaptations/local-platform/
+!adaptations/local-platform/Dockerfile.ui

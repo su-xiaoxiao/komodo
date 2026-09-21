@@ -1,0 +1,54 @@
+name: komodo
+services:
+  mongo:
+    image: ${KOMODO_MONGO_IMAGE:?Set a local immutable Mongo image}
+    restart: unless-stopped
+    command: ["--quiet", "--wiredTigerCacheSizeGB", "0.25"]
+    volumes: ["mongo-data:/data/db", "mongo-config:/data/configdb"]
+    labels: {komodo.skip: "true"}
+  core:
+    image: ${KOMODO_CORE_IMAGE:?Build the localized Core image first}
+    restart: unless-stopped
+    init: true
+    ports: ["127.0.0.1:28793:9120"]
+    depends_on: [mongo]
+    environment:
+      TZ: Asia/Shanghai
+      KOMODO_DATABASE_ADDRESS: mongo:27017
+      KOMODO_HOST: http://127.0.0.1:28793
+      KOMODO_TITLE: Komodo 本机平台
+      KOMODO_LOCAL_AUTH: "true"
+      KOMODO_INIT_ADMIN_USERNAME: admin
+      KOMODO_INIT_ADMIN_PASSWORD: ${KOMODO_LOCAL_PASSWORD:?Set local login password}
+      KOMODO_JWT_SECRET: ${KOMODO_JWT_SECRET:?Set JWT secret}
+      KOMODO_DISABLE_USER_REGISTRATION: "true"
+      KOMODO_DISABLE_INIT_RESOURCES: "true"
+      KOMODO_FIRST_SERVER_NAME: Local
+      KOMODO_PERIPHERY_PUBLIC_KEY: file:/config/keys/periphery.pub
+      KOMODO_PRETTY_STARTUP_CONFIG: "false"
+    volumes: ["keys:/config/keys", "backups:/backups"]
+    labels: {komodo.skip: "true"}
+  periphery:
+    image: ghcr.io/moghtech/komodo-periphery:2.3.3@sha256:fa3f1a641a265216066676950d5eecdf506955a7bafe2f01996135ae93115cd5
+    restart: unless-stopped
+    init: true
+    depends_on: [core]
+    environment:
+      PERIPHERY_CORE_ADDRESS: ws://core:9120
+      PERIPHERY_CONNECT_AS: Local
+      PERIPHERY_CORE_PUBLIC_KEYS: file:/config/keys/core.pub
+      PERIPHERY_ROOT_DIRECTORY: /etc/komodo
+      PERIPHERY_DISABLE_TERMINALS: "true"
+      PERIPHERY_DISABLE_CONTAINER_TERMINALS: "true"
+      PERIPHERY_PRETTY_STARTUP_CONFIG: "false"
+    volumes:
+      - keys:/config/keys
+      - /var/run/docker.sock:/var/run/docker.sock
+      - work:/etc/komodo
+    labels: {komodo.skip: "true"}
+volumes:
+  mongo-data: {name: komodo-mongo-data}
+  mongo-config: {name: komodo-mongo-config}
+  keys: {name: komodo-keys}
+  backups: {name: komodo-backups}
+  work: {name: komodo-work}

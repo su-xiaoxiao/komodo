@@ -1,0 +1,3045 @@
+{
+  " (no leading '/'), relative to": [
+    "src/resources/repo/config.tsx:193",
+    "src/resources/stack/config/index.tsx:843"
+  ],
+  " 404 Not Found": [
+    "src/resources/not-found.tsx:36"
+  ],
+  " below to confirm this action.": [
+    "src/components/docker/batch-executions.tsx:223",
+    "src/resources/batch-executions.tsx:193",
+    "node_modules/mogh_ui/dist/components/confirm-modal.js:74"
+  ],
+  " button.": [
+    "src/components/terminal/section.tsx:153"
+  ],
+  " by": [
+    "src/resources/alerter/config/resources.tsx:114"
+  ],
+  " Core": [
+    "src/resources/server/table/stats.tsx:231"
+  ],
+  " disabled": [
+    "src/pages/stats.tsx:242"
+  ],
+  " for the new ": [
+    "node_modules/mogh_ui/dist/components/create-modal.js:47"
+  ],
+  " GB": [
+    "src/pages/stats.tsx:266",
+    "src/pages/stats.tsx:267",
+    "src/pages/stats.tsx:281",
+    "src/pages/stats.tsx:282",
+    "src/resources/server/stats/current/index.tsx:48",
+    "src/resources/server/stats/current/index.tsx:49",
+    "src/resources/server/stats/current/ram.tsx:33",
+    "src/resources/server/stats/current/ram.tsx:34",
+    "src/resources/server/stats/current/ram.tsx:38",
+    "src/resources/server/stats/current/ram.tsx:39",
+    "src/resources/server/stats/disks.tsx:33",
+    "src/resources/server/stats/disks.tsx:37"
+  ],
+  " GB ": [
+    "src/resources/server/diskUsage.tsx:59",
+    "src/resources/server/diskUsage.tsx:60"
+  ],
+  " GB available": [
+    "src/resources/server/stats/current/ram.tsx:37"
+  ],
+  " is a template.": [
+    "src/components/template-marker.tsx:14"
+  ],
+  " KiB": [
+    "src/components/terminal/section.tsx:81",
+    "src/pages/terminals/index.tsx:159"
+  ],
+  " Maintenance Window": [
+    "src/components/maintenance-windows.tsx:159"
+  ],
+  " Mode:": [
+    "src/resources/sync/pending.tsx:37"
+  ],
+  " more...": [
+    "src/components/docker/container-ports.tsx:159"
+  ],
+  " of": [
+    "src/resources/server/stats/current/ram.tsx:33"
+  ],
+  " of ": [
+    "src/components/updates/details.tsx:172",
+    "src/pages/stats.tsx:232",
+    "src/pages/stats.tsx:367",
+    "src/resources/build/info.tsx:203"
+  ],
+  " reachable": [
+    "src/pages/stats.tsx:232"
+  ],
+  " Resource": [
+    "src/resources/sync/pending.tsx:90"
+  ],
+  " resources": [
+    "src/resources/alerter/config/resources.tsx:115"
+  ],
+  " servers. Filter to specific Servers to compare the others.": [
+    "src/pages/stats.tsx:367"
+  ],
+  " Service": [
+    "src/resources/stack/index.tsx:206"
+  ],
+  " tab for details.": [
+    "src/resources/stack/index.tsx:342"
+  ],
+  " to match the ": [
+    "src/resources/sync/pending.tsx:40",
+    "src/resources/sync/pending.tsx:45"
+  ],
+  " unreachable": [
+    "src/pages/stats.tsx:237"
+  ],
+  " with update:": [
+    "src/resources/stack/update-available.tsx:137"
+  ],
+  "--extra-arg=value": [
+    "src/resources/build/config.tsx:422",
+    "src/resources/deployment/config/index.tsx:407",
+    "src/resources/stack/config/index.tsx:592",
+    "src/resources/stack/config/index.tsx:715"
+  ],
+  ". Expected ": [
+    "src/resources/server/version.tsx:42"
+  ],
+  ".env": [
+    "src/resources/stack/config/index.tsx:300"
+  ],
+  "· Cache ": [
+    "src/resources/server/stats/current/ram.tsx:39"
+  ],
+  "· ZFS ARC ": [
+    "src/resources/server/stats/current/ram.tsx:38"
+  ],
+  "' when Stack was last deployed.": [
+    "src/resources/stack/info.tsx:207"
+  ],
+  "{0} - Description": [
+    "src/pages/settings/variables/index.tsx:127"
+  ],
+  "{0} - Value": [
+    "src/pages/settings/variables/index.tsx:91"
+  ],
+  "{0} Core{1}": [
+    "src/resources/server/index.tsx:208"
+  ],
+  "{0} lines": [
+    "src/components/log-section.tsx:196"
+  ],
+  "{0}-name": [
+    "src/resources/new.tsx:82"
+  ],
+  "{0}% of {1} Cores": [
+    "src/resources/server/stats/current/load-average.tsx:47"
+  ],
+  "/path/to/disk": [
+    "src/resources/server/config.tsx:158"
+  ],
+  "/work/dir (Optional)": [
+    "src/resources/procedure/config/executions.tsx:889"
+  ],
+  "15m": [
+    "src/resources/server/stats/historical.tsx:145",
+    "src/resources/server/table/stats.tsx:222"
+  ],
+  "1m": [
+    "src/resources/server/stats/historical.tsx:143",
+    "src/resources/server/table/stats.tsx:206"
+  ],
+  "2FA": [
+    "src/pages/profile.tsx:157"
+  ],
+  "2FA Code": [
+    "node_modules/mogh_ui/dist/auth/login/index.js:203"
+  ],
+  "5m": [
+    "src/resources/server/stats/historical.tsx:144",
+    "src/resources/server/table/stats.tsx:214"
+  ],
+  "Account": [
+    "src/app/topbar/user-dropdown.tsx:113",
+    "src/components/config/account-selector.tsx:61",
+    "src/components/config/account-selector.tsx:79"
+  ],
+  "Action Arguments (JSON)": [
+    "src/resources/procedure/config/executions.tsx:126"
+  ],
+  "Action File": [
+    "src/resources/action/config.tsx:58"
+  ],
+  "Active": [
+    "src/pages/dashboard/active.tsx:205",
+    "src/resources/swarm/docker/nodes/update.tsx:127"
+  ],
+  "Add": [
+    "src/app/topbar/user-dropdown.tsx:111"
+  ],
+  "Add '.toml' files or folders to the sync. Relative to '/syncs/{sync_name}'.": [
+    "src/resources/sync/config.tsx:228"
+  ],
+  "Add additional env files to pass with '--env-file'. Relative to the 'Run Directory'. Uncheck 'Track' for externally managed files (e.g., sops decrypted).": [
+    "src/resources/stack/config/index.tsx:352"
+  ],
+  "Add commands": [
+    "src/resources/stack/config/index.tsx:541"
+  ],
+  "Add Env File": [
+    "src/resources/stack/config/index.tsx:348"
+  ],
+  "Add Execution": [
+    "src/resources/procedure/config/stage.tsx:127"
+  ],
+  "Add Extra Arg": [
+    "src/components/config/add-extra-arg.tsx:28",
+    "src/components/config/add-extra-arg.tsx:53"
+  ],
+  "Add extra args inserted after 'docker compose build'": [
+    "src/resources/stack/config/index.tsx:692"
+  ],
+  "Add File": [
+    "src/resources/stack/config/config-files.tsx:48"
+  ],
+  "Add files to include using 'docker compose -f'. If empty, uses 'compose.yaml'. Relative to 'Run Directory'.": [
+    "src/resources/stack/config/index.tsx:755",
+    "src/resources/stack/config/index.tsx:873"
+  ],
+  "Add Filter": [
+    "src/resources/alerter/config/alert-types.tsx:51"
+  ],
+  "Add Filter Tag": [
+    "src/app/topbar/keyboard-shortcuts.tsx:59"
+  ],
+  "Add Group": [
+    "src/pages/user/add-group.tsx:60"
+  ],
+  "Add other config files to associate with the Stack, and edit in the UI. Relative to 'Run Directory'.": [
+    "src/resources/stack/config/index.tsx:371"
+  ],
+  "Add quick links in the resource header": [
+    "src/resources/build/config.tsx:307",
+    "src/resources/deployment/config/index.tsx:219",
+    "src/resources/repo/config.tsx:311",
+    "src/resources/stack/config/index.tsx:451",
+    "src/resources/swarm/config.tsx:158"
+  ],
+  "Add Registry": [
+    "src/resources/build/config.tsx:244"
+  ],
+  "Add Server": [
+    "src/resources/builder/config/server.tsx:100",
+    "src/resources/swarm/config.tsx:109"
+  ],
+  "Add services": [
+    "src/resources/stack/config/config-files.tsx:92",
+    "src/resources/stack/config/index.tsx:411",
+    "src/resources/stack/config/index.tsx:623"
+  ],
+  "Add specific permissions...": [
+    "src/components/permissions/specific-selector.tsx:56"
+  ],
+  "Add Stage": [
+    "src/resources/procedure/config/index.tsx:166"
+  ],
+  "Add User": [
+    "src/pages/user-group/add-user.tsx:61"
+  ],
+  "Add Window": [
+    "src/components/maintenance-windows.tsx:65"
+  ],
+  "Additional Env Files": [
+    "src/resources/stack/config/index.tsx:282"
+  ],
+  "Address": [
+    "src/resources/server/config.tsx:122"
+  ],
+  "Admin": [
+    "src/components/user/header.tsx:34"
+  ],
+  "After: ": [
+    "src/resources/sync/pending.tsx:116"
+  ],
+  "Alert": [
+    "src/resources/action/config.tsx:134",
+    "src/resources/procedure/config/index.tsx:174"
+  ],
+  "Alert message": [
+    "src/resources/procedure/config/executions.tsx:1466"
+  ],
+  "Alert Types": [
+    "src/resources/alerter/config/alert-types.tsx:46"
+  ],
+  "Alerts": [
+    "src/app/sidebar.tsx:74",
+    "src/pages/alerts.tsx:77",
+    "src/resources/swarm/config.tsx:119",
+    "src/resources/sync/config.tsx:204"
+  ],
+  "Alerts ": [
+    "src/resources/alerter/config/resources.tsx:113"
+  ],
+  "All services": [
+    "src/resources/procedure/config/executions.tsx:381",
+    "src/resources/procedure/config/executions.tsx:478",
+    "src/resources/procedure/config/executions.tsx:537",
+    "src/resources/procedure/config/executions.tsx:569",
+    "src/resources/procedure/config/executions.tsx:601",
+    "src/resources/procedure/config/executions.tsx:633",
+    "src/resources/procedure/config/executions.tsx:665",
+    "src/resources/procedure/config/executions.tsx:697",
+    "src/resources/stack/config/config-files.tsx:92",
+    "src/resources/stack/log.tsx:34",
+    "src/resources/stack/log.tsx:44"
+  ],
+  "All users will inherit the permissions in this group.": [
+    "src/pages/user-group/index.tsx:126"
+  ],
+  "Allow the onboarding key to update an existing Server's public key and configuration to enable the connection.": [
+    "src/pages/settings/onboarding/index.tsx:126"
+  ],
+  "Always redeploy full stack instead of just specific services with update.": [
+    "src/resources/stack/config/index.tsx:432"
+  ],
+  "API": [
+    "src/app/topbar/index.tsx:84"
+  ],
+  "API key": [
+    "src/components/api-keys/new.tsx:138",
+    "src/components/api-keys/table.tsx:37"
+  ],
+  "API Key Created": [
+    "src/components/api-keys/new.tsx:86"
+  ],
+  "API Keys": [
+    "src/components/api-keys/section.tsx:48"
+  ],
+  "API secret": [
+    "src/components/api-keys/new.tsx:147"
+  ],
+  "Apply To": [
+    "src/resources/stack/config/index.tsx:536"
+  ],
+  "Arguments": [
+    "src/resources/action/config.tsx:92"
+  ],
+  "As Manager": [
+    "src/resources/swarm/join-commands.tsx:30"
+  ],
+  "As Worker": [
+    "src/resources/swarm/join-commands.tsx:49"
+  ],
+  "Attach security groups to the instance.": [
+    "src/resources/builder/config/aws.tsx:70"
+  ],
+  "Attachable": [
+    "src/resources/server/docker/networks.tsx:104"
+  ],
+  "Auth": [
+    "src/resources/server/config.tsx:73"
+  ],
+  "Auth style?": [
+    "src/components/webhook/builder.tsx:27"
+  ],
+  "Auto Prune Images": [
+    "src/resources/server/config.tsx:179"
+  ],
+  "Auto Update": [
+    "src/resources/deployment/config/index.tsx:278",
+    "src/resources/stack/config/index.tsx:388"
+  ],
+  "Availability": [
+    "src/resources/swarm/docker/nodes/index.tsx:105",
+    "src/resources/swarm/docker/nodes/update.tsx:119"
+  ],
+  "Available": [
+    "src/resources/stack/update-available.tsx:94"
+  ],
+  "Back": [
+    "src/resources/not-found.tsx:22",
+    "node_modules/mogh_ui/dist/components/back-button.js:12"
+  ],
+  "Base Permissions on Resource Types": [
+    "src/components/permissions/base-section.tsx:85"
+  ],
+  "Blacklist": [
+    "src/resources/alerter/config/resources.tsx:166"
+  ],
+  "blacklisted": [
+    "src/resources/alerter/config/resources.tsx:114"
+  ],
+  "Block I/O": [
+    "src/resources/server/stats/containers.tsx:101"
+  ],
+  "Branch": [
+    "src/resources/action/config.tsx:259",
+    "src/resources/procedure/config/index.tsx:277",
+    "src/resources/repo/table.tsx:70",
+    "src/resources/sync/table.tsx:66"
+  ],
+  "Build": [
+    "src/resources/build/executions.tsx:67",
+    "src/resources/deployment/config/index.tsx:139",
+    "src/resources/repo/executions.tsx:147"
+  ],
+  "Build Args": [
+    "src/resources/build/config.tsx:335"
+  ],
+  "Build Extra Args": [
+    "src/resources/stack/config/index.tsx:691"
+  ],
+  "Build Images": [
+    "src/resources/stack/config/index.tsx:679"
+  ],
+  "Builder": [
+    "src/resources/build/config.tsx:130",
+    "src/resources/repo/config.tsx:99"
+  ],
+  "Builder Type": [
+    "src/resources/builder/index.tsx:61"
+  ],
+  "Builder:": [
+    "src/resources/build/config.tsx:138",
+    "src/resources/repo/config.tsx:107"
+  ],
+  "Building": [
+    "src/resources/build/index.tsx:63"
+  ],
+  "Builds": [
+    "src/resources/repo/resources.tsx:25"
+  ],
+  "Cache/Buffers": [
+    "src/resources/server/stats/historical.tsx:158"
+  ],
+  "Cancel": [
+    "src/components/maintenance-windows.tsx:400",
+    "src/resources/swarm/docker/nodes/update.tsx:167"
+  ],
+  "Cancel Build": [
+    "src/resources/build/executions.tsx:57",
+    "src/resources/repo/executions.tsx:136"
+  ],
+  "Cancel Run": [
+    "src/resources/action/executions.tsx:58",
+    "src/resources/procedure/executions.tsx:60"
+  ],
+  "Changes Made": [
+    "src/components/updates/details.tsx:148"
+  ],
+  "Charting the first ": [
+    "src/pages/stats.tsx:366"
+  ],
+  "Check": [
+    "src/resources/deployment/update-available.tsx:100",
+    "src/resources/stack/update-available.tsx:156"
+  ],
+  "Check for updates": [
+    "src/resources/deployment/update-available.tsx:94",
+    "src/resources/stack/update-available.tsx:150"
+  ],
+  "Check for updates to the image during Global Auto Update.": [
+    "src/resources/deployment/config/index.tsx:285",
+    "src/resources/stack/config/index.tsx:395"
+  ],
+  "Choose between multiple signals when stopping": [
+    "src/resources/deployment/config/index.tsx:428"
+  ],
+  "Choose Mode": [
+    "src/resources/build/config.tsx:194",
+    "src/resources/build/config.tsx:200",
+    "src/resources/build/config.tsx:205",
+    "src/resources/stack/config/index.tsx:225",
+    "src/resources/stack/config/index.tsx:231",
+    "src/resources/stack/config/index.tsx:236",
+    "src/resources/sync/config.tsx:121",
+    "src/resources/sync/config.tsx:127",
+    "src/resources/sync/config.tsx:132"
+  ],
+  "Choose the --network attached to container": [
+    "src/resources/deployment/config/network.tsx:40"
+  ],
+  "Choose whether to provide English or CRON schedule expression": [
+    "src/resources/action/config.tsx:164",
+    "src/resources/procedure/config/index.tsx:204"
+  ],
+  "Clear Filter Tags": [
+    "src/app/topbar/keyboard-shortcuts.tsx:61"
+  ],
+  "Clear on close": [
+    "src/app/topbar/omni-search/index.tsx:67"
+  ],
+  "Click to reconnect": [
+    "src/app/topbar/websocket-status.tsx:42"
+  ],
+  "Clone": [
+    "src/resources/repo/executions.tsx:47"
+  ],
+  "Clone Path": [
+    "src/resources/repo/config.tsx:184"
+  ],
+  "Close": [
+    "src/components/api-keys/new.tsx:153",
+    "src/pages/settings/onboarding/new.tsx:134",
+    "src/resources/swarm/join-commands.tsx:74"
+  ],
+  "Close Alert": [
+    "src/components/alerts/details.tsx:146"
+  ],
+  "Combined usage:": [
+    "src/resources/server/diskUsage.tsx:35"
+  ],
+  "command": [
+    "src/components/updates/details.tsx:184",
+    "src/resources/build/info.tsx:215"
+  ],
+  "Command": [
+    "src/pages/terminals/index.tsx:139",
+    "src/pages/terminals/new.tsx:178",
+    "src/resources/deployment/config/index.tsx:314",
+    "src/resources/deployment/config/index.tsx:319",
+    "src/resources/procedure/config/executions.tsx:876"
+  ],
+  "Command working directory": [
+    "src/components/config/system-command.tsx:23"
+  ],
+  "Commit Changes": [
+    "src/resources/sync/executions.tsx:123",
+    "src/resources/sync/executions.tsx:135"
+  ],
+  "Commit Hash": [
+    "src/resources/build/config.tsx:533",
+    "src/resources/repo/config.tsx:172",
+    "src/resources/stack/config/index.tsx:829",
+    "src/resources/sync/config.tsx:302"
+  ],
+  "Compose File": [
+    "src/resources/stack/config/index.tsx:938"
+  ],
+  "compose up": [
+    "src/resources/stack/config/index.tsx:568"
+  ],
+  "compose.yaml": [
+    "src/resources/stack/config/index.tsx:760",
+    "src/resources/stack/config/index.tsx:878"
+  ],
+  "Config": [
+    "node_modules/mogh_ui/dist/components/config/layout.js:12"
+  ],
+  "Config '": [
+    "node_modules/mogh_ui/dist/components/config/group.js:63"
+  ],
+  "Config Files": [
+    "src/resources/stack/config/index.tsx:365",
+    "src/resources/stack/config/index.tsx:370"
+  ],
+  "Config Missing": [
+    "src/resources/stack/index.tsx:277"
+  ],
+  "config.yaml": [
+    "src/resources/swarm/new/config.tsx:35",
+    "src/resources/swarm/new/secret.tsx:35"
+  ],
+  "configs/config.yaml": [
+    "src/resources/stack/config/config-files.tsx:59"
+  ],
+  "Configure": [
+    "src/resources/procedure/config/executions.tsx:838"
+  ],
+  "Configure Branch": [
+    "src/resources/build/config.tsx:578",
+    "src/resources/repo/config.tsx:264",
+    "src/resources/stack/config/index.tsx:902",
+    "src/resources/sync/config.tsx:327"
+  ],
+  "Configure custom alert message": [
+    "src/resources/procedure/config/executions.tsx:1468"
+  ],
+  "Configure port mappings.": [
+    "src/resources/deployment/config/index.tsx:206"
+  ],
+  "Configure the --restart behavior.": [
+    "src/resources/deployment/config/restart.tsx:20"
+  ],
+  "Configure the endpoint to send the alert to.": [
+    "src/resources/alerter/config/endpoint.tsx:26"
+  ],
+  "Configure where the built image is pushed.": [
+    "src/resources/build/config.tsx:229"
+  ],
+  "Confirm": [
+    "src/resources/procedure/config/executions.tsx:989",
+    "node_modules/mogh_ui/dist/auth/profile/totp.js:97",
+    "node_modules/mogh_ui/dist/components/confirm-button.js:60"
+  ],
+  "Confirm ": [
+    "node_modules/mogh_ui/dist/components/confirm-modal.js:54"
+  ],
+  "Confirm Code": [
+    "node_modules/mogh_ui/dist/auth/profile/totp.js:79"
+  ],
+  "Confirm Password": [
+    "src/pages/settings/users/new-local-user.tsx:43"
+  ],
+  "Confirm Public Key": [
+    "src/resources/server/confirm-pubkey.tsx:28"
+  ],
+  "Confirm Update": [
+    "node_modules/mogh_ui/dist/components/config/confirm.js:45"
+  ],
+  "confirm-password": [
+    "src/pages/settings/users/new-local-user.tsx:44"
+  ],
+  "Connection": [
+    "src/resources/builder/config/aws.tsx:107",
+    "src/resources/builder/config/url.tsx:45"
+  ],
+  "Contact an admin for access to resources.": [
+    "src/pages/dashboard/no-resources.tsx:16"
+  ],
+  "Container": [
+    "src/pages/terminals/new.tsx:349"
+  ],
+  "Containers": [
+    "src/app/sidebar.tsx:24",
+    "src/app/topbar/omni-search/hooks.tsx:147",
+    "src/components/docker/containers-section.tsx:55",
+    "src/pages/containers.tsx:247",
+    "src/pages/docker/network.tsx:148",
+    "src/resources/server/stats/containers.tsx:38"
+  ],
+  "Content": [
+    "src/resources/swarm/new/config.tsx:42",
+    "src/resources/swarm/new/secret.tsx:42"
+  ],
+  "Copy": [
+    "src/resources/new.tsx:131"
+  ],
+  "Copy a command below and run it on the target host to join the swarm.": [
+    "src/resources/swarm/join-commands.tsx:23"
+  ],
+  "Copy Source": [
+    "src/resources/new.tsx:112"
+  ],
+  "Copy the API key and secret.": [
+    "src/components/api-keys/new.tsx:129"
+  ],
+  "Copy the onboarding key below. ": [
+    "src/pages/settings/onboarding/new.tsx:123"
+  ],
+  "Core Info": [
+    "src/pages/settings/core-info.tsx:61"
+  ],
+  "Core Secrets:": [
+    "src/pages/settings/variables/index.tsx:177"
+  ],
+  "CPU": [
+    "src/resources/server/config.tsx:209",
+    "src/resources/server/stats-card.tsx:102",
+    "src/resources/server/stats/containers.tsx:75",
+    "src/resources/server/stats/processes.tsx:67",
+    "src/resources/server/table/stats.tsx:75"
+  ],
+  "CPU Usage": [
+    "src/pages/stats.tsx:248",
+    "src/resources/server/stats/current/cpu.tsx:11",
+    "src/resources/server/stats/current/index.tsx:31"
+  ],
+  "Create": [
+    "src/components/api-keys/new.tsx:120",
+    "src/components/maintenance-windows.tsx:159",
+    "src/components/maintenance-windows.tsx:404",
+    "src/pages/settings/onboarding/new.tsx:114",
+    "src/pages/settings/providers/new.tsx:111",
+    "src/pages/terminals/new.tsx:220",
+    "node_modules/mogh_ui/dist/components/create-modal.js:58"
+  ],
+  "Create ": [
+    "src/pages/settings/providers/new.tsx:72"
+  ],
+  "Create {0} Permission": [
+    "src/pages/user/index.tsx:115"
+  ],
+  "Create a terminal using the ": [
+    "src/components/terminal/section.tsx:152"
+  ],
+  "Create Builder": [
+    "src/pages/settings/onboarding/index.tsx:144"
+  ],
+  "Create Onboarding Key": [
+    "src/pages/settings/onboarding/new.tsx:68"
+  ],
+  "Create Tag": [
+    "src/components/tags/selector.tsx:146",
+    "src/resources/tags.tsx:171"
+  ],
+  "Created": [
+    "src/components/swarm/services-section.tsx:90",
+    "src/pages/terminals/index.tsx:167",
+    "src/resources/swarm/docker/configs.tsx:81",
+    "src/resources/swarm/docker/secrets.tsx:105"
+  ],
+  "Current": [
+    "src/resources/server/stats/current/index.tsx:26"
+  ],
+  "Current Labels": [
+    "src/resources/swarm/docker/nodes/update.tsx:153"
+  ],
+  "Custom": [
+    "src/components/terminal/new.tsx:148"
+  ],
+  "Custom entrypoint (Optional)": [
+    "src/resources/procedure/config/executions.tsx:909"
+  ],
+  "Custom Extra Arg": [
+    "src/components/config/add-extra-arg.tsx:71"
+  ],
+  "Custom Name": [
+    "src/resources/deployment/config/index.tsx:302"
+  ],
+  "custom-public-key": [
+    "src/resources/server/config.tsx:80"
+  ],
+  "Dashboard": [
+    "src/app/sidebar.tsx:18",
+    "src/app/topbar/omni-search/hooks.tsx:122",
+    "src/pages/dashboard/index.tsx:23"
+  ],
+  "Date": [
+    "src/components/maintenance-windows.tsx:331"
+  ],
+  "Day of Week": [
+    "src/components/maintenance-windows.tsx:324"
+  ],
+  "Default": [
+    "src/components/terminal/new.tsx:132"
+  ],
+  "Default ({0})": [
+    "src/components/timezone-selector.tsx:28"
+  ],
+  "Default termination signal": [
+    "src/resources/deployment/config/termination.tsx:17"
+  ],
+  "Delete": [
+    "src/components/api-keys/table.tsx:71",
+    "src/components/user/delete-group.tsx:32",
+    "src/components/user/table.tsx:92",
+    "src/pages/settings/onboarding/delete.tsx:27",
+    "src/pages/settings/providers/delete.tsx:26",
+    "src/pages/settings/tags/delete.tsx:30",
+    "src/pages/settings/variables/delete.tsx:30",
+    "src/pages/terminals/delete.tsx:42",
+    "src/pages/user-group/delete.tsx:22",
+    "src/resources/batch-executions.tsx:121",
+    "src/resources/delete.tsx:31"
+  ],
+  "Delete All": [
+    "src/pages/terminals/batch-delete.tsx:28"
+  ],
+  "Delete Image": [
+    "src/pages/docker/image.tsx:125"
+  ],
+  "Delete Network": [
+    "src/pages/docker/network.tsx:141"
+  ],
+  "Delete Unmatched Resources": [
+    "src/resources/sync/config.tsx:150"
+  ],
+  "Delete Volume": [
+    "src/pages/docker/volume.tsx:124"
+  ],
+  "Deploy": [
+    "src/resources/deployment/executions.tsx:91",
+    "src/resources/stack/executions.tsx:69",
+    "src/resources/stack/executions.tsx:81"
+  ],
+  "Deploy ": [
+    "src/resources/sync/pending.tsx:89"
+  ],
+  "Deploy Error": [
+    "src/resources/sync/pending.tsx:71"
+  ],
+  "Deployed config:": [
+    "src/resources/stack/info.tsx:205"
+  ],
+  "Deployment": [
+    "src/pages/terminals/new.tsx:494"
+  ],
+  "Deployments": [
+    "src/resources/server/resources.tsx:25",
+    "src/resources/swarm/resources.tsx:25"
+  ],
+  "Description": [
+    "src/pages/settings/variables/index.tsx:119"
+  ],
+  "Description (optional)": [
+    "src/components/maintenance-windows.tsx:387"
+  ],
+  "Desired State": [
+    "src/components/swarm/tasks-section.tsx:136"
+  ],
+  "Destroy": [
+    "src/pages/docker/container/executions.tsx:39",
+    "src/pages/docker/container/executions.tsx:44",
+    "src/resources/deployment/executions.tsx:149",
+    "src/resources/stack/config/index.tsx:722",
+    "src/resources/stack/executions.tsx:129"
+  ],
+  "Destroy Before Deploy": [
+    "src/resources/stack/config/index.tsx:726"
+  ],
+  "Detach": [
+    "src/resources/procedure/config/executions.tsx:956"
+  ],
+  "Details": [
+    "src/pages/docker/container/index.tsx:155",
+    "src/pages/docker/image.tsx:136",
+    "src/pages/docker/network.tsx:196",
+    "src/pages/docker/volume.tsx:135"
+  ],
+  "Did not find ": [
+    "src/resources/deployment/tasks.tsx:35"
+  ],
+  "Disable User": [
+    "src/pages/user/index.tsx:85"
+  ],
+  "disabled": [
+    "src/resources/server/version.tsx:34"
+  ],
+  "Disabled": [
+    "src/pages/docker/network.tsx:119",
+    "src/resources/server/index.tsx:75",
+    "src/resources/server/stats-card.tsx:149",
+    "node_modules/mogh_ui/dist/components/enable-switch.js:28"
+  ],
+  "Disk": [
+    "src/resources/server/config.tsx:249",
+    "src/resources/server/stats-card.tsx:114",
+    "src/resources/server/table/stats.tsx:101"
+  ],
+  "Disk Usage": [
+    "src/pages/stats.tsx:276",
+    "src/resources/server/diskUsage.tsx:33",
+    "src/resources/server/stats/current/index.tsx:42"
+  ],
+  "Disks": [
+    "src/resources/server/config.tsx:147",
+    "src/resources/server/stats/disks.tsx:27"
+  ],
+  "Docker resources are not available": [
+    "src/resources/server/docker/index.tsx:48",
+    "src/resources/swarm/docker/index.tsx:53"
+  ],
+  "docker run": [
+    "src/resources/deployment/config/index.tsx:371"
+  ],
+  "docker service create": [
+    "src/resources/deployment/config/index.tsx:371"
+  ],
+  "Dockerfile": [
+    "src/resources/build/config.tsx:611"
+  ],
+  "Docs": [
+    "src/app/topbar/index.tsx:86",
+    "src/resources/action/config.tsx:67"
+  ],
+  "Domain": [
+    "src/components/config/provider-selector.tsx:39",
+    "src/components/config/provider-selector.tsx:73",
+    "src/pages/settings/providers/index.tsx:87"
+  ],
+  "Down": [
+    "src/resources/stack/index.tsx:85"
+  ],
+  "Drain": [
+    "src/resources/swarm/docker/nodes/update.tsx:129"
+  ],
+  "Driver": [
+    "src/resources/server/docker/networks.tsx:92",
+    "src/resources/server/docker/volumes.tsx:69",
+    "src/resources/swarm/docker/secrets.tsx:75"
+  ],
+  "Duration": [
+    "src/components/maintenance-windows.tsx:111"
+  ],
+  "Duration (minutes)": [
+    "src/components/maintenance-windows.tsx:373"
+  ],
+  "Duration in milliseconds": [
+    "src/resources/procedure/config/executions.tsx:1489"
+  ],
+  "e.g., Automated backup process": [
+    "src/components/maintenance-windows.tsx:392"
+  ],
+  "e.g., Daily Backup": [
+    "src/components/maintenance-windows.tsx:300"
+  ],
+  "Edit": [
+    "src/components/maintenance-windows.tsx:159"
+  ],
+  "Edit {0} Resources": [
+    "src/resources/alerter/config/resources.tsx:123"
+  ],
+  "Edit Resources": [
+    "src/resources/alerter/config/resources.tsx:109"
+  ],
+  "Egress": [
+    "src/resources/server/stats/current/network-usage.tsx:19"
+  ],
+  "Email": [
+    "src/resources/alerter/config/endpoint.tsx:54"
+  ],
+  "Enable User": [
+    "src/pages/user/index.tsx:85"
+  ],
+  "Enabled": [
+    "src/components/maintenance-windows.tsx:118",
+    "src/pages/docker/network.tsx:119",
+    "src/pages/schedules.tsx:137",
+    "src/pages/settings/onboarding/index.tsx:161",
+    "src/resources/action/config.tsx:149",
+    "src/resources/alerter/config/index.tsx:35",
+    "src/resources/alerter/table.tsx:69",
+    "src/resources/procedure/config/index.tsx:189",
+    "src/resources/server/config.tsx:63",
+    "node_modules/mogh_ui/dist/components/enable-switch.js:28"
+  ],
+  "Endpoint": [
+    "src/resources/alerter/config/endpoint.tsx:25",
+    "src/resources/alerter/config/index.tsx:44"
+  ],
+  "Enroll Passkey 2FA": [
+    "node_modules/mogh_ui/dist/auth/profile/passkey.js:55"
+  ],
+  "Enroll TOTP 2FA": [
+    "node_modules/mogh_ui/dist/auth/profile/totp.js:110"
+  ],
+  "Enter ": [
+    "node_modules/mogh_ui/dist/components/create-modal.js:45"
+  ],
+  "Enter command (Optional)": [
+    "src/resources/procedure/config/executions.tsx:878"
+  ],
+  "Enter name": [
+    "node_modules/mogh_ui/dist/components/entity-header.js:64"
+  ],
+  "Entrypoint": [
+    "src/resources/procedure/config/executions.tsx:907"
+  ],
+  "Environment": [
+    "src/resources/deployment/config/index.tsx:230",
+    "src/resources/repo/config.tsx:202",
+    "src/resources/stack/config/index.tsx:249"
+  ],
+  "Error": [
+    "src/resources/sync/pending.tsx:53",
+    "node_modules/mogh_ui/dist/components/hover-error.js:12"
+  ],
+  "ERROR:": [
+    "node_modules/mogh_ui/dist/components/hover-error.js:17"
+  ],
+  "Everyone": [
+    "src/pages/user-group/index.tsx:95",
+    "src/pages/user-group/index.tsx:119"
+  ],
+  "example config": [
+    "node_modules/mogh_ui/dist/auth/login/index.js:236"
+  ],
+  "Execute": [
+    "src/components/docker/batch-executions.tsx:134",
+    "src/resources/batch-executions.tsx:80",
+    "src/resources/sub-page.tsx:95"
+  ],
+  "Execute a shell command after running docker compose up. The 'path' is relative to the Run Directory": [
+    "src/resources/stack/config/index.tsx:500"
+  ],
+  "Execute a shell command before running docker compose up. The 'path' is relative to the Run Directory": [
+    "src/resources/stack/config/index.tsx:482"
+  ],
+  "Execute Change": [
+    "src/resources/sync/pending.tsx:178"
+  ],
+  "Execute Sync": [
+    "src/resources/sync/executions.tsx:90"
+  ],
+  "Executions will delete any resources not found in the resource files. Only use this when using one sync for everything.": [
+    "src/resources/sync/config.tsx:151"
+  ],
+  "Expires": [
+    "src/pages/settings/onboarding/index.tsx:178"
+  ],
+  "Expiry": [
+    "src/components/api-keys/new.tsx:104",
+    "src/pages/settings/onboarding/new.tsx:98"
+  ],
+  "Explicitly specify the folder on the host to clone the repo in.": [
+    "src/resources/repo/config.tsx:188",
+    "src/resources/stack/config/index.tsx:838"
+  ],
+  "Export to Toml": [
+    "src/components/export-toml.tsx:32"
+  ],
+  "Expression": [
+    "src/resources/action/config.tsx:181",
+    "src/resources/procedure/config/index.tsx:221"
+  ],
+  "Extra Args": [
+    "src/resources/build/config.tsx:382",
+    "src/resources/build/config.tsx:387",
+    "src/resources/deployment/config/index.tsx:361",
+    "src/resources/deployment/config/index.tsx:366",
+    "src/resources/stack/config/index.tsx:558",
+    "src/resources/stack/config/index.tsx:563"
+  ],
+  "Extra Env": [
+    "src/resources/procedure/config/executions.tsx:917"
+  ],
+  "Failed": [
+    "src/resources/action/index.tsx:57",
+    "src/resources/build/index.tsx:68",
+    "src/resources/procedure/index.tsx:59",
+    "src/resources/repo/index.tsx:61",
+    "src/resources/sync/index.tsx:64"
+  ],
+  "Failed to create passkey": [
+    "node_modules/mogh_ui/dist/auth/profile/passkey.js:41"
+  ],
+  "Failed to inspect network.": [
+    "src/pages/docker/network.tsx:76"
+  ],
+  "Failed to inspect volume.": [
+    "src/pages/docker/volume.tsx:83"
+  ],
+  "Failed to select passkey": [
+    "node_modules/mogh_ui/dist/auth/index.js:95",
+    "node_modules/mogh_ui/dist/auth/login/index.js:88"
+  ],
+  "file": [
+    "src/resources/sync/pending.tsx:45"
+  ],
+  "file changes.": [
+    "src/resources/sync/pending.tsx:40"
+  ],
+  "file path": [
+    "src/resources/build/info.tsx:134",
+    "src/resources/stack/info.tsx:142"
+  ],
+  "File Paths": [
+    "src/resources/stack/config/index.tsx:754",
+    "src/resources/stack/config/index.tsx:872"
+  ],
+  "File:": [
+    "src/resources/build/info.tsx:132",
+    "src/resources/stack/info.tsx:140",
+    "src/resources/sync/info.tsx:150"
+  ],
+  "Files": [
+    "src/resources/build/config.tsx:454",
+    "src/resources/build/config.tsx:543",
+    "src/resources/stack/config/index.tsx:744",
+    "src/resources/stack/config/index.tsx:858"
+  ],
+  "Files on Server": [
+    "src/components/file-source.tsx:30"
+  ],
+  "Filter": [
+    "src/resources/alerter/config/index.tsx:57"
+  ],
+  "Filter by {0}s": [
+    "src/resources/multi-selector.tsx:52"
+  ],
+  "Folder:": [
+    "src/resources/sync/info.tsx:145"
+  ],
+  "for information on configuring auth.": [
+    "node_modules/mogh_ui/dist/auth/login/index.js:240"
+  ],
+  "Force:": [
+    "src/resources/procedure/config/executions.tsx:1455"
+  ],
+  "Format": [
+    "src/resources/action/config.tsx:163",
+    "src/resources/procedure/config/index.tsx:203"
+  ],
+  "From config file:": [
+    "src/pages/settings/providers/from-config.tsx:34"
+  ],
+  "Full Stack Auto Update": [
+    "src/resources/stack/config/index.tsx:431"
+  ],
+  "General": [
+    "src/resources/builder/config/aws.tsx:34",
+    "src/resources/builder/config/url.tsx:35",
+    "src/resources/sync/config.tsx:145",
+    "src/resources/sync/config.tsx:222",
+    "src/resources/sync/config.tsx:363"
+  ],
+  "GENERAL": [
+    "node_modules/mogh_ui/dist/components/config/index.js:159"
+  ],
+  "Git Accounts": [
+    "src/pages/settings/providers/index.tsx:65"
+  ],
+  "Global Auto Update": [
+    "src/pages/dashboard/active.tsx:191"
+  ],
+  "Go Home": [
+    "src/app/topbar/keyboard-shortcuts.tsx:46"
+  ],
+  "Go To": [
+    "node_modules/mogh_ui/dist/components/config/index.js:191"
+  ],
+  "Go to Builds": [
+    "src/app/topbar/keyboard-shortcuts.tsx:51"
+  ],
+  "Go to Deployments": [
+    "src/app/topbar/keyboard-shortcuts.tsx:50"
+  ],
+  "Go to Procedures": [
+    "src/app/topbar/keyboard-shortcuts.tsx:53"
+  ],
+  "Go to Repos": [
+    "src/app/topbar/keyboard-shortcuts.tsx:52"
+  ],
+  "Go to Schedules": [
+    "src/app/topbar/keyboard-shortcuts.tsx:56"
+  ],
+  "Go to Servers": [
+    "src/app/topbar/keyboard-shortcuts.tsx:48"
+  ],
+  "Go to Stacks": [
+    "src/app/topbar/keyboard-shortcuts.tsx:49"
+  ],
+  "Go to Terminals": [
+    "src/app/topbar/keyboard-shortcuts.tsx:55"
+  ],
+  "Go to Variables": [
+    "src/app/topbar/keyboard-shortcuts.tsx:54"
+  ],
+  "Group Execute - ": [
+    "src/components/docker/batch-executions.tsx:204",
+    "src/resources/batch-executions.tsx:172"
+  ],
+  "group-name": [
+    "src/pages/settings/users/new-group.tsx:25"
+  ],
+  "Groups": [
+    "src/pages/user/member-groups.tsx:28"
+  ],
+  "Healthy": [
+    "src/resources/server/index.tsx:63",
+    "src/resources/swarm/index.tsx:55"
+  ],
+  "Hide": [
+    "node_modules/mogh_ui/dist/components/show-hide-button.js:17"
+  ],
+  "Hide Server Stats": [
+    "src/resources/server/show-stats.tsx:20"
+  ],
+  "Historical": [
+    "src/pages/stats.tsx:338",
+    "src/resources/server/stats/historical.tsx:60"
+  ],
+  "History": [
+    "src/pages/docker/image.tsx:163"
+  ],
+  "Host": [
+    "src/resources/deployment/table.tsx:77",
+    "src/resources/stack/table.tsx:73"
+  ],
+  "Hostname": [
+    "src/resources/swarm/docker/nodes/index.tsx:60"
+  ],
+  "http{0}://": [
+    "src/components/config/provider-selector.tsx:121"
+  ],
+  "ID": [
+    "src/components/swarm/services-section.tsx:73",
+    "src/components/swarm/tasks-section.tsx:79",
+    "src/resources/server/docker/images.tsx:70",
+    "src/resources/swarm/docker/configs.tsx:68",
+    "src/resources/swarm/docker/nodes/index.tsx:74",
+    "src/resources/swarm/docker/secrets.tsx:68"
+  ],
+  "Id:": [
+    "src/pages/docker/image.tsx:108",
+    "src/pages/docker/network.tsx:123"
+  ],
+  "If ": [
+    "src/resources/repo/config.tsx:192",
+    "src/resources/stack/config/index.tsx:842"
+  ],
+  "If multiple servers are configured, builds will be distributed among them.": [
+    "src/resources/builder/config/server.tsx:43"
+  ],
+  "If provided, the associated private key must be set as Periphery 'private_key'. For Periphery -> Core connection, either this or using 'periphery_public_key' in Core config is required for Periphery to be able to connect.": [
+    "src/resources/server/config.tsx:79"
+  ],
+  "If undesired disk mount points are coming through in server stats, filter them out here.": [
+    "src/resources/server/config.tsx:152"
+  ],
+  "If your compose file has init services that exit early, ignore them here so your stack will report the correct health.": [
+    "src/resources/stack/config/index.tsx:619"
+  ],
+  "Ignore Disks": [
+    "src/resources/server/config.tsx:153"
+  ],
+  "Ignore Services": [
+    "src/resources/stack/config/index.tsx:613",
+    "src/resources/stack/config/index.tsx:618"
+  ],
+  "Ignore Services During Auto Update": [
+    "src/resources/stack/config/index.tsx:405"
+  ],
+  "Image": [
+    "src/components/docker/containers-section.tsx:126",
+    "src/pages/containers.tsx:152",
+    "src/resources/deployment/config/index.tsx:140",
+    "src/resources/deployment/table.tsx:65",
+    "src/resources/stack/services.tsx:95",
+    "src/resources/stack/services.tsx:161"
+  ],
+  "image name": [
+    "src/resources/deployment/config/image.tsx:94"
+  ],
+  "Image Registry": [
+    "src/resources/build/config.tsx:228"
+  ],
+  "in use": [
+    "src/resources/server/diskUsage.tsx:60"
+  ],
+  "Include": [
+    "src/resources/sync/config.tsx:167"
+  ],
+  "Info": [
+    "src/resources/stack/index.tsx:342"
+  ],
+  "Ingress": [
+    "src/resources/server/stats/current/network-usage.tsx:15"
+  ],
+  "Initialize File": [
+    "src/resources/build/info.tsx:89",
+    "src/resources/stack/info.tsx:84",
+    "src/resources/sync/info.tsx:91"
+  ],
+  "Input {0}": [
+    "src/pages/settings/providers/new.tsx:97"
+  ],
+  "Input custom network name": [
+    "src/resources/deployment/config/network.tsx:44"
+  ],
+  "Input custom organization name": [
+    "src/components/config/organization-selector.tsx:29"
+  ],
+  "Input custom provider domain": [
+    "src/components/config/provider-selector.tsx:40"
+  ],
+  "Input ID": [
+    "src/resources/builder/config/aws.tsx:75"
+  ],
+  "Input link": [
+    "src/resources/build/config.tsx:312",
+    "src/resources/deployment/config/index.tsx:224",
+    "src/resources/repo/config.tsx:316",
+    "src/resources/stack/config/index.tsx:456",
+    "src/resources/swarm/config.tsx:163"
+  ],
+  "Input resource path": [
+    "src/resources/sync/config.tsx:233",
+    "src/resources/sync/config.tsx:379"
+  ],
+  "Insert Above": [
+    "src/resources/procedure/config/stage.tsx:87"
+  ],
+  "Insert Below": [
+    "src/resources/procedure/config/stage.tsx:98"
+  ],
+  "Inspect": [
+    "src/components/inspect-section.tsx:52"
+  ],
+  "Instance Type": [
+    "src/resources/builder/table.tsx:66"
+  ],
+  "Invalid Pubkey": [
+    "src/resources/server/confirm-pubkey.tsx:46"
+  ],
+  "Invert": [
+    "src/components/log-section.tsx:130"
+  ],
+  "IPAM": [
+    "src/pages/docker/network.tsx:225"
+  ],
+  "IPAM Driver": [
+    "src/resources/server/docker/networks.tsx:110"
+  ],
+  "IPv4": [
+    "src/pages/docker/network.tsx:172"
+  ],
+  "IPv6": [
+    "src/pages/docker/network.tsx:179"
+  ],
+  "IPV6:": [
+    "src/pages/docker/network.tsx:118"
+  ],
+  "It won't be shown again": [
+    "src/pages/settings/onboarding/new.tsx:124"
+  ],
+  "john@example.com": [
+    "src/resources/alerter/config/endpoint.tsx:56"
+  ],
+  "Join": [
+    "src/resources/swarm/index.tsx:123"
+  ],
+  "Join Commands": [
+    "src/resources/swarm/index.tsx:111"
+  ],
+  "key": [
+    "src/resources/swarm/docker/nodes/update.tsx:145"
+  ],
+  "Key": [
+    "src/components/api-keys/new.tsx:135"
+  ],
+  "key=value": [
+    "src/resources/swarm/docker/nodes/update.tsx:138"
+  ],
+  "Keyboard Shortcuts": [
+    "src/app/topbar/keyboard-shortcuts.tsx:40"
+  ],
+  "KOMODO": [
+    "src/app/topbar/index.tsx:68"
+  ],
+  "Labels": [
+    "src/components/docker/labels-section.tsx:33",
+    "src/resources/build/config.tsx:429",
+    "src/resources/deployment/config/index.tsx:347",
+    "src/resources/swarm/docker/nodes/index.tsx:119"
+  ],
+  "Labels to Add. Press enter to add multiple.": [
+    "src/resources/swarm/docker/nodes/update.tsx:137"
+  ],
+  "Labels to Remove": [
+    "src/resources/swarm/docker/nodes/update.tsx:144"
+  ],
+  "Last run:": [
+    "src/resources/action/last-run.tsx:40",
+    "src/resources/action/last-run.tsx:57"
+  ],
+  "latest": [
+    "src/components/hash-compare.tsx:48",
+    "src/components/hash-compare.tsx:65"
+  ],
+  "Latest": [
+    "src/resources/deployment/config/image.tsx:169",
+    "src/resources/deployment/config/image.tsx:186"
+  ],
+  "Level": [
+    "src/components/permissions/base-section.tsx:124",
+    "src/components/permissions/specific-section.tsx:95"
+  ],
+  "Level:": [
+    "src/components/user/header.tsx:28"
+  ],
+  "Link ": [
+    "node_modules/mogh_ui/dist/auth/profile/linked-logins.js:135"
+  ],
+  "Linked": [
+    "node_modules/mogh_ui/dist/auth/profile/linked-logins.js:91"
+  ],
+  "Links": [
+    "src/resources/build/config.tsx:300",
+    "src/resources/build/config.tsx:305",
+    "src/resources/deployment/config/index.tsx:218",
+    "src/resources/repo/config.tsx:304",
+    "src/resources/repo/config.tsx:309",
+    "src/resources/stack/config/index.tsx:444",
+    "src/resources/stack/config/index.tsx:449",
+    "src/resources/swarm/config.tsx:151",
+    "src/resources/swarm/config.tsx:156"
+  ],
+  "Listen on branch?": [
+    "src/resources/action/config.tsx:258",
+    "src/resources/procedure/config/index.tsx:276"
+  ],
+  "Load Average": [
+    "src/resources/server/stats/current/load-average.tsx:38"
+  ],
+  "Load Average (1m)": [
+    "src/pages/stats.tsx:447"
+  ],
+  "Load Avg": [
+    "src/resources/server/table/stats.tsx:114"
+  ],
+  "Local": [
+    "src/components/config/image-registry-config.tsx:45"
+  ],
+  "Log In": [
+    "node_modules/mogh_ui/dist/auth/login/header.js:24",
+    "node_modules/mogh_ui/dist/auth/login/index.js:181",
+    "node_modules/mogh_ui/dist/auth/login/index.js:218"
+  ],
+  "Log Out": [
+    "src/pages/user-disabled.tsx:22"
+  ],
+  "Log Out All": [
+    "src/app/topbar/user-dropdown.tsx:140"
+  ],
+  "Login": [
+    "src/pages/profile.tsx:73"
+  ],
+  "Login request {0} failed": [
+    "node_modules/mogh_ui/dist/auth/index.js:37"
+  ],
+  "Login to a registry for private image access.": [
+    "src/resources/stack/config/index.tsx:643"
+  ],
+  "Logs are not available": [
+    "src/components/log-section.tsx:38"
+  ],
+  "Mac": [
+    "src/pages/docker/network.tsx:186"
+  ],
+  "Maintenance": [
+    "src/resources/alerter/config/index.tsx:86",
+    "src/resources/server/config.tsx:267",
+    "src/resources/swarm/config.tsx:128"
+  ],
+  "Make Admin": [
+    "src/pages/user/index.tsx:101"
+  ],
+  "Manage auth request {0} failed": [
+    "node_modules/mogh_ui/dist/auth/index.js:66"
+  ],
+  "Manage terminals across all servers.": [
+    "src/pages/terminals/index.tsx:65"
+  ],
+  "Managed": [
+    "src/resources/sync/config.tsx:159"
+  ],
+  "Manager": [
+    "src/resources/swarm/docker/nodes/update.tsx:111"
+  ],
+  "Manager Nodes": [
+    "src/resources/swarm/config.tsx:51"
+  ],
+  "Managers": [
+    "src/resources/swarm/config.tsx:45"
+  ],
+  "match": [
+    "src/resources/server/version.tsx:46"
+  ],
+  "Match actions": [
+    "src/resources/procedure/config/executions.tsx:143"
+  ],
+  "Match builds": [
+    "src/resources/procedure/config/executions.tsx:182"
+  ],
+  "Match deployments": [
+    "src/resources/procedure/config/executions.tsx:234",
+    "src/resources/procedure/config/executions.tsx:338"
+  ],
+  "Match procedures": [
+    "src/resources/procedure/config/executions.tsx:92"
+  ],
+  "Match repos": [
+    "src/resources/procedure/config/executions.tsx:1016",
+    "src/resources/procedure/config/executions.tsx:1054",
+    "src/resources/procedure/config/executions.tsx:1092"
+  ],
+  "Match stacks": [
+    "src/resources/procedure/config/executions.tsx:398",
+    "src/resources/procedure/config/executions.tsx:436",
+    "src/resources/procedure/config/executions.tsx:495",
+    "src/resources/procedure/config/executions.tsx:714"
+  ],
+  "Match Tags": [
+    "src/resources/procedure/config/executions.tsx:105",
+    "src/resources/procedure/config/executions.tsx:156",
+    "src/resources/procedure/config/executions.tsx:195",
+    "src/resources/procedure/config/executions.tsx:247",
+    "src/resources/procedure/config/executions.tsx:351",
+    "src/resources/procedure/config/executions.tsx:411",
+    "src/resources/procedure/config/executions.tsx:449",
+    "src/resources/procedure/config/executions.tsx:508",
+    "src/resources/procedure/config/executions.tsx:727",
+    "src/resources/procedure/config/executions.tsx:1029",
+    "src/resources/procedure/config/executions.tsx:1067",
+    "src/resources/procedure/config/executions.tsx:1105",
+    "src/resources/sync/config.tsx:186"
+  ],
+  "MCP Manager": [
+    "src/app/topbar/index.tsx:85"
+  ],
+  "Memory": [
+    "src/resources/server/config.tsx:228",
+    "src/resources/server/stats-card.tsx:108",
+    "src/resources/server/stats/containers.tsx:81",
+    "src/resources/server/stats/processes.tsx:74",
+    "src/resources/server/table/stats.tsx:88"
+  ],
+  "Memory Critical": [
+    "src/resources/server/config.tsx:242"
+  ],
+  "Memory Usage": [
+    "src/pages/stats.tsx:261"
+  ],
+  "Memory Warning": [
+    "src/resources/server/config.tsx:237"
+  ],
+  "message": [
+    "src/components/hash-compare.tsx:55"
+  ],
+  "mismatch": [
+    "src/resources/server/version.tsx:42"
+  ],
+  "Missing :service in URL": [
+    "src/pages/terminal.tsx:56"
+  ],
+  "Missing external address": [
+    "src/components/docker/container-ports.tsx:145"
+  ],
+  "Mode": [
+    "src/pages/terminals/new.tsx:156"
+  ],
+  "Monitoring": [
+    "src/resources/server/config.tsx:164"
+  ],
+  "Mount:": [
+    "src/resources/server/diskUsage.tsx:52"
+  ],
+  "Move Down": [
+    "src/resources/procedure/config/stage.tsx:72"
+  ],
+  "Move Up": [
+    "src/resources/procedure/config/stage.tsx:64"
+  ],
+  "Must configure Branch before webhooks will work.": [
+    "src/resources/build/config.tsx:579",
+    "src/resources/repo/config.tsx:265",
+    "src/resources/stack/config/index.tsx:903",
+    "src/resources/sync/config.tsx:328"
+  ],
+  "N/A": [
+    "src/resources/deployment/index.tsx:198",
+    "src/resources/server/index.tsx:209",
+    "src/resources/server/index.tsx:236",
+    "src/resources/server/index.tsx:260",
+    "src/resources/server/index.tsx:288",
+    "src/resources/server/stats-card.tsx:189",
+    "src/resources/server/stats/current/load-average.tsx:48",
+    "src/resources/server/table/stats.tsx:210",
+    "src/resources/server/table/stats.tsx:218",
+    "src/resources/server/table/stats.tsx:226",
+    "src/resources/server/table/stats.tsx:243",
+    "node_modules/mogh_ui/dist/components/stat-cell.js:38"
+  ],
+  "Name": [
+    "src/components/api-keys/new.tsx:94",
+    "src/components/docker/containers-section.tsx:98",
+    "src/components/maintenance-windows.tsx:78",
+    "src/components/maintenance-windows.tsx:301",
+    "src/components/swarm/services-section.tsx:59",
+    "src/pages/containers.tsx:100",
+    "src/pages/dashboard/active.tsx:222",
+    "src/pages/docker/network.tsx:156",
+    "src/pages/settings/onboarding/index.tsx:44",
+    "src/pages/settings/onboarding/new.tsx:78",
+    "src/pages/settings/variables/index.tsx:71",
+    "src/pages/terminals/index.tsx:109",
+    "src/resources/action/table.tsx:44",
+    "src/resources/alerter/table.tsx:49",
+    "src/resources/build/table.tsx:50",
+    "src/resources/builder/table.tsx:49",
+    "src/resources/deployment/table.tsx:52",
+    "src/resources/procedure/table.tsx:50",
+    "src/resources/repo/table.tsx:49",
+    "src/resources/server/docker/images.tsx:53",
+    "src/resources/server/docker/networks.tsx:68",
+    "src/resources/server/docker/volumes.tsx:53",
+    "src/resources/server/stats/containers.tsx:62",
+    "src/resources/server/table/standard.tsx:59",
+    "src/resources/server/table/stats.tsx:58",
+    "src/resources/stack/table.tsx:50",
+    "src/resources/swarm/docker/configs.tsx:47",
+    "src/resources/swarm/docker/secrets.tsx:47",
+    "src/resources/swarm/docker/stacks.tsx:42",
+    "src/resources/swarm/new/config.tsx:33",
+    "src/resources/swarm/new/secret.tsx:33",
+    "src/resources/swarm/table.tsx:48",
+    "src/resources/sync/table.tsx:48"
+  ],
+  "Net": [
+    "src/resources/server/table/stats.tsx:127"
+  ],
+  "Net I/O": [
+    "src/resources/server/stats/containers.tsx:95"
+  ],
+  "Network": [
+    "src/resources/builder/config/aws.tsx:61",
+    "src/resources/deployment/config/index.tsx:189"
+  ],
+  "Network Mode": [
+    "src/resources/deployment/config/network.tsx:39"
+  ],
+  "Network Usage": [
+    "src/resources/server/stats/current/network-usage.tsx:12"
+  ],
+  "Networks": [
+    "src/components/docker/containers-section.tsx:140",
+    "src/pages/containers.tsx:167",
+    "src/resources/stack/services.tsx:177"
+  ],
+  "Never": [
+    "src/components/api-keys/table.tsx:57",
+    "src/pages/settings/onboarding/index.tsx:192",
+    "src/resources/sync/index.tsx:138"
+  ],
+  "Never run": [
+    "src/resources/action/last-run.tsx:25",
+    "src/resources/action/last-run.tsx:34"
+  ],
+  "New": [
+    "src/app/topbar/keyboard-shortcuts.tsx:45",
+    "src/components/terminal/new.tsx:108",
+    "src/components/terminal/section.tsx:153"
+  ],
+  "New ": [
+    "node_modules/mogh_ui/dist/components/create-modal.js:72"
+  ],
+  "New {0}": [
+    "node_modules/mogh_ui/dist/components/create-modal.js:39"
+  ],
+  "New Account": [
+    "src/pages/settings/providers/new.tsx:118"
+  ],
+  "New API Key": [
+    "src/components/api-keys/new.tsx:160"
+  ],
+  "New Onboarding Key": [
+    "src/pages/settings/onboarding/new.tsx:141"
+  ],
+  "New Terminal": [
+    "src/pages/terminals/new.tsx:34"
+  ],
+  "Next Run": [
+    "src/pages/schedules.tsx:126",
+    "src/resources/action/table.tsx:62",
+    "src/resources/procedure/table.tsx:68"
+  ],
+  "Next Run:": [
+    "src/resources/action/index.tsx:113",
+    "src/resources/procedure/index.tsx:117"
+  ],
+  "No branch check": [
+    "src/resources/action/config.tsx:266",
+    "src/resources/procedure/config/index.tsx:284"
+  ],
+  "No configuration provided for stack. Cannot get stack state. Either paste the compose file contents into the UI, or configure a git repo containing your files.": [
+    "src/resources/stack/index.tsx:282"
+  ],
+  "No Dependencies": [
+    "src/resources/procedure/config/executions.tsx:946"
+  ],
+  "No log.": [
+    "src/components/log-viewer.tsx:111"
+  ],
+  "No login methods have been configured. ": [
+    "node_modules/mogh_ui/dist/auth/login/index.js:225"
+  ],
+  "No network found with given name: ": [
+    "src/pages/docker/network.tsx:84"
+  ],
+  "No resources found.": [
+    "src/pages/dashboard/no-resources.tsx:12"
+  ],
+  "No results": [
+    "node_modules/mogh_ui/dist/components/data-table.js:64"
+  ],
+  "No results.": [
+    "src/components/docker/container-selector.tsx:140",
+    "src/components/stack-service-selector.tsx:167",
+    "src/components/tags/selector.tsx:136",
+    "src/pages/settings/tags/color-selector.tsx:85",
+    "src/pages/user-group/add-user.tsx:80",
+    "src/pages/user/add-group.tsx:82",
+    "src/resources/procedure/config/execution-selector.tsx:74",
+    "src/resources/selector.tsx:183"
+  ],
+  "No Servers found.": [
+    "src/pages/stats.tsx:137"
+  ],
+  "No Terminals": [
+    "src/components/terminal/section.tsx:150"
+  ],
+  "No TTY": [
+    "src/resources/procedure/config/executions.tsx:936"
+  ],
+  "No Updates": [
+    "src/components/updates/list.tsx:36"
+  ],
+  "No volume found with given name: ": [
+    "src/pages/docker/volume.tsx:91"
+  ],
+  "Node": [
+    "src/components/swarm/tasks-section.tsx:93"
+  ],
+  "None": [
+    "src/resources/build/config.tsx:519",
+    "src/resources/procedure/config/execution-selector.tsx:67",
+    "src/resources/repo/config.tsx:159",
+    "src/resources/stack/config/index.tsx:666",
+    "src/resources/stack/config/index.tsx:814",
+    "src/resources/swarm/docker/secrets.tsx:79",
+    "src/resources/swarm/docker/secrets.tsx:89",
+    "src/resources/sync/config.tsx:288",
+    "node_modules/mogh_ui/dist/components/config/confirm.js:154",
+    "node_modules/mogh_ui/dist/components/config/confirm.js:158"
+  ],
+  "Not Deployed": [
+    "src/resources/deployment/index.tsx:84"
+  ],
+  "Not Scheduled": [
+    "src/resources/action/index.tsx:118",
+    "src/resources/procedure/index.tsx:122"
+  ],
+  "Note: the content cannot be viewed again after creation, but can be rotated.": [
+    "src/resources/swarm/new/secret.tsx:50"
+  ],
+  "Note. May take a few moments for status to update.": [
+    "src/resources/server/confirm-pubkey.tsx:40"
+  ],
+  "Nothing found...": [
+    "src/app/topbar/omni-search/index.tsx:87"
+  ],
+  "Notifications": [
+    "src/app/sidebar.tsx:66"
+  ],
+  "of": [
+    "src/resources/server/diskUsage.tsx:59"
+  ],
+  "Ok": [
+    "src/resources/action/index.tsx:50",
+    "src/resources/build/index.tsx:61",
+    "src/resources/procedure/index.tsx:52",
+    "src/resources/repo/index.tsx:52",
+    "src/resources/sync/index.tsx:52"
+  ],
+  "On Clone": [
+    "src/resources/repo/config.tsx:228"
+  ],
+  "On Pull": [
+    "src/resources/repo/config.tsx:242"
+  ],
+  "Onboarding Key Created": [
+    "src/pages/settings/onboarding/new.tsx:69"
+  ],
+  "ongoing": [
+    "src/components/alerts/details.tsx:131",
+    "src/components/updates/details.tsx:134"
+  ],
+  "Only Open": [
+    "src/pages/alerts.tsx:137"
+  ],
+  "Only send alerts of certain types.": [
+    "src/resources/alerter/config/alert-types.tsx:47"
+  ],
+  "Open menu": [
+    "src/resources/procedure/config/stage.tsx:55"
+  ],
+  "Optional": [
+    "src/components/api-keys/new.tsx:98",
+    "src/pages/settings/onboarding/new.tsx:82",
+    "src/pages/settings/onboarding/new.tsx:92"
+  ],
+  "Options": [
+    "src/resources/procedure/config/executions.tsx:927"
+  ],
+  "OR": [
+    "src/resources/new-with-deploy-target.tsx:54"
+  ],
+  "Organization": [
+    "src/components/config/organization-selector.tsx:28",
+    "src/components/config/organization-selector.tsx:55"
+  ],
+  "Output of '": [
+    "src/resources/stack/info.tsx:206"
+  ],
+  "Pass extra arguments to '": [
+    "src/resources/deployment/config/index.tsx:369"
+  ],
+  "Pass extra arguments to 'docker build'.": [
+    "src/resources/build/config.tsx:390"
+  ],
+  "Pass extra arguments to docker '": [
+    "src/resources/stack/config/index.tsx:566"
+  ],
+  "Pass secrets to 'docker build'. These values remain hidden in the final image by using docker secret mounts.": [
+    "src/resources/build/config.tsx:356"
+  ],
+  "password": [
+    "src/pages/settings/users/new-local-user.tsx:37"
+  ],
+  "Password": [
+    "src/pages/settings/users/new-local-user.tsx:36",
+    "node_modules/mogh_ui/dist/auth/login/index.js:155"
+  ],
+  "Password:": [
+    "src/pages/profile.tsx:99"
+  ],
+  "Path": [
+    "src/components/config/system-command.tsx:22",
+    "src/resources/repo/config.tsx:180"
+  ],
+  "Path:": [
+    "src/resources/build/info.tsx:73",
+    "src/resources/stack/info.tsx:67",
+    "src/resources/sync/info.tsx:73"
+  ],
+  "Pause": [
+    "src/pages/docker/container/executions.tsx:176",
+    "src/resources/deployment/executions.tsx:374",
+    "src/resources/stack/executions.tsx:363",
+    "src/resources/swarm/docker/nodes/update.tsx:128"
+  ],
+  "Pause Containers": [
+    "src/resources/server/index.tsx:395"
+  ],
+  "Pending": [
+    "src/resources/sync/index.tsx:59"
+  ],
+  "Pending Alerts": [
+    "src/resources/sync/config.tsx:207"
+  ],
+  "Pending Update": [
+    "src/resources/table.tsx:164"
+  ],
+  "Per Resource Permissions": [
+    "src/components/permissions/specific-section.tsx:141"
+  ],
+  "Percentage": [
+    "src/resources/server/stats/disks.tsx:82"
+  ],
+  "Periphery and Core version ": [
+    "src/resources/server/version.tsx:45"
+  ],
+  "Periphery Public Key": [
+    "src/resources/builder/config/aws.tsx:111",
+    "src/resources/builder/config/url.tsx:49",
+    "src/resources/server/config.tsx:78"
+  ],
+  "Periphery version ": [
+    "src/resources/server/version.tsx:41"
+  ],
+  "Periphery version is ": [
+    "src/resources/server/version.tsx:37"
+  ],
+  "PIDs": [
+    "src/resources/server/stats/containers.tsx:107"
+  ],
+  "Please enter ": [
+    "src/components/docker/batch-executions.tsx:222",
+    "src/resources/batch-executions.tsx:192",
+    "node_modules/mogh_ui/dist/components/confirm-modal.js:72"
+  ],
+  "Poll": [
+    "src/components/log-section.tsx:186"
+  ],
+  "Poll for Updates": [
+    "src/resources/deployment/config/index.tsx:284",
+    "src/resources/stack/config/index.tsx:394"
+  ],
+  "Ports": [
+    "src/components/docker/containers-section.tsx:184",
+    "src/pages/containers.tsx:212",
+    "src/resources/deployment/config/index.tsx:205",
+    "src/resources/stack/services.tsx:210"
+  ],
+  "Post Deploy": [
+    "src/resources/stack/config/index.tsx:494",
+    "src/resources/stack/config/index.tsx:499"
+  ],
+  "Pre Build": [
+    "src/resources/build/config.tsx:321"
+  ],
+  "Pre Build Images": [
+    "src/resources/stack/config/index.tsx:684"
+  ],
+  "Pre Deploy": [
+    "src/resources/stack/config/index.tsx:476",
+    "src/resources/stack/config/index.tsx:481"
+  ],
+  "Pre Pull Images": [
+    "src/resources/stack/config/index.tsx:671"
+  ],
+  "Pre-Existing Key": [
+    "src/pages/settings/onboarding/new.tsx:88"
+  ],
+  "private key": [
+    "src/pages/settings/onboarding/new.tsx:129"
+  ],
+  "Privileged": [
+    "src/pages/settings/onboarding/index.tsx:125"
+  ],
+  "Processes": [
+    "src/resources/server/stats/processes.tsx:29"
+  ],
+  "Profile": [
+    "src/app/topbar/user-dropdown.tsx:125"
+  ],
+  "Project Missing": [
+    "src/resources/stack/index.tsx:310"
+  ],
+  "Project Name": [
+    "src/resources/stack/config/index.tsx:465"
+  ],
+  "Provide your passkey to finish login...": [
+    "node_modules/mogh_ui/dist/auth/login/index.js:193"
+  ],
+  "Provider": [
+    "src/resources/builder/table.tsx:59"
+  ],
+  "Providers": [
+    "node_modules/mogh_ui/dist/auth/profile/linked-logins.js:69"
+  ],
+  "Prune {0}": [
+    "src/resources/server/executions.tsx:67",
+    "src/resources/server/executions.tsx:79"
+  ],
+  "Pruning": [
+    "src/resources/server/config.tsx:175"
+  ],
+  "Public IP (click to copy)": [
+    "src/resources/server/index.tsx:188"
+  ],
+  "public key": [
+    "src/pages/settings/core-info.tsx:43"
+  ],
+  "Public Key:": [
+    "src/pages/settings/core-info.tsx:38",
+    "src/resources/server/confirm-pubkey.tsx:35"
+  ],
+  "Pull": [
+    "src/resources/repo/executions.tsx:74"
+  ],
+  "Pull Image": [
+    "src/resources/deployment/executions.tsx:177",
+    "src/resources/procedure/config/executions.tsx:976"
+  ],
+  "Pull Image{0}": [
+    "src/resources/stack/executions.tsx:168"
+  ],
+  "Pull Images": [
+    "src/resources/stack/config/index.tsx:637"
+  ],
+  "Pulling": [
+    "src/resources/repo/index.tsx:56"
+  ],
+  "Pushes to:": [
+    "src/components/config/image-registry-config.tsx:41"
+  ],
+  "RAM Usage": [
+    "src/resources/server/stats/current/ram.tsx:26"
+  ],
+  "Recently Viewed": [
+    "src/pages/dashboard/recents.tsx:82"
+  ],
+  "Reclone": [
+    "src/resources/repo/executions.tsx:47"
+  ],
+  "Reconnect": [
+    "src/components/terminal/section.tsx:117"
+  ],
+  "Redeploy": [
+    "src/resources/deployment/executions.tsx:80",
+    "src/resources/deployment/update-available.tsx:109",
+    "src/resources/stack/update-available.tsx:114"
+  ],
+  "Refresh": [
+    "src/resources/batch-executions.tsx:90",
+    "src/resources/sync/executions.tsx:39"
+  ],
+  "Region": [
+    "src/resources/server/table/standard.tsx:93"
+  ],
+  "Registry": [
+    "src/resources/build/config.tsx:223"
+  ],
+  "Registry Accounts": [
+    "src/pages/settings/providers/index.tsx:65"
+  ],
+  "relative": [
+    "src/resources/stack/config/index.tsx:843"
+  ],
+  "relative path": [
+    "src/resources/repo/config.tsx:193"
+  ],
+  "relative to the root of the repo.": [
+    "src/resources/build/config.tsx:549",
+    "src/resources/stack/config/index.tsx:865",
+    "src/resources/sync/config.tsx:372"
+  ],
+  "Reload": [
+    "src/resources/action/config.tsx:238"
+  ],
+  "Reload Dependencies": [
+    "src/resources/action/config.tsx:242"
+  ],
+  "Remote Error": [
+    "src/resources/stack/index.tsx:335"
+  ],
+  "Remove": [
+    "src/components/swarm/remove.tsx:45",
+    "src/components/user/table.tsx:71",
+    "src/resources/procedure/config/stage.tsx:107"
+  ],
+  "Rename": [
+    "node_modules/mogh_ui/dist/components/entity-header.js:58"
+  ],
+  "Replace the CMD, or extend the ENTRYPOINT.": [
+    "src/resources/deployment/config/index.tsx:322"
+  ],
+  "Replicas": [
+    "src/resources/stack/services.tsx:105"
+  ],
+  "Repo": [
+    "src/resources/repo/table.tsx:57"
+  ],
+  "Repo:": [
+    "src/components/config/linked-repo.tsx:33"
+  ],
+  "Repos": [
+    "src/resources/server/resources.tsx:32"
+  ],
+  "Request Ntfy to send an email to this address. SMTP must be configured on the Ntfy instance. Only one email address per alerter is supported.": [
+    "src/resources/alerter/config/endpoint.tsx:55"
+  ],
+  "Reset": [
+    "src/pages/swarm/config/edit.tsx:76",
+    "src/pages/swarm/secret/edit.tsx:75",
+    "src/resources/build/info.tsx:150",
+    "src/resources/stack/info.tsx:157",
+    "src/resources/sync/info.tsx:167",
+    "node_modules/mogh_ui/dist/components/config/index.js:114"
+  ],
+  "Resource": [
+    "src/components/permissions/specific-section.tsx:57",
+    "src/pages/dashboard/active.tsx:237",
+    "src/resources/alerter/config/resources.tsx:135"
+  ],
+  "Resource {0}": [
+    "src/resources/alerter/config/resources.tsx:107"
+  ],
+  "Resource File": [
+    "src/resources/sync/config.tsx:395"
+  ],
+  "Resource Id or Name?": [
+    "src/components/webhook/builder.tsx:37"
+  ],
+  "Resource Paths": [
+    "src/resources/sync/config.tsx:226",
+    "src/resources/sync/config.tsx:367"
+  ],
+  "Resource Type": [
+    "src/components/permissions/base-section.tsx:106"
+  ],
+  "Resources": [
+    "src/app/sidebar.tsx:44",
+    "src/resources/server/table/standard.tsx:83"
+  ],
+  "Restart": [
+    "src/pages/docker/container/executions.tsx:78",
+    "src/resources/deployment/config/index.tsx:264",
+    "src/resources/deployment/executions.tsx:211",
+    "src/resources/stack/executions.tsx:217"
+  ],
+  "Restart Containers": [
+    "src/resources/server/index.tsx:361"
+  ],
+  "Restart Mode": [
+    "src/resources/deployment/config/restart.tsx:19"
+  ],
+  "Role": [
+    "src/resources/swarm/docker/nodes/index.tsx:81",
+    "src/resources/swarm/docker/nodes/update.tsx:102"
+  ],
+  "Rotate": [
+    "src/resources/server/config.tsx:106"
+  ],
+  "Run Action": [
+    "src/resources/action/executions.tsx:69"
+  ],
+  "Run Directory": [
+    "src/resources/stack/config/index.tsx:748"
+  ],
+  "Run on Startup": [
+    "src/resources/action/config.tsx:231"
+  ],
+  "Run Procedure": [
+    "src/resources/procedure/executions.tsx:71"
+  ],
+  "Run Stack Service": [
+    "src/resources/procedure/config/executions.tsx:845"
+  ],
+  "Running": [
+    "src/resources/action/index.tsx:52",
+    "src/resources/deployment/index.tsx:88",
+    "src/resources/procedure/index.tsx:54",
+    "src/resources/stack/index.tsx:89"
+  ],
+  "Runtime": [
+    "src/resources/stack/services.tsx:89"
+  ],
+  "s": [
+    "src/components/config/secret-selector.tsx:58",
+    "src/components/dashboard-summary/index.tsx:66",
+    "src/resources/server/table/stats.tsx:231",
+    "src/resources/stack/index.tsx:207",
+    "src/resources/stack/update-available.tsx:93",
+    "src/resources/stack/update-available.tsx:137",
+    "src/resources/swarm/docker/nodes/update.tsx:185",
+    "src/resources/sync/pending.tsx:91"
+  ],
+  "Same as Build": [
+    "src/resources/deployment/config/index.tsx:172"
+  ],
+  "Save": [
+    "src/app/topbar/keyboard-shortcuts.tsx:44",
+    "src/resources/server/config.tsx:97",
+    "node_modules/mogh_ui/dist/components/config/confirm.js:93",
+    "node_modules/mogh_ui/dist/components/config/confirm.js:112"
+  ],
+  "Save recovery keys": [
+    "node_modules/mogh_ui/dist/auth/profile/totp.js:58"
+  ],
+  "Scan this QR code with your authenticator app, and enter the 6 digit code below.": [
+    "node_modules/mogh_ui/dist/auth/profile/totp.js:63"
+  ],
+  "Schedule": [
+    "src/components/maintenance-windows.tsx:95",
+    "src/pages/schedules.tsx:119",
+    "src/resources/action/config.tsx:143",
+    "src/resources/procedure/config/index.tsx:183"
+  ],
+  "Schedule Error": [
+    "src/resources/action/index.tsx:134",
+    "src/resources/procedure/index.tsx:138"
+  ],
+  "Schedule Type": [
+    "src/components/maintenance-windows.tsx:310"
+  ],
+  "Schedules": [
+    "src/app/sidebar.tsx:89",
+    "src/app/topbar/omni-search/hooks.tsx:165",
+    "src/pages/schedules.tsx:70"
+  ],
+  "Scope": [
+    "src/resources/server/docker/networks.tsx:98",
+    "src/resources/server/docker/volumes.tsx:75"
+  ],
+  "Scope:": [
+    "src/pages/docker/volume.tsx:112"
+  ],
+  "Scroll to bottom": [
+    "src/components/log-viewer.tsx:115"
+  ],
+  "Search": [
+    "src/app/topbar/keyboard-shortcuts.tsx:58",
+    "src/app/topbar/omni-search/index.tsx:42",
+    "src/components/config/add-extra-arg.tsx:63",
+    "src/components/config/secret-selector.tsx:67",
+    "src/components/docker/container-selector.tsx:125",
+    "src/components/stack-service-selector.tsx:144",
+    "src/components/tags/selector.tsx:116",
+    "src/pages/settings/tags/color-selector.tsx:68",
+    "src/resources/deployment/config/image.tsx:178",
+    "src/resources/procedure/config/execution-selector.tsx:64"
+  ],
+  "Search / Create": [
+    "src/resources/tags.tsx:147"
+  ],
+  "Search Logs": [
+    "src/components/log-section.tsx:148"
+  ],
+  "search...": [
+    "src/app/topbar/omni-search/index.tsx:58",
+    "src/pages/user-group/add-user.tsx:71",
+    "src/pages/user/add-group.tsx:70",
+    "src/resources/selector.tsx:166",
+    "node_modules/mogh_ui/dist/components/search-input.js:12"
+  ],
+  "seconds": [
+    "src/resources/deployment/config/termination.tsx:68"
+  ],
+  "Secret": [
+    "src/components/api-keys/new.tsx:144"
+  ],
+  "Secret Args": [
+    "src/resources/build/config.tsx:353"
+  ],
+  "Security Group IDs": [
+    "src/resources/builder/config/aws.tsx:69"
+  ],
+  "See an overview of your scheduled Actions and Procedures.": [
+    "src/pages/schedules.tsx:71"
+  ],
+  "See containers across all servers.": [
+    "src/pages/containers.tsx:249"
+  ],
+  "See docker docs.": [
+    "src/resources/build/config.tsx:364",
+    "src/resources/build/config.tsx:397",
+    "src/resources/deployment/config/index.tsx:330",
+    "src/resources/deployment/config/index.tsx:382",
+    "src/resources/stack/config/index.tsx:581"
+  ],
+  "See the": [
+    "node_modules/mogh_ui/dist/auth/login/index.js:227"
+  ],
+  "Select {0}": [
+    "src/resources/selector.tsx:155"
+  ],
+  "Select {0} domain": [
+    "src/components/config/provider-selector.tsx:111"
+  ],
+  "Select account": [
+    "src/components/config/account-selector.tsx:67"
+  ],
+  "Select alert type": [
+    "src/pages/alerts.tsx:117"
+  ],
+  "Select an alternate account used to log in to the provider": [
+    "src/resources/deployment/config/index.tsx:176"
+  ],
+  "Select an existing Repo to attach{0}.": [
+    "src/components/config/linked-repo.tsx:46"
+  ],
+  "Select availability": [
+    "src/resources/swarm/docker/nodes/update.tsx:124"
+  ],
+  "Select Builder": [
+    "src/resources/build/config.tsx:148",
+    "src/resources/repo/config.tsx:117"
+  ],
+  "Select Command": [
+    "src/components/terminal/new.tsx:118"
+  ],
+  "Select commands": [
+    "src/resources/stack/config/index.tsx:541"
+  ],
+  "Select container": [
+    "src/components/docker/container-selector.tsx:115"
+  ],
+  "Select format": [
+    "src/resources/action/config.tsx:106"
+  ],
+  "Select Mode": [
+    "src/resources/deployment/config/restart.tsx:28"
+  ],
+  "Select operation": [
+    "src/pages/updates.tsx:98"
+  ],
+  "Select Organization": [
+    "src/components/config/organization-selector.tsx:54"
+  ],
+  "Select Provider": [
+    "src/components/config/provider-selector.tsx:72"
+  ],
+  "Select Repo": [
+    "src/components/config/linked-repo.tsx:43"
+  ],
+  "Select resource type": [
+    "src/components/resource-type-selector.tsx:19"
+  ],
+  "Select role": [
+    "src/resources/swarm/docker/nodes/update.tsx:107"
+  ],
+  "Select row": [
+    "node_modules/mogh_ui/dist/components/data-table.js:197"
+  ],
+  "Select Server": [
+    "src/resources/deployment/config/index.tsx:119",
+    "src/resources/repo/config.tsx:81",
+    "src/resources/stack/config/index.tsx:205"
+  ],
+  "Select Servers": [
+    "src/resources/builder/config/server.tsx:42"
+  ],
+  "Select service": [
+    "src/components/stack-service-selector.tsx:133",
+    "src/pages/swarm/stack/logs.tsx:27"
+  ],
+  "Select Service": [
+    "src/components/terminal/new.tsx:118"
+  ],
+  "Select services": [
+    "src/resources/stack/config/index.tsx:411",
+    "src/resources/stack/config/index.tsx:623"
+  ],
+  "Select signal": [
+    "src/resources/deployment/config/termination.tsx:24"
+  ],
+  "Select specific IANA timezone for schedule expression.": [
+    "src/resources/action/config.tsx:209",
+    "src/resources/procedure/config/index.tsx:249"
+  ],
+  "Select Swarm": [
+    "src/resources/deployment/config/index.tsx:82",
+    "src/resources/stack/config/index.tsx:168"
+  ],
+  "Select Tags": [
+    "src/pages/settings/onboarding/index.tsx:85"
+  ],
+  "Select Template": [
+    "src/resources/new.tsx:119"
+  ],
+  "Select the account used to log in to the provider": [
+    "src/components/config/account-selector.tsx:81"
+  ],
+  "Select the Builder to build with.": [
+    "src/resources/build/config.tsx:151"
+  ],
+  "Select the Builder to build with. Optional.": [
+    "src/resources/repo/config.tsx:120"
+  ],
+  "Select the Server to clone on. Optional.": [
+    "src/resources/repo/config.tsx:84"
+  ],
+  "Select the Server to deploy on.": [
+    "src/resources/deployment/config/index.tsx:122",
+    "src/resources/stack/config/index.tsx:208"
+  ],
+  "Select the Servers which have joined the Swarm as Manager Nodes.": [
+    "src/resources/swarm/config.tsx:52"
+  ],
+  "Select the Swarm to deploy on.": [
+    "src/resources/deployment/config/index.tsx:85",
+    "src/resources/stack/config/index.tsx:171"
+  ],
+  "Select which docker {0} subcommands to wrap.": [
+    "src/resources/stack/config/index.tsx:537"
+  ],
+  "Send CPU Alerts": [
+    "src/resources/server/config.tsx:213"
+  ],
+  "Send Memory Alerts": [
+    "src/resources/server/config.tsx:232"
+  ],
+  "Send Version Mismatch Alerts": [
+    "src/resources/server/config.tsx:202"
+  ],
+  "Server": [
+    "src/pages/containers.tsx:126",
+    "src/pages/terminals/new.tsx:269",
+    "src/pages/terminals/new.tsx:336",
+    "src/resources/builder/config/server.tsx:36",
+    "src/resources/deployment/config/index.tsx:100",
+    "src/resources/repo/config.tsx:63",
+    "src/resources/stack/config/index.tsx:186"
+  ],
+  "Server Onboarding Keys": [
+    "src/pages/settings/onboarding/index.tsx:209"
+  ],
+  "Server unreachable": [
+    "src/resources/server/docker/index.tsx:47"
+  ],
+  "Server version is ": [
+    "src/resources/server/version.tsx:33"
+  ],
+  "Server:": [
+    "src/resources/deployment/config/index.tsx:109",
+    "src/resources/repo/config.tsx:71",
+    "src/resources/stack/config/index.tsx:195"
+  ],
+  "Servers": [
+    "src/pages/stats.tsx:145",
+    "src/pages/stats.tsx:225"
+  ],
+  "Service": [
+    "src/components/swarm/tasks-section.tsx:107",
+    "src/pages/terminals/new.tsx:433",
+    "src/resources/procedure/config/executions.tsx:863",
+    "src/resources/stack/services.tsx:59",
+    "src/resources/stack/services.tsx:131",
+    "src/resources/stack/update-available.tsx:135"
+  ],
+  "Service Ports": [
+    "src/resources/procedure/config/executions.tsx:966"
+  ],
+  "Services": [
+    "src/components/swarm/services-section.tsx:37",
+    "src/resources/swarm/docker/stacks.tsx:68"
+  ],
+  "Services listed here are skipped only during Global Auto Update checks. Manual checks still include all services.": [
+    "src/resources/stack/config/index.tsx:406"
+  ],
+  "Set description": [
+    "src/pages/settings/variables/index.tsx:145"
+  ],
+  "Set Description": [
+    "src/resources/description.tsx:35",
+    "src/resources/description.tsx:64"
+  ],
+  "Set domain": [
+    "src/pages/settings/providers/index.tsx:133"
+  ],
+  "Set Domain": [
+    "src/pages/settings/providers/index.tsx:96"
+  ],
+  "Set password above to enable.": [
+    "node_modules/mogh_ui/dist/auth/profile/linked-logins.js:129"
+  ],
+  "Set token": [
+    "src/pages/settings/providers/index.tsx:210"
+  ],
+  "Set Token": [
+    "src/pages/settings/providers/index.tsx:192"
+  ],
+  "Set username": [
+    "src/pages/settings/providers/index.tsx:171"
+  ],
+  "Set Username": [
+    "src/pages/settings/providers/index.tsx:153"
+  ],
+  "Set value": [
+    "src/pages/settings/variables/index.tsx:108"
+  ],
+  "Settings": [
+    "src/app/sidebar.tsx:95",
+    "src/pages/resource.tsx:73",
+    "src/pages/user-group/index.tsx:77",
+    "src/pages/user/index.tsx:59"
+  ],
+  "shareable link": [
+    "src/components/alerts/details.tsx:136",
+    "src/components/updates/details.tsx:139"
+  ],
+  "shift + s": [
+    "src/app/topbar/omni-search/index.tsx:33"
+  ],
+  "Show": [
+    "node_modules/mogh_ui/dist/components/show-hide-button.js:17"
+  ],
+  "Show All": [
+    "src/components/alerts/list.tsx:47",
+    "src/components/config/secret-selector.tsx:80",
+    "src/components/permissions/base-section.tsx:93",
+    "src/components/permissions/specific-section.tsx:153",
+    "src/components/updates/list.tsx:52"
+  ],
+  "Show Dashboard": [
+    "src/pages/dashboard/show-tables.tsx:20"
+  ],
+  "Show Server Stats": [
+    "src/resources/server/show-stats.tsx:20"
+  ],
+  "Show Tables": [
+    "src/pages/dashboard/show-tables.tsx:20"
+  ],
+  "Sign Up": [
+    "node_modules/mogh_ui/dist/auth/login/index.js:178"
+  ],
+  "Size": [
+    "src/pages/terminals/index.tsx:151",
+    "src/resources/server/docker/images.tsx:76"
+  ],
+  "Skip 2FA for external logins": [
+    "src/pages/profile.tsx:175"
+  ],
+  "Skip redeploy": [
+    "src/resources/procedure/config/executions.tsx:1436"
+  ],
+  "Sort By:": [
+    "src/pages/stats.tsx:179"
+  ],
+  "Source": [
+    "src/resources/build/config.tsx:478",
+    "src/resources/build/table.tsx:58",
+    "src/resources/repo/config.tsx:135",
+    "src/resources/stack/config/index.tsx:777",
+    "src/resources/stack/table.tsx:65",
+    "src/resources/sync/config.tsx:247",
+    "src/resources/sync/table.tsx:58"
+  ],
+  "Stack": [
+    "src/pages/terminals/new.tsx:420",
+    "src/resources/procedure/config/executions.tsx:851"
+  ],
+  "stack deploy": [
+    "src/resources/stack/config/index.tsx:568"
+  ],
+  "Stacks": [
+    "src/resources/repo/resources.tsx:18",
+    "src/resources/server/resources.tsx:18",
+    "src/resources/swarm/resources.tsx:18"
+  ],
+  "Stage ": [
+    "src/components/updates/details.tsx:171",
+    "src/resources/build/info.tsx:202"
+  ],
+  "Stages": [
+    "src/resources/procedure/config/index.tsx:79"
+  ],
+  "Start": [
+    "src/pages/docker/container/executions.tsx:113",
+    "src/resources/deployment/executions.tsx:241",
+    "src/resources/stack/executions.tsx:280"
+  ],
+  "Start Containers": [
+    "src/resources/server/index.tsx:336"
+  ],
+  "Start Time": [
+    "src/components/maintenance-windows.tsx:104",
+    "src/components/maintenance-windows.tsx:346"
+  ],
+  "Startup": [
+    "src/resources/action/config.tsx:227"
+  ],
+  "State": [
+    "src/components/docker/containers-section.tsx:111",
+    "src/components/swarm/tasks-section.tsx:121",
+    "src/pages/containers.tsx:136",
+    "src/resources/action/table.tsx:54",
+    "src/resources/build/table.tsx:72",
+    "src/resources/deployment/table.tsx:108",
+    "src/resources/procedure/table.tsx:60",
+    "src/resources/repo/table.tsx:77",
+    "src/resources/server/table/standard.tsx:108",
+    "src/resources/stack/services.tsx:68",
+    "src/resources/stack/services.tsx:140",
+    "src/resources/stack/table.tsx:104",
+    "src/resources/swarm/docker/nodes/index.tsx:93",
+    "src/resources/swarm/docker/stacks.tsx:56",
+    "src/resources/swarm/table.tsx:56",
+    "src/resources/sync/table.tsx:73"
+  ],
+  "Stats": [
+    "src/app/sidebar.tsx:36",
+    "src/app/topbar/omni-search/hooks.tsx:159",
+    "src/pages/stats.tsx:155"
+  ],
+  "stderr": [
+    "src/components/updates/details.tsx:212",
+    "src/resources/build/info.tsx:243"
+  ],
+  "Stderr": [
+    "src/resources/action/last-run.tsx:58"
+  ],
+  "stdout": [
+    "src/components/updates/details.tsx:198",
+    "src/resources/build/info.tsx:229"
+  ],
+  "Stdout": [
+    "src/resources/action/last-run.tsx:41"
+  ],
+  "Stop": [
+    "src/pages/docker/container/executions.tsx:126",
+    "src/resources/deployment/executions.tsx:298",
+    "src/resources/stack/executions.tsx:293"
+  ],
+  "Stop Containers": [
+    "src/resources/server/index.tsx:452"
+  ],
+  "Stopped": [
+    "src/resources/deployment/index.tsx:90",
+    "src/resources/stack/index.tsx:93"
+  ],
+  "Super Admin": [
+    "src/components/user/header.tsx:32"
+  ],
+  "Swarm": [
+    "src/resources/deployment/config/index.tsx:63",
+    "src/resources/deployment/tasks.tsx:35",
+    "src/resources/stack/config/index.tsx:149"
+  ],
+  "Swarm {0} - {1}": [
+    "src/components/swarm/link.tsx:44"
+  ],
+  "Swarm Service": [
+    "src/resources/deployment/tasks.tsx:35"
+  ],
+  "Swarm unreachable": [
+    "src/resources/swarm/docker/index.tsx:52"
+  ],
+  "Swarm:": [
+    "src/resources/deployment/config/index.tsx:72",
+    "src/resources/stack/config/index.tsx:158"
+  ],
+  "Switch accounts": [
+    "src/app/topbar/user-dropdown.tsx:72"
+  ],
+  "Sync Resources": [
+    "src/resources/sync/config.tsx:170"
+  ],
+  "Sync User Groups": [
+    "src/resources/sync/config.tsx:178"
+  ],
+  "Sync Variables": [
+    "src/resources/sync/config.tsx:174"
+  ],
+  "Syncing": [
+    "src/resources/sync/index.tsx:54"
+  ],
+  "Syncs": [
+    "src/resources/repo/resources.tsx:32"
+  ],
+  "System": [
+    "src/components/alerts/details.tsx:115",
+    "src/components/updates/details.tsx:111",
+    "src/lib/socket.tsx:136",
+    "src/pages/dashboard/active.tsx:228",
+    "src/pages/updates.tsx:164",
+    "src/resources/server/docker/networks.tsx:80"
+  ],
+  "System Info": [
+    "src/resources/server/stats/system-info.tsx:26"
+  ],
+  "System stats across all servers.": [
+    "src/pages/stats.tsx:157"
+  ],
+  "System Stats Monitoring": [
+    "src/resources/server/config.tsx:168"
+  ],
+  "T": [
+    "src/components/template-marker.tsx:9",
+    "src/components/template-query-selector.tsx:22"
+  ],
+  "Tag Filter": [
+    "src/components/tags/filter.tsx:30",
+    "src/components/tags/filter.tsx:39"
+  ],
+  "tag-name": [
+    "src/components/tags/new.tsx:28"
+  ],
+  "Tagging": [
+    "src/resources/build/config.tsx:277"
+  ],
+  "Tags:": [
+    "src/pages/resource.tsx:174"
+  ],
+  "Take Admin": [
+    "src/pages/user/index.tsx:101"
+  ],
+  "Target": [
+    "src/components/permissions/specific-section.tsx:75",
+    "src/pages/schedules.tsx:106",
+    "src/pages/terminals/index.tsx:129",
+    "src/resources/alerter/config/resources.tsx:150"
+  ],
+  "Tasks": [
+    "src/components/swarm/tasks-section.tsx:57"
+  ],
+  "Template": [
+    "src/components/template-switch.tsx:29"
+  ],
+  "Templating": [
+    "src/resources/swarm/docker/secrets.tsx:85"
+  ],
+  "Terminal": [
+    "src/pages/terminal.tsx:212"
+  ],
+  "Terminal Name": [
+    "src/pages/terminals/new.tsx:138"
+  ],
+  "terminal-name (Optional)": [
+    "src/pages/terminals/new.tsx:142"
+  ],
+  "Terminals": [
+    "src/app/sidebar.tsx:30",
+    "src/app/topbar/omni-search/hooks.tsx:153",
+    "src/pages/terminals/index.tsx:63"
+  ],
+  "Termination": [
+    "src/resources/deployment/config/index.tsx:414",
+    "src/resources/deployment/executions.tsx:317"
+  ],
+  "Termination Signal Labels": [
+    "src/resources/deployment/config/index.tsx:427"
+  ],
+  "Termination timeout": [
+    "src/resources/deployment/config/termination.tsx:48"
+  ],
+  "Test Alerter": [
+    "src/resources/alerter/index.tsx:100"
+  ],
+  "The compose project is not on the host. If the compose stack is running, the 'Project Name' needs to be set. This can be found with 'docker compose ls'.": [
+    "src/resources/stack/index.tsx:315"
+  ],
+  "The secret will not be shown again.": [
+    "src/components/api-keys/new.tsx:131"
+  ],
+  "ThemeToggle": [
+    "node_modules/mogh_ui/dist/components/theme-toggle.js:12"
+  ],
+  "There are errors reading the remote file contents. See": [
+    "src/resources/stack/index.tsx:340"
+  ],
+  "There is a newer image available.": [
+    "src/resources/deployment/update-available.tsx:82"
+  ],
+  "This ": [
+    "src/components/template-marker.tsx:14"
+  ],
+  "This resource type does not have any containers.": [
+    "src/pages/docker/container/index.tsx:37"
+  ],
+  "This resource type does not have any images.": [
+    "src/pages/docker/image.tsx:27"
+  ],
+  "This resource type does not have any networks.": [
+    "src/pages/docker/network.tsx:26"
+  ],
+  "This resource type does not have any services.": [
+    "src/pages/stack-service/index.tsx:47"
+  ],
+  "This resource type does not have any Terminals.": [
+    "src/pages/terminal.tsx:69"
+  ],
+  "This resource type does not have any volumes.": [
+    "src/pages/docker/volume.tsx:25"
+  ],
+  "time in seconds": [
+    "src/resources/deployment/config/termination.tsx:52"
+  ],
+  "Timestamps": [
+    "src/components/log-section.tsx:180"
+  ],
+  "Timezone": [
+    "src/components/maintenance-windows.tsx:363",
+    "src/resources/action/config.tsx:208",
+    "src/resources/procedure/config/index.tsx:248"
+  ],
+  "To get started, create a server.": [
+    "src/pages/dashboard/no-resources.tsx:15"
+  ],
+  "Token": [
+    "src/pages/settings/providers/index.tsx:182"
+  ],
+  "Toml": [
+    "src/components/export-toml.tsx:41"
+  ],
+  "Total": [
+    "src/resources/alerter/index.tsx:45",
+    "src/resources/builder/index.tsx:47",
+    "src/resources/server/stats/disks.tsx:73"
+  ],
+  "Total:": [
+    "src/resources/server/stats/disks.tsx:36"
+  ],
+  "TRACE:": [
+    "node_modules/mogh_ui/dist/components/hover-error.js:21"
+  ],
+  "Track": [
+    "src/resources/stack/config/index.tsx:307"
+  ],
+  "Trigger an execution of the sync.": [
+    "src/resources/sync/config.tsx:346"
+  ],
+  "Trigger an update of the pending sync cache.": [
+    "src/resources/sync/config.tsx:337"
+  ],
+  "Type": [
+    "src/pages/terminals/new.tsx:124",
+    "src/resources/alerter/table.tsx:59"
+  ],
+  "Type: ": [
+    "src/components/user/header.tsx:38"
+  ],
+  "UI": [
+    "src/resources/sync/pending.tsx:40"
+  ],
+  "UI changes.": [
+    "src/resources/sync/pending.tsx:45"
+  ],
+  "UI Defined": [
+    "src/components/file-source.tsx:41"
+  ],
+  "uid:gid or user (Optional)": [
+    "src/resources/procedure/config/executions.tsx:898"
+  ],
+  "Unenroll Passkey 2FA": [
+    "node_modules/mogh_ui/dist/auth/profile/passkey.js:67"
+  ],
+  "Unenroll TOTP 2FA": [
+    "node_modules/mogh_ui/dist/auth/profile/totp.js:123"
+  ],
+  "Unhealthy": [
+    "src/resources/deployment/index.tsx:95",
+    "src/resources/server/index.tsx:70",
+    "src/resources/stack/index.tsx:98",
+    "src/resources/swarm/index.tsx:59"
+  ],
+  "unknown": [
+    "src/resources/server/version.tsx:38"
+  ],
+  "Unknown": [
+    "src/components/user-avatar.tsx:48",
+    "src/resources/action/index.tsx:62",
+    "src/resources/build/index.tsx:73",
+    "src/resources/deployment/index.tsx:100",
+    "src/resources/deployment/index.tsx:178",
+    "src/resources/link.tsx:55",
+    "src/resources/procedure/index.tsx:64",
+    "src/resources/repo/index.tsx:66",
+    "src/resources/server/version.tsx:27",
+    "src/resources/stack/index.tsx:103",
+    "src/resources/stack/index.tsx:192",
+    "src/resources/sub-page.tsx:67",
+    "src/resources/swarm/index.tsx:64",
+    "src/resources/sync/index.tsx:69"
+  ],
+  "Unknown Builder": [
+    "src/resources/build/index.tsx:158"
+  ],
+  "Unknown IP": [
+    "src/resources/server/index.tsx:185"
+  ],
+  "Unlink": [
+    "node_modules/mogh_ui/dist/auth/profile/linked-logins.js:127"
+  ],
+  "Unlink Login": [
+    "node_modules/mogh_ui/dist/auth/profile/linked-logins.js:125"
+  ],
+  "Unlinked": [
+    "node_modules/mogh_ui/dist/auth/profile/linked-logins.js:91"
+  ],
+  "Unpause": [
+    "src/pages/docker/container/executions.tsx:163",
+    "src/resources/deployment/executions.tsx:361",
+    "src/resources/stack/executions.tsx:345"
+  ],
+  "Unpause Containers": [
+    "src/resources/server/index.tsx:429"
+  ],
+  "Unreachable": [
+    "src/resources/server/config.tsx:188",
+    "src/resources/server/stats-card.tsx:149"
+  ],
+  "Unsaved changes": [
+    "node_modules/mogh_ui/dist/components/config/unsaved-changes.js:14"
+  ],
+  "Unused": [
+    "src/pages/swarm/config/index.tsx:53",
+    "src/pages/swarm/secret/index.tsx:53",
+    "src/resources/server/docker/images.tsx:62",
+    "src/resources/server/docker/networks.tsx:82",
+    "src/resources/server/docker/volumes.tsx:61",
+    "src/resources/swarm/docker/configs.tsx:57",
+    "src/resources/swarm/docker/secrets.tsx:57"
+  ],
+  "Update": [
+    "src/components/maintenance-windows.tsx:404",
+    "src/resources/stack/update-available.tsx:89",
+    "src/resources/swarm/docker/nodes/update.tsx:170",
+    "node_modules/mogh_ui/dist/components/shared-text-update.js:54",
+    "node_modules/mogh_ui/dist/components/text-update-modal.js:73"
+  ],
+  "Update {0} Description": [
+    "src/resources/description.tsx:34"
+  ],
+  "Update Available": [
+    "src/resources/deployment/update-available.tsx:77",
+    "src/resources/deployment/update-available.tsx:124",
+    "src/resources/stack/update-available.tsx:143"
+  ],
+  "Update Node": [
+    "src/resources/swarm/docker/nodes/update.tsx:184"
+  ],
+  "Update Node{0}: {1}": [
+    "src/resources/swarm/docker/nodes/update.tsx:91"
+  ],
+  "Update password": [
+    "src/pages/profile.tsx:102"
+  ],
+  "Update resources in the ": [
+    "src/resources/sync/pending.tsx:39",
+    "src/resources/sync/pending.tsx:44"
+  ],
+  "Update username": [
+    "src/pages/profile.tsx:83"
+  ],
+  "Updated": [
+    "src/components/swarm/services-section.tsx:80",
+    "src/components/swarm/tasks-section.tsx:151",
+    "src/resources/swarm/docker/configs.tsx:75",
+    "src/resources/swarm/docker/nodes/index.tsx:144",
+    "src/resources/swarm/docker/secrets.tsx:95"
+  ],
+  "Updates": [
+    "src/app/sidebar.tsx:80",
+    "src/components/updates/section.tsx:17",
+    "src/pages/updates.tsx:58"
+  ],
+  "URI": [
+    "node_modules/mogh_ui/dist/auth/profile/totp.js:74"
+  ],
+  "Use HTTPS": [
+    "src/pages/settings/providers/index.tsx:104"
+  ],
+  "Use HTTPS:": [
+    "src/pages/settings/providers/index.tsx:102"
+  ],
+  "Used": [
+    "src/resources/server/stats/disks.tsx:66",
+    "src/resources/server/stats/historical.tsx:152"
+  ],
+  "Used ": [
+    "src/resources/server/stats/current/ram.tsx:32"
+  ],
+  "Used:": [
+    "src/resources/server/stats/disks.tsx:32"
+  ],
+  "User": [
+    "src/components/user/header.tsx:35",
+    "src/resources/procedure/config/executions.tsx:896"
+  ],
+  "User Data": [
+    "src/resources/builder/config/aws.tsx:89"
+  ],
+  "User does not have permission to inspect this Stack service.": [
+    "src/pages/stack-service/inspect.tsx:37"
+  ],
+  "User Group": [
+    "src/pages/user-group/index.tsx:93",
+    "src/resources/sync/pending.tsx:288"
+  ],
+  "User Group - {0}": [
+    "src/pages/user/member-groups.tsx:43"
+  ],
+  "User Groups": [
+    "src/pages/settings/users/groups.tsx:25"
+  ],
+  "User Not Enabled": [
+    "src/pages/user-disabled.tsx:13"
+  ],
+  "User Permissions": [
+    "src/pages/user/index.tsx:69"
+  ],
+  "username": [
+    "src/pages/settings/users/new-local-user.tsx:30",
+    "src/pages/settings/users/new-service-user.tsx:27"
+  ],
+  "Username": [
+    "src/pages/settings/providers/index.tsx:144",
+    "src/pages/settings/users/new-local-user.tsx:29",
+    "node_modules/mogh_ui/dist/auth/login/index.js:143"
+  ],
+  "Username:": [
+    "src/pages/profile.tsx:80"
+  ],
+  "Users": [
+    "src/app/topbar/omni-search/hooks.tsx:180",
+    "src/pages/settings/users/index.tsx:41",
+    "src/pages/user-group/index.tsx:111"
+  ],
+  "v": [
+    "src/app/topbar/index.tsx:88"
+  ],
+  "Value": [
+    "src/pages/settings/variables/index.tsx:82"
+  ],
+  "Variable": [
+    "src/resources/sync/pending.tsx:235"
+  ],
+  "variable name": [
+    "src/pages/settings/variables/index.tsx:75"
+  ],
+  "variable-name": [
+    "src/pages/settings/variables/new.tsx:30"
+  ],
+  "Variables": [
+    "src/app/topbar/omni-search/hooks.tsx:171"
+  ],
+  "Version": [
+    "src/resources/build/config.tsx:167",
+    "src/resources/build/config.tsx:178",
+    "src/resources/server/config.tsx:198",
+    "src/resources/server/table/standard.tsx:100"
+  ],
+  "Version the image with major.minor.patch. It can be interpolated using [[$VERSION]].": [
+    "src/resources/build/config.tsx:179"
+  ],
+  "View historical alerts": [
+    "src/pages/alerts.tsx:79"
+  ],
+  "View historical updates": [
+    "src/pages/updates.tsx:60"
+  ],
+  "Volumes": [
+    "src/components/docker/containers-section.tsx:196",
+    "src/pages/containers.tsx:225",
+    "src/resources/deployment/config/index.tsx:250"
+  ],
+  "Warning": [
+    "src/resources/server/index.tsx:65"
+  ],
+  "Webhook URL": [
+    "src/components/webhook/copy-url.tsx:18"
+  ],
+  "Webhook URL - Build": [
+    "src/resources/build/config.tsx:589",
+    "src/resources/repo/config.tsx:290"
+  ],
+  "Webhook URL - Clone": [
+    "src/resources/repo/config.tsx:283"
+  ],
+  "Webhook URL - Deploy": [
+    "src/resources/stack/config/index.tsx:913"
+  ],
+  "Webhook URL - Execute Sync": [
+    "src/resources/sync/config.tsx:345"
+  ],
+  "Webhook URL - Pull": [
+    "src/resources/repo/config.tsx:276"
+  ],
+  "Webhook URL - Refresh Pending": [
+    "src/resources/sync/config.tsx:336"
+  ],
+  "Webhook URL - Run": [
+    "src/resources/action/config.tsx:282",
+    "src/resources/procedure/config/index.tsx:300"
+  ],
+  "Webhooks": [
+    "src/resources/action/config.tsx:249",
+    "src/resources/build/config.tsx:563",
+    "src/resources/procedure/config/index.tsx:267",
+    "src/resources/repo/config.tsx:256",
+    "src/resources/stack/config/index.tsx:887",
+    "src/resources/sync/config.tsx:312"
+  ],
+  "Websocket Status": [
+    "src/app/topbar/websocket-status.tsx:41"
+  ],
+  "Whitelist": [
+    "src/resources/alerter/config/resources.tsx:166"
+  ],
+  "whitelisted": [
+    "src/resources/alerter/config/resources.tsx:114"
+  ],
+  "Will the dockerfile contents be defined in UI, stored on the server, or pulled from a git repo?": [
+    "src/resources/build/config.tsx:201"
+  ],
+  "Will the file contents be defined in UI, stored on the server, or pulled from a git repo?": [
+    "src/resources/stack/config/index.tsx:232",
+    "src/resources/sync/config.tsx:128"
+  ],
+  "Worker": [
+    "src/resources/swarm/docker/nodes/update.tsx:110"
+  ],
+  "Working Directory": [
+    "src/resources/procedure/config/executions.tsx:887"
+  ],
+  "Wrapper": [
+    "src/resources/stack/config/index.tsx:512"
+  ],
+  "You may click the text in bold to copy it": [
+    "src/components/docker/batch-executions.tsx:227",
+    "src/resources/batch-executions.tsx:197",
+    "node_modules/mogh_ui/dist/components/confirm-modal.js:76"
+  ],
+  "ZFS ARC": [
+    "src/resources/server/stats/historical.tsx:167"
+  ]
+}
