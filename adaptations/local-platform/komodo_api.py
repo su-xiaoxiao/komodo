@@ -26,33 +26,49 @@ class Komodo:
             return json.load(response)
 
 
-if __name__ == '__main__':
-    api = Komodo()
-    source = Path(__file__).with_name('mqtt-action.ts').read_text(encoding='utf-8')
+def install(api):
+    from project_registry import load_projects, render_action
     actions = {item['name']: item for item in api.call('read/ListActions', {})}
-    for name, arguments in [
-        ('mqtt-build-deploy', {'operation':'build-deploy','ref':'dev_necal'}),
-        ('mqtt-deploy-version', {'operation':'deploy','version':''}),
-        ('mqtt-rollback', {'operation':'rollback'}),
-        ('mqtt-reconcile', {'operation':'reconcile','job':''}),
-    ]:
-        config = dict(file_contents=source, arguments=json.dumps(arguments), arguments_format='json',
-                      run_at_startup=False, schedule_enabled=False, webhook_enabled=False)
-        if name in actions:
-            result = api.call('write/UpdateAction', {'id':actions[name]['id'],'config':config})
-        else:
-            result = api.call('write/CreateAction', {'name':name,'config':config})
-        print(name, result.get('_id', result.get('id')))
     procedures = {item['name']: item for item in api.call('read/ListProcedures', {})}
-    for name, action, stage in [
-        ('mqtt-release', 'mqtt-build-deploy', '构建 → 隔离验收 → 发布 → 健康检查'),
-        ('mqtt-restore', 'mqtt-rollback', '回退上一已验证版本'),
-    ]:
-        config = dict(schedule_enabled=False, webhook_enabled=False, stages=[{
-            'name': stage, 'enabled': True, 'executions': [{'enabled':True,
-            'execution':{'type':'RunAction','params':{'action':action}}}]}])
-        if name in procedures:
-            result = api.call('write/UpdateProcedure', {'id':procedures[name]['id'],'config':config})
-        else:
-            result = api.call('write/CreateProcedure', {'name':name,'config':config})
-        print(name, result.get('_id', result.get('id')))
+    for project, policy in load_projects().items():
+        prefix = policy['prefix']
+        source = render_action(project, policy)
+        definitions = [('reconcile', {'operation':'reconcile','job':''})]
+        if 'build-deploy' in policy['actions']:
+            definitions.append(('build-deploy', {'operation':'build-deploy','ref':policy['default_ref']}))
+        if 'deploy' in policy['actions']:
+            definitions.append(('deploy-version', {'operation':'deploy','version':''}))
+        if 'rollback' in policy['actions']:
+            definitions.append(('rollback', {'operation':'rollback'}))
+        for suffix, arguments in definitions:
+            name = prefix + '-' + suffix
+            config = dict(file_contents=source, arguments=json.dumps(arguments), arguments_format='json',
+                          run_at_startup=False, schedule_enabled=False, webhook_enabled=False)
+            if name in actions:
+                # Keep the operator's explicit version/ref selection across adapter upgrades.
+                config.pop('arguments')
+                config.pop('arguments_format')
+                result = api.call('write/UpdateAction', {'id':actions[name]['id'],'config':config})
+            else:
+                result = api.call('write/CreateAction', {'name':name,'config':config})
+                api.call('write/UpdateResourceMeta', {'target':{'type':'Action','id':name},'description':policy.get('note','')})
+            print(name, result.get('_id', result.get('id')))
+        definitions = []
+        if 'build-deploy' in policy['actions']:
+            definitions.append(('release','build-deploy','构建 → 项目专用验收 → 发布 → 健康检查'))
+        if 'rollback' in policy['actions']:
+            definitions.append(('restore','rollback','回退上一已验证版本'))
+        for suffix, action, stage in definitions:
+            name = prefix + '-' + suffix
+            config = dict(schedule_enabled=False, webhook_enabled=False, stages=[{
+                'name':stage,'enabled':True,'executions':[{'enabled':True,
+                'execution':{'type':'RunAction','params':{'action':prefix+'-'+action}}}]}])
+            if name in procedures:
+                result = api.call('write/UpdateProcedure', {'id':procedures[name]['id'],'config':config})
+            else:
+                result = api.call('write/CreateProcedure', {'name':name,'config':config})
+            print(name, result.get('_id', result.get('id')))
+
+
+if __name__ == '__main__':
+    install(Komodo())

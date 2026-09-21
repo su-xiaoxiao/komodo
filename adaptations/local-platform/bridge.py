@@ -1,4 +1,4 @@
-"""Windows MQTT worker for Komodo's local file queue. No listening network port."""
+"""Windows worker for approved Komodo releases. No listening network port."""
 import argparse
 import hashlib
 import json
@@ -8,6 +8,7 @@ import re
 import sys
 import time
 import uuid
+from project_registry import load_projects
 
 TERMINAL = {'succeeded', 'failed', 'interrupted'}
 
@@ -38,15 +39,24 @@ def write(path, body):
         pending.unlink(missing_ok=True)
 
 
-def validate(body, identity):
+def validate(body, identity, projects=None, *, admission=True):
+    projects = load_projects() if projects is None else projects
     if (not isinstance(body, dict) or set(body) != {'id','project','action','options','expires_at'}
-            or body['id'] != identity or body['project'] != 'mqtt-sandbox'):
+            or body['id'] != identity or not isinstance(body['project'], str)
+            or not re.fullmatch(r'[a-z][a-z0-9-]{0,79}',body['project'])):
         raise ValueError('Invalid request identity or project')
+    if admission and body['project'] not in projects:
+        raise ValueError('Unregistered project')
     allowed = {'build-deploy': {'ref'}, 'deploy': {'version'}, 'rollback': set()}
     action, options = body['action'], body['options']
+    policy = projects.get(body['project'], {})
     if not isinstance(action, str) or action not in allowed or not isinstance(options, dict) or set(options) != allowed[action]:
         raise ValueError('Unsupported action or options')
-    if action == 'build-deploy' and options['ref'] != 'dev_necal':
+    if admission and action not in policy['actions']:
+        raise ValueError('This project has no approved adapter for the requested action')
+    if action == 'build-deploy' and (not isinstance(options['ref'],str)
+            or not re.fullmatch(r'[A-Za-z0-9_][A-Za-z0-9_./-]{0,255}',options['ref'])
+            or (admission and options['ref'] not in policy['refs'])):
         raise ValueError('Unregistered ref')
     if action == 'deploy' and (not isinstance(options['version'], str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,120}', options['version'])):
         raise ValueError('Invalid version')
@@ -59,6 +69,7 @@ class Bridge:
     def __init__(self, home, pipeline, root=None):
         self.home, self.pipeline = Path(home), pipeline
         self.root = Path(root) if root else None
+        self.projects = load_projects()
         for name in ('requests', 'responses', 'claims'):
             (self.home/name).mkdir(parents=True, exist_ok=True)
 
@@ -77,7 +88,8 @@ class Bridge:
                 if not claim.exists() and target.exists() and read(target).get('status') in TERMINAL:
                     continue
                 request = read(path)
-                intent = validate(request, identity)
+                # Admission can be revoked without changing already accepted identities/history.
+                intent = validate(request, identity, self.projects, admission=not claim.exists())
                 if claim.exists():
                     saved = read(claim)
                     if saved and saved != intent:
@@ -106,14 +118,14 @@ class Bridge:
                 result = dict(job)
                 result['observed_at'] = time.time()
                 if self.root and job.get('version'):
-                    manifest = self.root/'releases/manifests/mqtt-sandbox'/(job['version']+'.json')
+                    manifest = self.root/'releases/manifests'/job['project']/(job['version']+'.json')
                     if manifest.is_file():
                         data = read(manifest)
                         result['images'] = data['images']
                         result['manifest_sha256'] = hashlib.sha256(manifest.read_bytes()).hexdigest()
                 if self.root and job['status'] in TERMINAL:
                     current = read(self.root/'releases/current.compose.json')
-                    result['current_release'] = current.get('x-release-state', {}).get('mqtt-sandbox')
+                    result['current_release'] = current.get('x-release-state', {}).get(job['project'])
                 if job['status'] in TERMINAL:
                     result['terminal_verified'] = True
                 write(target, result)

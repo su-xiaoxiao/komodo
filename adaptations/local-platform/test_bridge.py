@@ -86,6 +86,15 @@ class BridgeTests(unittest.TestCase):
         self.assertEqual(self.pipeline.calls, 0)
         self.assertEqual(self.response()['status'], 'failed')
 
+    def test_policy_revocation_does_not_invalidate_accepted_history(self):
+        self.request()
+        self.bridge.tick()
+        self.bridge.projects = {}
+        self.pipeline.jobs[self.identity]['status'] = 'succeeded'
+        self.bridge.tick()
+        self.assertEqual(self.response()['status'],'succeeded')
+        self.assertEqual(self.pipeline.calls,1)
+
     def test_lost_response_recovers_terminal_job_without_execution(self):
         self.request()
         self.bridge.tick()

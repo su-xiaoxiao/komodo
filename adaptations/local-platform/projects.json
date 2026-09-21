@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "projects": {
+    "mqtt-sandbox": {
+      "title": "MQTT",
+      "prefix": "mqtt",
+      "actions": ["build-deploy", "deploy", "rollback"],
+      "refs": ["dev_necal"],
+      "default_ref": "dev_necal",
+      "note": "源码构建、隔离 HTTP/代理/MQTT 验收；动态变量重启恢复问题仍待修复。"
+    },
+    "mcp-gateway": {
+      "title": "MCP 管理台与网关",
+      "prefix": "mcp",
+      "actions": ["deploy", "rollback"],
+      "note": "仅发布已验证快照/镜像清单；管理台尚非 Git 仓库，源码自动构建未启用。"
+    }
+  }
+}

@@ -1,5 +1,10 @@
 // Installed into a Komodo Action. ARGS is supplied by Komodo.
 // Cancelling this Action stops observation; the Windows release transaction continues.
+const project = __PROJECT__;
+const title = __TITLE__;
+const defaultRef = __DEFAULT_REF__;
+const metadataTarget = __METADATA_TARGET__;
+const note = __NOTE__;
 const queue = "/local-queue";
 const heartbeat = JSON.parse(await Deno.readTextFile(`${queue}/heartbeat.json`));
 if (heartbeat.protocol !== 1 || Date.now() / 1000 - heartbeat.updated_at > 15) {
@@ -7,15 +12,16 @@ if (heartbeat.protocol !== 1 || Date.now() / 1000 - heartbeat.updated_at > 15) {
 }
 const operation = ARGS.operation ?? "build-deploy";
 if (!["build-deploy", "deploy", "rollback", "reconcile"].includes(operation)) throw new Error("不支持的操作");
-const options = operation === "build-deploy" ? { ref: ARGS.ref ?? "dev_necal" }
+const options = operation === "build-deploy" ? { ref: ARGS.ref ?? defaultRef }
   : operation === "deploy" ? { version: ARGS.version } : {};
 if (operation === "deploy" && typeof ARGS.version !== "string") throw new Error("请填写 version");
 const id = operation === "reconcile" ? ARGS.job : crypto.randomUUID().replaceAll("-", "");
 if (typeof id !== "string" || !/^[a-f0-9]{32}$/.test(id)) throw new Error("无效任务 ID");
 if (operation === "reconcile") {
-  await Deno.stat(`${queue}/requests/${id}.json`);
+  const original = JSON.parse(await Deno.readTextFile(`${queue}/requests/${id}.json`));
+  if (original.project !== project) throw new Error("任务不属于此项目");
 } else {
-  const request = { id, project: "mqtt-sandbox", action: operation, options, expires_at: Date.now() / 1000 + 60 };
+  const request = { id, project, action: operation, options, expires_at: Date.now() / 1000 + 60 };
   await Deno.writeTextFile(`${queue}/requests/${id}.tmp`, JSON.stringify(request));
   await Deno.rename(`${queue}/requests/${id}.tmp`, `${queue}/requests/${id}.json`);
 }
@@ -38,16 +44,16 @@ for (let attempt = 0; attempt < 3600; attempt++) {
     if (result.status !== "succeeded") throw new Error(result.error ?? result.status);
     const release = result.current_release;
     if (release && operation !== "reconcile") {
-      const description = [`MQTT · Git ${release.source?.commit?.slice(0, 12) ?? "未知"} · ${release.version}`,
-        "Windows 构建 / Docker 运行",
+      const origin = release.source?.commit ? `Git ${release.source.commit.slice(0, 12)}` : release.source?.snapshot ? `快照 ${release.source.snapshot.slice(0, 12)}` : "镜像来源待核实";
+      const description = [`${title} · ${origin} · ${release.version}`,
+        "Windows 发布执行器 / Docker 运行",
         `最近发布结果核对：${new Date(result.observed_at * 1000).toISOString()}`,
         `发布版本：${release.version}`, `Git 提交：${release.source?.commit ?? "未知"}`,
         ...Object.entries(release.images ?? {}).map(([service, image]) => `${service}: ${image}`),
         "以上为最近成功发布记录，实时容器状态请查看 Local / 容器。",
-        "构建 → Maven 测试 → API/Web 镜像 → 隔离 HTTP/代理/MQTT → 发布/健康检查。",
-        "上游动态新变量重启恢复问题仍未修复。"].join("\n");
+        note].join("\n");
       try {
-        await komodo.write("UpdateResourceMeta", { target: { type: "Procedure", id: "mqtt-release" }, description });
+        await komodo.write("UpdateResourceMeta", { target: metadataTarget, description });
       } catch { console.warn("发布已成功，但流水线说明更新失败；以任务结果中的版本/镜像为准。"); }
     }
     return;
