@@ -1,0 +1,171 @@
+"""Windows MQTT worker for Komodo's local file queue. No listening network port."""
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import sys
+import time
+import uuid
+
+TERMINAL = {'succeeded', 'failed', 'interrupted'}
+
+
+def read(path):
+    if path.stat().st_size > 4 * 1024 * 1024:
+        raise ValueError('Queue file too large')
+    return json.loads(path.read_text(encoding='utf-8-sig'))
+
+
+def write(path, body):
+    pending = path.with_suffix('.tmp-' + uuid.uuid4().hex)
+    with pending.open('w', encoding='utf-8') as stream:
+        json.dump(body, stream, ensure_ascii=False, indent=2)
+        stream.flush()
+        os.fsync(stream.fileno())
+    try:
+        # Docker Desktop may briefly hold a Windows file without delete-sharing.
+        for attempt in range(40):
+            try:
+                os.replace(pending, path)
+                break
+            except PermissionError:
+                if attempt == 39:
+                    raise
+                time.sleep(.05)
+    finally:
+        pending.unlink(missing_ok=True)
+
+
+def validate(body, identity):
+    if (not isinstance(body, dict) or set(body) != {'id','project','action','options','expires_at'}
+            or body['id'] != identity or body['project'] != 'mqtt-sandbox'):
+        raise ValueError('Invalid request identity or project')
+    allowed = {'build-deploy': {'ref'}, 'deploy': {'version'}, 'rollback': set()}
+    action, options = body['action'], body['options']
+    if not isinstance(action, str) or action not in allowed or not isinstance(options, dict) or set(options) != allowed[action]:
+        raise ValueError('Unsupported action or options')
+    if action == 'build-deploy' and options['ref'] != 'dev_necal':
+        raise ValueError('Unregistered ref')
+    if action == 'deploy' and (not isinstance(options['version'], str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,120}', options['version'])):
+        raise ValueError('Invalid version')
+    if type(body['expires_at']) not in (int, float) or not 0 < body['expires_at'] < 1e12:
+        raise ValueError('Invalid expiry')
+    return {key: body[key] for key in ('id', 'project', 'action', 'options')}
+
+
+class Bridge:
+    def __init__(self, home, pipeline, root=None):
+        self.home, self.pipeline = Path(home), pipeline
+        self.root = Path(root) if root else None
+        for name in ('requests', 'responses', 'claims'):
+            (self.home/name).mkdir(parents=True, exist_ok=True)
+
+    def tick(self):
+        write(self.home/'heartbeat.json', {'pid': os.getpid(), 'updated_at': time.time(), 'protocol': 1})
+        for path in sorted((self.home/'requests').glob('*.json')):
+            identity = path.stem
+            if not re.fullmatch(r'[0-9a-f]{32}', identity):
+                continue
+            target = self.home/'responses'/path.name
+            observing = False
+            try:
+                claim = self.home/'claims'/path.name
+                # Reconcile accepted jobs even if an older observer reported an error.
+                # Rejected, unclaimed terminal requests must never become executable.
+                if not claim.exists() and target.exists() and read(target).get('status') in TERMINAL:
+                    continue
+                request = read(path)
+                intent = validate(request, identity)
+                if claim.exists():
+                    saved = read(claim)
+                    if saved and saved != intent:
+                        raise ValueError('Job identity mismatch')
+                    try:
+                        job = self.pipeline.get_job(identity)
+                    except json.JSONDecodeError:
+                        raise
+                    except ValueError:
+                        write(target, dict(id=identity, status='interrupted', error='Claim has no execution record; reconcile manually; do not retry automatically'))
+                        continue
+                    if any(job.get(key) != value for key, value in intent.items()):
+                        raise ValueError('Job identity mismatch')
+                else:
+                    if not time.time() < request['expires_at'] <= time.time()+120:
+                        raise ValueError('Request expired or invalid deadline')
+                    # Claim is durable BEFORE enqueue. A crash here must never replay automatically.
+                    write(claim, intent)
+                    job = self.pipeline.submit_once(identity, request['project'], request['action'], **request['options'])
+                observing = True
+                if job['status'] in TERMINAL and target.exists():
+                    previous = read(target)
+                    if (previous.get('terminal_verified') is True
+                            and all(previous.get(key) == job.get(key) for key in (*intent, 'status'))):
+                        continue
+                result = dict(job)
+                result['observed_at'] = time.time()
+                if self.root and job.get('version'):
+                    manifest = self.root/'releases/manifests/mqtt-sandbox'/(job['version']+'.json')
+                    if manifest.is_file():
+                        data = read(manifest)
+                        result['images'] = data['images']
+                        result['manifest_sha256'] = hashlib.sha256(manifest.read_bytes()).hexdigest()
+                if self.root and job['status'] in TERMINAL:
+                    current = read(self.root/'releases/current.compose.json')
+                    result['current_release'] = current.get('x-release-state', {}).get('mqtt-sandbox')
+                if job['status'] in TERMINAL:
+                    result['terminal_verified'] = True
+                write(target, result)
+            except (OSError, json.JSONDecodeError):
+                print(f'Transient queue IO failure for {identity}; reconciliation will retry', file=sys.stderr, flush=True)
+                continue
+            except ValueError as error:
+                if observing:
+                    print(f'Result enrichment unavailable for {identity}; reconciliation will retry', file=sys.stderr, flush=True)
+                    continue
+                # No raw command/config output or credentials in protocol errors.
+                write(target, dict(id=identity, status='failed', error=str(error)[:500]))
+            except Exception:
+                if not observing:
+                    raise
+                print(f'Result observation unavailable for {identity}; reconciliation will retry', file=sys.stderr, flush=True)
+
+    def active(self):
+        # Observation files are never authoritative for stopping an executor.
+        try:
+            return any(job['status'] in {'queued', 'running'} for job in self.pipeline.list_jobs())
+        except Exception:
+            print('Execution state unavailable; deferring shutdown', file=sys.stderr, flush=True)
+            return True
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--root', type=Path, required=True)
+    parser.add_argument('--queue', type=Path, required=True)
+    args = parser.parse_args()
+    sys.path.insert(0, str(args.root/'services/project-console'))
+    from pipeline import Pipeline, exclusive
+    args.queue.mkdir(parents=True, exist_ok=True)
+    with exclusive(args.queue/'worker.lock'):
+        # Do not recover another worker's currently queued/running tasks on startup.
+        jobs = args.root/'.local/project-console/jobs'
+        if any(read(path)['status'] in {'queued', 'running'} for path in jobs.glob('*/job.json')):
+            raise RuntimeError('Existing pipeline is active; start this worker only while idle')
+        bridge = Bridge(args.queue, Pipeline(args.root), args.root)
+        write(args.queue/'worker.json', {'pid': os.getpid(), 'started_at': time.time()})
+        while True:
+            try:
+                bridge.tick()
+            except OSError:
+                print('Queue IO unavailable; retrying without changing execution state', file=sys.stderr, flush=True)
+            if (args.queue/'stop').exists():
+                if not bridge.active():
+                    (args.queue/'stop').unlink()
+                    break
+            time.sleep(2)
+
+
+if __name__ == '__main__':
+    main()

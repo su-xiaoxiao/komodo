@@ -1,0 +1,47 @@
+--- a/services/project-console/controller.py
++++ b/services/project-console/controller.py
+@@ -96,6 +96,11 @@
+ 
+ 
+ def create_app(state_dir=None, clock=None, allowed_peers=None, allowed_hosts=None):
++    read_only = {item.strip() for item in os.environ.get('CONSOLE_READ_ONLY_PROJECTS', '').split(',') if item.strip()}
++    def submit(project, action, options):
++        if project in read_only:
++            raise StoreError('该项目发布已迁至 Komodo http://127.0.0.1:28793；此处仅保留历史查询', 409)
++        return store.submit(project, action, options)
+     store = ControlStore(state_dir or os.environ.get('CONSOLE_STATE_DIR', '/data'), clock)
+     peers = allowed_peers if allowed_peers is not None else os.environ.get('CONSOLE_ALLOWED_PEERS', '127.0.0.0/8,::1/128').split(',')
+     hosts = allowed_hosts if allowed_hosts is not None else os.environ.get('CONSOLE_ALLOWED_HOSTS', '127.0.0.1:28791,localhost:28791').split(',')
+@@ -117,7 +122,12 @@
+ 
+     @app.get('/api/projects')
+     def projects():
+-        return store.catalog()
++        result = store.catalog()
++        for project in result.get('projects', []):
++            if project['id'] in read_only:
++                project['capabilities'].update(build_deploy=False, deploy=False, rollback=False,
++                    build_reason='发布已迁至 Komodo http://127.0.0.1:28793；此处只读')
++        return result
+ 
+     @app.get('/api/projects/{project}/releases')
+     def releases(project: str):
+@@ -133,15 +143,15 @@
+ 
+     @app.post('/api/projects/{project}/build-deploy', status_code=202)
+     def build(project: str, body: Build):
+-        return {'job': store.submit(project, 'build-deploy', {'ref': body.ref})}
++        return {'job': submit(project, 'build-deploy', {'ref': body.ref})}
+ 
+     @app.post('/api/projects/{project}/deploy', status_code=202)
+     def deploy(project: str, body: Deploy):
+-        return {'job': store.submit(project, 'deploy', {'version': body.version})}
++        return {'job': submit(project, 'deploy', {'version': body.version})}
+ 
+     @app.post('/api/projects/{project}/rollback', status_code=202)
+     def rollback(project: str, body: StrictBody):
+-        return {'job': store.submit(project, 'rollback', {})}
++        return {'job': submit(project, 'rollback', {})}
+ 
+     @app.get('/api/runner/status')
+     def runner_status():

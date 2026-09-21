@@ -23,3 +23,36 @@ python adaptations/local-platform/export_stacks.py --root E:\jvjv\local-platform
 宿主 bind mount 会拒绝导出，需要先明确 Windows→Periphery 路径映射。不要为了导入而移除挂载。当前 MCP 组存在此类挂载，不能直接套用 MQTT 方案。
 
 正式接管前还需要：跨组依赖顺序、统一发布锁、Windows 构建替代或桥接、独立业务验收、版本来源映射、不同版本恢复、旧历史保留。新旧管理台不得同时管理同一项目的发布。此阶段没有启用自动更新或同步删除。
+
+## MQTT 的 Windows 执行桥接
+
+Komodo 管理发布入口；`bridge.py` 调用本机 `E:/jvjv/local-platform/services/project-console/pipeline.py` 和同目录依赖、`scripts/release_ops.py`。旧发布台的 HTTP 服务不是桥接依赖，但这一套构建/发布引擎、配方、工作树和历史目录仍需保留。并非将 Windows Java/Maven 强行搬进 Core 容器。
+
+Core 只额外挂专用 `.local/mqtt-queue`，不是整个 E 盘。将 `KOMODO_LOCAL_QUEUE=E:/jvjv/komodo/.local/mqtt-queue` 写入未跟踪的 `.local/komodo.env`，预先建立 requests/responses/claims 子目录；任务入口仅允许 MQTT 的指定分支、已验证版本发布和回退，没有通用 shell/命令/URL 参数，也不监听额外网络端口。具有 Core 管理权限的用户属于本机可信操作者。
+
+启动入口：
+
+```powershell
+pwsh -NoProfile -File E:\jvjv\komodo\adaptations\local-platform\Komodo.ps1 -Action Open
+```
+
+`Start` 启动容器及 Windows 后台工作进程，`Status` 查询工作进程，`StopWorker` 请求空闲后停止；不强杀正在运行的发布。Docker 重启会恢复容器，但 Windows 工作进程需要上述启动入口，不能把容器 online 误认成 Windows 构建工具已启动。
+
+`python adaptations/local-platform/komodo_api.py` 幂等安装四个 Action 和两个 Procedure，账号由本机 env 读取，默认禁用定时和 webhook：
+
+| 入口 | 用途 |
+| --- | --- |
+| 流水线 `mqtt-release` | 独立 worktree → Maven 测试 → 构建 API/Web → 独立网络/卷验收 → 发布及健康检查 |
+| 流水线 `mqtt-restore` | 使用同一发布引擎回退上一已验证版本 |
+| 操作 `mqtt-deploy-version` | 运行参数中填写已存在清单的 `version`，重新部署该版本 |
+| 操作 `mqtt-reconcile` | 填写已有 Windows 任务 ID `job`，重新读取执行结果，不提交新任务 |
+
+Action 日志包含 Windows 任务 ID、阶段、提交、不可变镜像 ID 和结果。成功后同步 `mqtt-release` 的说明，标明最近一次验证的版本/镜像；这不是实时容器监控，实时状态仍看 Local 的容器页。
+
+任务先持久化领取记录，再交给 Pipeline；同 ID 只对账、不重跑。启动时发现活跃执行记录会拒绝启动，需核对容器/发布历史后处理；不能删除记录或换 ID 重试不确定的发布。**取消 Komodo Action 只停止等待，已领取的 Windows 发布事务会继续完成**，请使用日志中的任务 ID 查询 `.local/mqtt-queue/responses/<ID>.json`。
+
+交接时旧控制面以 `CONSOLE_READ_ONLY_PROJECTS=mqtt-sandbox` 禁用三个写入 API，并将按钮变为只读，原历史卷保留。这个开关依赖已更新的本机 controller.py；不能只给旧镜像添加环境变量便认为已禁用。维护脚本 Stack/Update-Service 仍保留人工修复能力，不能在 Komodo 发布期间并行使用。
+
+旧控制面改动保存在 `legacy-controller-readonly.patch`。新安装时先在 local-platform 目录运行 `git apply --ignore-space-change --check <此补丁绝对路径>`，通过后应用并重建控制面；已应用的机器可用 `git apply --ignore-space-change --reverse --check` 验证，勿重复应用。切换前后都要检查旧队列没有 queued/running 任务，实测旧三个写入入口409后才认定交接完成。
+
+后续更新上游只需复核 `adaptations/`、本机引擎契约及 Action API；此适配未修改 Komodo 后端。自动检查：`python -m unittest discover -s adaptations/local-platform -p 'test_*.py'`。单元测试不替代真实构建、隔离 MQTT 验收、回退和浏览器入口验证；当次实际证据记录在原实施状态清单。

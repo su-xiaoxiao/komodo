@@ -26,7 +26,14 @@ services:
       KOMODO_FIRST_SERVER_NAME: Local
       KOMODO_PERIPHERY_PUBLIC_KEY: file:/config/keys/periphery.pub
       KOMODO_PRETTY_STARTUP_CONFIG: "false"
-    volumes: ["keys:/config/keys", "backups:/backups"]
+    volumes:
+      - keys:/config/keys
+      - backups:/backups
+      - type: bind
+        source: ${KOMODO_LOCAL_QUEUE:?Set the dedicated local queue directory}
+        target: /local-queue
+        bind:
+          create_host_path: false
     labels: {komodo.skip: "true"}
   periphery:
     image: ghcr.io/moghtech/komodo-periphery:2.3.3@sha256:fa3f1a641a265216066676950d5eecdf506955a7bafe2f01996135ae93115cd5
