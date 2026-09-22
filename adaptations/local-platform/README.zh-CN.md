@@ -66,3 +66,15 @@ Action 日志包含 Windows 任务 ID、阶段、提交、不可变镜像 ID 和
 Git 来源展示完整提交；非 Git 项目展示源码快照或镜像来源，不能伪造 Git 版本。MCP 管理台当前不是 Git 仓库，仅开放 deploy/rollback；要启用 build-deploy，需先补齐 Git 来源、专用构建与独立验收配方。
 
 发布指定 MCP 版本：打开自动化脚本 `mcp-deploy-version` 的配置，在 JSON 参数中设置 `{"operation":"deploy","version":"2026-09-21.komodo-link.1"}`，保存后运行并确认。版本必须已有通过验收的不可变清单。当前采用 Windows 引擎执行 Compose，因此保留原 Windows bind mount；无需为了接入而搬动业务数据。通用接入步骤见本机 `docker-project-onboard` skill。
+
+## 应用栈：现有容器组的查看与启停
+
+运行 `python adaptations/local-platform/adopt_stacks.py` 预览，添加 `--apply` 将已登记且实际存在的 Compose 项目登记到 Komodo 的“应用栈（容器组）”。登记不调用 deploy/up、不启动停止项目、不复制凭据或挂载配置。同名 Stack 必须由本导入器管理，否则拒绝覆盖。仅存在的服务会被列入，例如 infra 当前只含 MySQL，不会创建尚未使用的 Redis/PG/Mongo。重复导入可刷新服务清单。
+
+进入应用栈默认查看“服务”，可看所属容器、状态、端口及日志，原生启动/停止作用于现有 Compose 项目。2026-09-22 已登记 docforge、docforge-legacy、fmea、infra、mcp、mqtt-sandbox、project-console 共8组；未启动原先停止的 spec 或旧版项目。Komodo 上游将 Created 容器汇总为 unhealthy，因此尚未首次启动的 docforge-legacy 以服务明细的 created 状态为准。
+
+这里的 UI 文件仅为服务镜像清单，**不是完整部署配置**。pre_deploy 明确拒绝重新部署；版本更新继续走 Windows 发布流水线，不能移除保护后用此文件部署。镜像清单是登记时快照，实时镜像看容器详情，发布版本看对应发布 Action/Procedure。
+
+原生 Stack 启停与 Windows 发布引擎没有共同事务锁，发布时不得并行启停，未知发布结果先按任务ID对账。跨组依赖不会自动启动：业务组前先启动其共享数据库/依赖；停止 infra 会影响依赖它的应用。分组启动只恢复已有容器，不创建缺失服务。维护入口不等于项目已具备源码CI或正式业务迁移完成。
+
+本机实际验收：MQTT 通过 Komodo 原生 StopStack/StartStack 完成整组停止再启动，原容器ID、镜像、挂载不变且恢复healthy。保护性 DeployStack 演练必须在 Pre Deploy 阶段失败并保持容器不变；证据存 `.local/stack-lifecycle-verification.json` 和 `.local/stack-deploy-guard.json`。

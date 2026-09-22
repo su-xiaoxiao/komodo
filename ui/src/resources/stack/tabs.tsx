@@ -19,7 +19,7 @@ type StackTabsView = "Config" | "Info" | "Services" | "Log" | "Terminals";
 export default function StackTabs({ id }: { id: string }) {
   const [_view, setView] = useLocalStorage<StackTabsView>({
     key: `stack-${id}-tab-v2`,
-    defaultValue: "Config",
+    defaultValue: "Services",
   });
   const info = useStack(id)?.info;
   const { specificLogs, specificTerminal } = usePermissions({

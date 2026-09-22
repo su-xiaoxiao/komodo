@@ -1,3 +1,4 @@
+import { t } from "@/localization/runtime";
 import { usePermissions, useRead, useWrite } from "@/lib/hooks";
 import { useFullServer } from ".";
 import { ReactNode, useEffect, useState } from "react";
@@ -65,7 +66,7 @@ export default function ServerConfig({
             fields: {
               enabled: {
                 description:
-                  "Whether to attempt to connect to this host / send alerts if offline. Disabling will also convert all attached resource's state to 'Unknown'.",
+                  t("Whether to attempt to connect to this host / send alerts if offline. Disabling will also convert all attached resource's state to 'Unknown'."),
               },
             },
           },

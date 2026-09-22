@@ -21,7 +21,11 @@ export function scan(source, filename = 'input.tsx') {
   const ast = parse(source, { sourceType: 'module', plugins: ['typescript', 'jsx'] });
   const entries = [];
   const jsxCalls = new Set();
+  const translators = new Set();
   for (const statement of ast.program.body) {
+    if (statement.type === 'ImportDeclaration' && statement.source.value === '@/localization/runtime') {
+      for (const spec of statement.specifiers) if (spec.imported?.name === 't') translators.add(spec.local.name);
+    }
     if (statement.type === 'ImportDeclaration' && statement.source.value === 'react/jsx-runtime') {
       for (const spec of statement.specifiers) if (['jsx', 'jsxs'].includes(spec.imported?.name)) jsxCalls.add(spec.local.name);
     }
@@ -46,6 +50,11 @@ export function scan(source, filename = 'input.tsx') {
   }
   function visit(node, blocked = false) {
     if (!node || typeof node !== 'object') return;
+    if (node.type === 'CallExpression' && translators.has(node.callee.name) && node.arguments[0]?.type === 'StringLiteral') {
+      const arg = node.arguments[0];
+      entries.push({ source: arg.value, start: arg.start, end: arg.end, line: arg.loc.start.line, file: filename, manual: true });
+      return;
+    }
     if (node.type === 'ObjectProperty' && !node.computed && ['label', 'title'].includes(node.key.name ?? node.key.value)) {
       expression(node.value);
     }
@@ -94,7 +103,7 @@ export function scan(source, filename = 'input.tsx') {
 }
 
 export function transform(source, filename) {
-  const entries = scan(source, filename);
+  const entries = scan(source, filename).filter(e => !e.manual);
   if (!entries.length) return null;
   let code = source;
   for (const e of entries.sort((a, b) => b.start - a.start)) {

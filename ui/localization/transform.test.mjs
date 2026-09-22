@@ -42,3 +42,9 @@ test('template placeholders preserve user expressions and API values', () => {
   assert.match(result, /value="Delete"/);
   parse(result, {sourceType: 'module', plugins: ['typescript', 'jsx']});
 });
+
+test('explicit display translations join catalog without double wrapping', () => {
+  const source = `import {t as translate} from '@/localization/runtime'; const config={description:translate('Host connection help')}; const other=t('User data');`;
+  assert.deepEqual(scan(source).map(e => e.source), ['Host connection help']);
+  assert.equal(transform(source, 'config.tsx'), null);
+});

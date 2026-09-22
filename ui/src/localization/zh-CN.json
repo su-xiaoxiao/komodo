@@ -11,7 +11,7 @@
   "Settings": "设置",
   "Servers": "服务器",
   "Swarms": "Swarm 集群",
-  "Stacks": "Compose 项目",
+  "Stacks": "应用栈（容器组）",
   "Deployments": "容器部署",
   "Builds": "镜像构建",
   "Repos": "代码仓库",
@@ -287,7 +287,7 @@
   "Go to Repos": "前往代码仓库",
   "Go to Schedules": "前往计划任务",
   "Go to Servers": "前往服务器",
-  "Go to Stacks": "前往 Compose 项目",
+  "Go to Stacks": "前往应用栈",
   "Go to Terminals": "前往终端",
   "Go to Variables": "前往变量",
   "Group Execute - ": "批量执行 -",
@@ -571,7 +571,7 @@
   "Skip redeploy": "跳过重新部署",
   "Sort By:": "排序依据：",
   "Source": "来源",
-  "Stack": "Compose 项目",
+  "Stack": "应用栈",
   "Stage ": "阶段",
   "Start Containers": "启动容器",
   "Start Time": "开始时间",
@@ -830,5 +830,7 @@
   "OK": "正常",
   "failed": "失败",
   "FAILED": "失败",
-  "UNKNOWN": "未知"
+  "UNKNOWN": "未知",
+  "Whether to attempt to connect to this host / send alerts if offline. Disabling will also convert all attached resource's state to 'Unknown'.": "是否尝试连接此主机，并在离线时发送告警。禁用后，所有关联资源的状态也会变为“未知”。",
+  "Control and monitor docker swarms.": "管理和监控 Docker Swarm 集群。"
 }

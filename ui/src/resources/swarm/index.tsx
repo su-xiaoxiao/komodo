@@ -1,3 +1,4 @@
+import { t } from "@/localization/runtime";
 import {
   swarmStateIntention,
   swarmNodeStateIntention,
@@ -66,7 +67,7 @@ export const SwarmComponents: RequiredResourceComponents<
     ];
   },
 
-  Description: () => <>Control and monitor docker swarms.</>,
+  Description: () => <>{t("Control and monitor docker swarms.")}</>,
 
   New: () => <NewResource type="Swarm" />,
 
