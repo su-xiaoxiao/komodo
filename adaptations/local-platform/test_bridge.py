@@ -24,6 +24,8 @@ class Stack:
 
     def execute(self, action, groups=(), services=()):
         CALLS.append((action, list(groups)))
+        if BLOCK.get('hang'):
+            self.run(BLOCK['hang'])
         if BLOCK['event'] is not None:
             BLOCK['event'].wait(10)
         if BLOCK.get('fail'):
@@ -104,15 +106,17 @@ class BridgeTests(unittest.TestCase):
         self.identity = 'a' * 32
 
     def request(self, **changes):
-        body = dict(id=self.identity, project='mqtt-sandbox', action='build-deploy',
+        identity = changes.pop('identity', self.identity)
+        body = dict(id=identity, project='mqtt-sandbox', action='build-deploy',
                     options={'ref': 'dev_necal'}, expires_at=time.time()+60)
         body.update(changes)
-        path = self.home / 'requests' / (self.identity+'.json')
+        path = self.home / 'requests' / (identity+'.json')
         path.write_text(json.dumps(body))
         return path
 
-    def response(self):
-        return json.loads((self.home/'responses'/ (self.identity+'.json')).read_text(encoding='utf-8-sig'))
+    def response(self, identity=None):
+        identity = identity or self.identity
+        return json.loads((self.home/'responses'/ (identity+'.json')).read_text(encoding='utf-8-sig'))
 
     def test_repeat_request_reconciles_same_job(self):
         self.request()
@@ -342,7 +346,9 @@ class BridgeTests(unittest.TestCase):
         stack = self.bridge.stack_runs[self.identity]
         self.assertIn(('Status', ['spec']), bridge_stack_calls())
         self.assertEqual(self.pipeline.calls, 0, 'a lifecycle request must never become a release job')
-        self.assertFalse((self.home / 'claims' / (self.identity + '.json')).exists())
+        claim = json.loads((self.home / 'claims' / (self.identity + '.json')).read_text(encoding='utf-8-sig'))
+        self.assertEqual((claim['action'], claim['kind'], claim['project']), ('stack', 'stack', 'spec'))
+        self.assertEqual(claim['options'], {'operation': 'status', 'group': 'spec'})
 
     def test_stack_rejection_is_reported_and_not_retried(self):
         import importlib
@@ -371,10 +377,10 @@ class BridgeTests(unittest.TestCase):
             self.stack_request()
             self.bridge.tick()
             self.assertEqual(self.response()['status'], 'running')
-            self.request()  # build-deploy for mqtt-sandbox while the lifecycle holds the stage
+            self.request(identity='b' * 32)  # build-deploy while the lifecycle holds the stage
             self.bridge.tick()
             self.assertEqual(self.pipeline.calls, 0)
-            self.assertIn('lifecycle operation is in progress', self.response()['error'])
+            self.assertIn('lifecycle operation is in progress', self.response('b' * 32)['error'])
         finally:
             stub.BLOCK['event'].set()
             stub.BLOCK['event'] = None
@@ -400,6 +406,89 @@ class BridgeTests(unittest.TestCase):
                 self.assertEqual(self.pipeline.calls, 0)
                 self.assertEqual(self.bridge.stack_runs, {})
                 (self.home / 'responses' / (self.identity + '.json')).unlink()
+
+    def test_lifecycle_claim_is_durable_and_active_waits_for_it(self):
+        import importlib, threading
+        stub = importlib.import_module('stack_groups')
+        stub.BLOCK['event'] = threading.Event()
+        try:
+            self.stack_request()
+            self.bridge.tick()
+            claim = json.loads((self.home / 'claims' / (self.identity + '.json')).read_text(encoding='utf-8-sig'))
+            self.assertEqual(claim['action'], 'stack')
+            self.assertEqual(claim['options'], {'operation': 'status', 'group': 'spec'})
+            self.assertEqual(self.response()['status'], 'running')
+            # A shutdown must wait for the in-flight operation instead of abandoning it.
+            self.assertTrue(self.bridge.active())
+        finally:
+            stub.BLOCK['event'].set()
+            stub.BLOCK['event'] = None
+        deadline = time.time() + 5
+        while time.time() < deadline and self.response()['status'] == 'running':
+            time.sleep(0.05)
+            self.bridge.tick()
+        self.assertEqual(self.response()['status'], 'succeeded')
+        self.assertFalse(self.bridge.active())
+
+    def test_claim_of_a_dead_executor_is_interrupted_and_never_replayed(self):
+        import importlib
+        stub = importlib.import_module('stack_groups')
+        before = len(stub.CALLS)
+        self.stack_request()
+        # An executor that claimed the operation and then died leaves a claim behind with
+        # no durable execution record: the real container state is unknown.
+        (self.home / 'claims' / (self.identity + '.json')).write_text(json.dumps(
+            {'id': self.identity, 'project': 'spec', 'action': 'stack', 'kind': 'stack',
+             'options': {'operation': 'start', 'group': 'spec'}, 'claimed_at': time.time()}))
+        (self.home / 'responses' / (self.identity + '.json')).write_text(json.dumps({'id': self.identity, 'status': 'running'}))
+        restarted = Bridge(self.home, self.pipeline, self.root)
+        result = self.response()
+        self.assertEqual(result['status'], 'interrupted')
+        self.assertEqual(result['stage'], 'claimed-without-executor')
+        self.assertIn('unknown', result['error'])
+        restarted.tick()
+        self.assertEqual(self.response(), result, 'an interrupted lifecycle answer must stay the answer')
+        self.assertEqual(len(stub.CALLS), before, 'a claimed lifecycle operation must never be replayed')
+
+    def test_a_timed_out_lifecycle_is_reported_once_and_not_reverted(self):
+        import importlib, threading
+        stub = importlib.import_module('stack_groups')
+        stub.BLOCK['event'] = threading.Event()
+        self.bridge.stack_timeout = 0.2
+        try:
+            self.stack_request()
+            self.bridge.tick()
+            self.assertEqual(self.response()['status'], 'running')
+            time.sleep(0.3)
+            self.bridge.tick()
+            result = self.response()
+            self.assertEqual(result['status'], 'timed_out')
+            self.assertEqual(result['stage'], 'timeout')
+            self.assertIn('result is unknown', result['error'])
+            self.assertEqual(result['job'], self.identity[:8])
+            self.bridge.tick()
+            self.assertEqual(self.response(), result, 'a timed out answer must not be reverted to running')
+        finally:
+            stub.BLOCK['event'].set()
+            stub.BLOCK['event'] = None
+
+    def test_a_hung_docker_call_fails_instead_of_reporting_progress_forever(self):
+        import importlib
+        stub = importlib.import_module('stack_groups')
+        stub.BLOCK['hang'] = [sys.executable, '-c', 'import time; time.sleep(30)']
+        self.bridge.command_timeout = 0.4
+        try:
+            self.stack_request()
+            self.bridge.tick()
+            deadline = time.time() + 15
+            while time.time() < deadline and self.response()['status'] == 'running':
+                time.sleep(0.05)
+                self.bridge.tick()
+            result = self.response()
+            self.assertEqual(result['status'], 'failed')
+            self.assertIn('timed out', result['error'])
+        finally:
+            stub.BLOCK['hang'] = None
 
     def test_other_projects_and_command_injection_rejected(self):
         for changes in ({'project':'docforge'}, {'options':{'command':'whoami'}},

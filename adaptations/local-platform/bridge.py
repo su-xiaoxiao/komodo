@@ -13,6 +13,11 @@ import uuid
 from project_registry import load_projects
 
 TERMINAL = {'succeeded', 'failed', 'interrupted'}
+# A lifecycle operation that runs past its deadline is reported as timed out; the
+# operator must re-check with the same entry instead of assuming it never started.
+STACK_TERMINAL = TERMINAL | {'timed_out'}
+STACK_CLAIM_REASON = ('Executor restarted or lost the operation state; the lifecycle result is unknown. '
+                      'Re-check with the same -stack entry using operation=status and only resubmit if needed.')
 
 
 def read(path):
@@ -101,8 +106,48 @@ class Bridge:
         self.root = Path(root) if root else None
         self.projects = load_projects()
         self.stack_runs = {}
+        # Every lifecycle operation is bounded: a hung docker call must not leave a run
+        # reported as running forever while the Komodo Action waits for an answer.
+        self.stack_timeout = float(os.environ.get('LOCAL_STACK_TIMEOUT', '900'))
+        # A single docker call gets slightly less than the whole budget, so a hung call is
+        # reported as a failed command instead of an unknown overall result.
+        self.command_timeout = float(os.environ.get('LOCAL_STACK_COMMAND_TIMEOUT', str(self.stack_timeout * 0.8)))
         for name in ('requests', 'responses', 'claims'):
             (self.home/name).mkdir(parents=True, exist_ok=True)
+        # A claimed lifecycle operation whose executor died has no durable execution record,
+        # so its real state is unknown. Report it once instead of replaying docker commands.
+        self.reconcile_stack_claims()
+
+    def stack_claim(self, identity):
+        return self.home/'claims'/(identity + '.json')
+
+    def reconcile_stack_claims(self):
+        """Settle claims left behind by an earlier executor process; never replay them."""
+        try:
+            claims = sorted((self.home/'claims').glob('*.json'))
+        except OSError:
+            return
+        for claim in claims:
+            try:
+                body = read(claim)
+            except (OSError, json.JSONDecodeError, ValueError):
+                continue
+            if not isinstance(body, dict) or body.get('action') != 'stack':
+                continue
+            target = self.home/'responses'/claim.name
+            try:
+                if target.exists() and read(target).get('status') in STACK_TERMINAL:
+                    continue
+            except (OSError, json.JSONDecodeError, ValueError):
+                pass
+            try:
+                write(target, dict(id=claim.stem, kind='stack', project=body.get('project'),
+                                   group=(body.get('options') or {}).get('group'),
+                                   operation=(body.get('options') or {}).get('operation'),
+                                   status='interrupted', stage='claimed-without-executor',
+                                   observed_at=time.time(), error=STACK_CLAIM_REASON))
+            except OSError:
+                continue
 
     def tick(self):
         write(self.home/'heartbeat.json', {'pid': os.getpid(), 'updated_at': time.time(), 'protocol': 1})
@@ -129,8 +174,13 @@ class Bridge:
                         raise ValueError('Request expired or invalid deadline')
                     self.answer_refs(identity, request, target)
                     continue
-                if intent['action'] == 'stack' and not claim.exists():
-                    if not time.time() < request['expires_at'] <= time.time()+120:
+                if intent['action'] == 'stack':
+                    # Every lifecycle answer is settled once: a timed out or interrupted
+                    # operation must never be turned back into 'running' by a later tick,
+                    # and must never be executed a second time.
+                    if target.exists() and read(target).get('status') in STACK_TERMINAL:
+                        continue
+                    if not claim.exists() and not time.time() < request['expires_at'] <= time.time()+120:
                         raise ValueError('Request expired or invalid deadline')
                     self.answer_stack(identity, request, target)
                     continue
@@ -246,18 +296,36 @@ class Bridge:
         state = self.stack_runs.get(identity)
         if state:
             return state
+        claim = self.stack_claim(identity)
+        if claim.exists():
+            # A claim without a live run in this process belongs to an earlier executor
+            # (or an already accepted request). Replaying docker here would be a guess.
+            return {'status': 'interrupted', 'stage': 'claimed-without-executor', 'output': [], 'error': STACK_CLAIM_REASON,
+                    'started_at': time.time()}
         operation, group = request['options']['operation'], request['options']['group']
         state = {'status': 'running', 'stage': 'stack-' + operation, 'output': [], 'error': None, 'started_at': time.time()}
+
+        def settle(status, **extra):
+            # A settled 'timed_out' verdict is the operator's record of an unknown result;
+            # stop the docker call but do not rewrite what was already reported.
+            if state.get('status') == 'timed_out' and status != 'timed_out':
+                return
+            state.update(status=status, **extra)
+
         self.stack_runs[identity] = state
         if self.root is None:
-            state.update(status='failed', stage='error', error='A platform root is required for lifecycle operations')
+            settle('failed', stage='error', error='A platform root is required for lifecycle operations')
             return state
         sys.path.insert(0, str(self.root / 'scripts'))
         import stack_groups
 
         def run(command):
             state['output'].append(' '.join(str(item) for item in command))
-            result = subprocess.run(command, capture_output=True, text=True, encoding='utf-8', errors='replace', shell=False)
+            try:
+                result = subprocess.run(command, capture_output=True, text=True, encoding='utf-8',
+                                        errors='replace', shell=False, timeout=self.command_timeout)
+            except subprocess.TimeoutExpired:
+                raise stack_groups.StackError('docker compose timed out after {0:.0f}s; the command was stopped and the operation state is unknown'.format(self.command_timeout))
             tail = (result.stdout or '') + (result.stderr or '')
             if tail.strip():
                 state['output'].extend(line for line in tail.strip().splitlines()[-20:])
@@ -268,18 +336,26 @@ class Bridge:
         def work():
             try:
                 stack_groups.Stack(self.root, run=run).execute(operation.capitalize(), groups=[group])
-                state.update(status='succeeded', stage='done')
+                settle('succeeded', stage='done')
             except Exception as error:  # noqa: BLE001 - reported to the operator, never raised into the tick loop
-                state.update(status='failed', stage='error', error=str(error)[:500])
+                settle('failed', stage='error', error=str(error)[:500])
 
+        # Durable claim BEFORE any docker command: if the executor dies here, startup
+        # reconciliation reports the operation as interrupted instead of replaying it.
+        write(claim, dict(id=identity, project=request['project'], action='stack', kind='stack',
+                          options=dict(request['options']), claimed_at=time.time()))
         threading.Thread(target=work, daemon=True, name='komodo-stack-' + identity[:8]).start()
         return state
 
     def answer_stack(self, identity, request, target):
         state = self.stack_runner(identity, request)
+        if state['status'] == 'running' and time.time() > state['started_at'] + self.stack_timeout:
+            state.update(status='timed_out', stage='timeout',
+                         error='Lifecycle operation exceeded {0:.0f}s; the result is unknown. Re-check with the same entry '
+                               '(operation=status) before resubmitting'.format(self.stack_timeout))
         result = {'id': identity, 'kind': 'stack', 'project': request['project'], 'group': request['options']['group'],
                   'operation': request['options']['operation'], 'status': state['status'], 'stage': state['stage'],
-                  'observed_at': time.time(), 'output': state['output'][-40:]}
+                  'observed_at': time.time(), 'output': state['output'][-40:], 'job': identity[:8]}
         if state['error']:
             result['error'] = state['error']
         write(target, result)
@@ -312,7 +388,11 @@ class Bridge:
                            observed_at=time.time(), **report))
 
     def active(self):
-        # Observation files are never authoritative for stopping an executor.
+        # Observation files are never authoritative for stopping an executor, but an
+        # in-flight lifecycle operation is: stopping here would abandon a half-applied
+        # start/stop with no durable executor able to finish or report it.
+        if any(state.get('status') == 'running' for state in self.stack_runs.values()):
+            return True
         try:
             return any(job['status'] in {'queued', 'running'} for job in self.pipeline.list_jobs())
         except Exception:

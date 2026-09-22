@@ -164,18 +164,34 @@ def install(api, refs=None, groups=None, sources=None):
             print(name, result.get('_id', result.get('id')))
     for group in groups or []:
         name = group + '-stack'
+        description = ('整组启停/状态（与发布事务共用 releases/.release.lock，二者互斥）；操作填 start/stop/status/logs。'
+                       '结果未知时用 job=<任务号> 回查（只读，不会重复执行启停）。'
+                       '注意：此 Action 之外，Komodo 原生 Stack 启停按钮不经过该锁，请只从这里启停。')
         body = render_stack_action(group, 'status')
-        config = dict(file_contents=body, arguments=json.dumps({'operation':'status'}), arguments_format='json',
+        config = dict(file_contents=body, arguments=json.dumps({'operation':'status','job':''}), arguments_format='json',
                       run_at_startup=False, schedule_enabled=False, webhook_enabled=False)
         if name in actions:
-            # Keep the operator's chosen operation across adapter upgrades.
-            config.pop('arguments')
-            config.pop('arguments_format')
+            # Keep the operator's chosen operation across adapter upgrades, and add the
+            # read-only reconcile argument once (an Action installed earlier has no 'job').
+            current = api.call('read/GetAction', {'id': actions[name]['id']}) or {}
+            config_now = current.get('config') or {}
+            try:
+                operator = json.loads(config_now.get('arguments') or '{}')
+            except ValueError:
+                operator = {}
+            if isinstance(operator, dict) and 'job' not in operator:
+                operator['job'] = ''
+                config['arguments'] = json.dumps(operator)
+                config['arguments_format'] = 'json'
+            else:
+                config.pop('arguments')
+                config.pop('arguments_format')
             result = api.call('write/UpdateAction', {'id':actions[name]['id'],'config':config})
         else:
             result = api.call('write/CreateAction', {'name':name,'config':config})
-            api.call('write/UpdateResourceMeta', {'target':{'type':'Action','id':name},
-                                                  'description':'整组启停/状态（与发布事务共用 releases/.release.lock，二者互斥）；操作填 start/stop/status/logs'})
+        # The guidance (shared lock, job= reconcile, native buttons) is generated, not typed
+        # by hand: refresh it on every install so the page always states the real boundary.
+        api.call('write/UpdateResourceMeta', {'target':{'type':'Action','id':name},'description':description})
         print(name, result.get('_id', result.get('id')))
 
 

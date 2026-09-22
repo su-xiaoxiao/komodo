@@ -164,6 +164,42 @@ class RegistryTests(unittest.TestCase):
         api2=API(); install(api2)
         created2={body['name']:body['config'] for path,body in api2.calls if path=='write/CreateAction'}
         self.assertEqual(json.loads(created2['mqtt-edit-source']['arguments'])['refs'],'')
+    def test_installer_stack_action_states_the_lock_boundary_and_reconcile_path(self):
+        class API:
+            def __init__(self, existing=None, arguments='{"operation":"stop"}'):
+                self.calls=[]; self.existing=existing or []; self.arguments=arguments
+            def call(self,path,body):
+                self.calls.append((path,body))
+                if path=='read/ListActions': return self.existing
+                if path=='read/ListProcedures': return []
+                if path=='read/GetAction': return {'config':{'arguments':self.arguments}}
+                return {}
+        api=API(); install(api, None, ['spec'], None)
+        created=next(body for path,body in api.calls if path=='write/CreateAction' and body['name']=='spec-stack')
+        self.assertEqual(json.loads(created['config']['arguments']),{'operation':'status','job':''})
+        self.assertIn('action: "stack"',created['config']['file_contents'])
+        self.assertIn('ARGS.job',created['config']['file_contents'])
+        description=next(body for path,body in api.calls
+                         if path=='write/UpdateResourceMeta' and body['target']['id']=='spec-stack')['description']
+        self.assertIn('release.lock',description)
+        self.assertIn('job=<任务号>',description)
+        self.assertIn('原生 Stack 启停按钮不经过该锁',description)
+        # A reinstall refreshes the generated guidance, not only the Action body.
+        api2=API(existing=[{'name':'spec-stack','id':'existing'}]); install(api2, None, ['spec'], None)
+        refreshed=[body for path,body in api2.calls if path=='write/UpdateResourceMeta' and body['target']['id']=='spec-stack']
+        self.assertEqual(len(refreshed),1)
+        self.assertIn('原生 Stack 启停按钮不经过该锁',refreshed[0]['description'])
+        self.assertFalse(any(path=='write/CreateAction' and body.get('name')=='spec-stack' for path,body in api2.calls))
+        updated=next(body for path,body in api2.calls if path=='write/UpdateAction')
+        # An Action installed before the reconcile path existed gains it without losing the
+        # operator's own selection.
+        self.assertEqual(json.loads(updated['config']['arguments']),{'operation':'stop','job':''})
+        # Once present, the operator's arguments are left exactly as they are.
+        api3=API(existing=[{'name':'spec-stack','id':'existing'}],
+                 arguments='{"operation":"logs","job":"abc"}')
+        install(api3, None, ['spec'], None)
+        updated3=next(body for path,body in api3.calls if path=='write/UpdateAction')
+        self.assertNotIn('arguments',updated3['config'])
 
 
 if __name__ == '__main__':
