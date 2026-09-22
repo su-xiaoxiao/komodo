@@ -20,7 +20,7 @@ export function jsxText(raw) {
 export function scan(source, filename = 'input.tsx') {
   const ast = parse(source, { sourceType: 'module', plugins: ['typescript', 'jsx'] });
   const entries = [];
-  const serverView = filename.replaceAll('\\', '/').includes('resources/server/');
+  const resourceView = /resources\/(server|procedure|action)\//.test(filename.replaceAll('\\', '/'));
   const jsxCalls = new Set();
   const translators = new Set();
   for (const statement of ast.program.body) {
@@ -56,7 +56,7 @@ export function scan(source, filename = 'input.tsx') {
       entries.push({ source: arg.value, start: arg.start, end: arg.end, line: arg.loc.start.line, file: filename, manual: true });
       return;
     }
-    if (node.type === 'ObjectProperty' && !node.computed && (serverView ? ['label', 'title', 'description', 'placeholder', 'header'] : ['label', 'title']).includes(node.key.name ?? node.key.value)) {
+    if (node.type === 'ObjectProperty' && !node.computed && (resourceView ? ['label', 'title', 'description', 'placeholder', 'header'] : ['label', 'title']).includes(node.key.name ?? node.key.value)) {
       expression(node.value);
     }
     if (node.type === 'CallExpression' && jsxCalls.has(node.callee.name)) {
@@ -73,7 +73,7 @@ export function scan(source, filename = 'input.tsx') {
       }
       return;
     }
-    if (serverView && node.type === 'JSXFragment') {
+    if (resourceView && node.type === 'JSXFragment') {
       for (const child of node.children) {
         if (child.type === 'JSXText') literal(child, true);
         else if (child.type === 'JSXExpressionContainer') { expression(child.expression); visit(child.expression); }

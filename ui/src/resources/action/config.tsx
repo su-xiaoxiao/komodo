@@ -1,3 +1,4 @@
+import { t } from "@/localization/runtime";
 import { Anchor, Group, Select, Stack, Text, TextInput } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import { useState } from "react";
@@ -9,7 +10,6 @@ import {
   useWebhookIntegrations,
   useWrite,
 } from "@/lib/hooks";
-import { fmtSnakeCaseToUpperSpaceCase } from "mogh_ui";
 import { MonacoEditor } from "mogh_ui";
 import { Config, ConfigItem, ConfigSwitch } from "mogh_ui";
 import ActionLastRun from "./last-run";
@@ -67,11 +67,11 @@ export default function ActionConfig({ id }: { id: string }) {
                         <Text c="dimmed">Docs</Text>
                         {["read", "execute", "write"].map((api) => (
                           <Anchor
-                            key={api}
+                            key={api === "read" ? t("Read API") : api === "execute" ? t("Execute API") : t("Write API")}
                             href={`https://docs.rs/komodo_client/latest/komodo_client/api/${api}/index.html`}
                             target="_blank"
                           >
-                            {api}
+                            {api === "read" ? t("Read API") : api === "execute" ? t("Execute API") : t("Write API")}
                           </Anchor>
                         ))}
                       </Group>
@@ -111,7 +111,7 @@ export default function ActionConfig({ id }: { id: string }) {
                         }
                         data={Object.values(Types.FileFormat).map((format) => ({
                           value: format,
-                          label: fmtSnakeCaseToUpperSpaceCase(format),
+                          label: format === Types.FileFormat.KeyValue ? t("Key-value pairs") : format.toUpperCase(),
                         }))}
                       />
                     </Group>
@@ -135,6 +135,7 @@ export default function ActionConfig({ id }: { id: string }) {
             labelHidden: true,
             fields: {
               failure_alert: {
+                label: "Failure Alert",
                 description: "Send an alert any time the Action fails",
               },
             },
@@ -172,7 +173,7 @@ export default function ActionConfig({ id }: { id: string }) {
                           schedule_format as Types.ScheduleFormat,
                       })
                     }
-                    data={Object.values(Types.ScheduleFormat)}
+                    data={Object.values(Types.ScheduleFormat).map(value => ({ value, label: value === "English" ? t("English expression") : "CRON" }))}
                     w={{ base: "85%", lg: 400 }}
                   />
                 </ConfigItem>
@@ -181,6 +182,7 @@ export default function ActionConfig({ id }: { id: string }) {
                 label: "Expression",
                 description: (
                   <Stack gap="0" pt="0.2rem">
+                    <Text c="dimmed">{(update.schedule_format ?? config.schedule_format) === "Cron" ? t("CRON fields: second, minute, hour, day, month, day of week.") : t("Schedule examples use English input; copy the expression without the leading dash.")}</Text>
                     {(update.schedule_format ?? config.schedule_format) ===
                     "Cron" ? (
                       <code>
@@ -219,6 +221,7 @@ export default function ActionConfig({ id }: { id: string }) {
                 );
               },
               schedule_alert: {
+                label: "Schedule Alert",
                 description: "Send an alert when the scheduled run occurs",
               },
             },
@@ -284,8 +287,9 @@ export default function ActionConfig({ id }: { id: string }) {
                   path={`/action/${idOrName === "Id" ? id : encodeURIComponent(name ?? "...")}/${branch}`}
                 />
               ),
-              webhook_enabled: true,
+              webhook_enabled: { label: "Webhook Enabled" },
               webhook_secret: {
+                label: "Webhook Secret",
                 description:
                   "Provide a custom webhook secret for this resource, or use the global default.",
                 placeholder: "Input custom secret",

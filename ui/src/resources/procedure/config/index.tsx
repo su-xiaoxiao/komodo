@@ -1,3 +1,4 @@
+import { t } from "@/localization/runtime";
 import {
   usePermissions,
   useRead,
@@ -10,7 +11,7 @@ import { useLocalStorage } from "@mantine/hooks";
 import { Types } from "komodo_client";
 import { useState } from "react";
 import Stage from "./stage";
-import { Button, Group, Select, Stack, TextInput } from "@mantine/core";
+import { Button, Group, Select, Stack, Text, TextInput } from "@mantine/core";
 import { ICONS } from "@/lib/icons";
 import TimezoneSelector from "@/components/timezone-selector";
 import WebhookBuilder from "@/components/webhook/builder";
@@ -175,6 +176,7 @@ export default function ProcedureConfig({ id }: { id: string }) {
             labelHidden: true,
             fields: {
               failure_alert: {
+                label: "Failure Alert",
                 description: "Send an alert any time the Procedure fails",
               },
             },
@@ -212,7 +214,7 @@ export default function ProcedureConfig({ id }: { id: string }) {
                           schedule_format as Types.ScheduleFormat,
                       })
                     }
-                    data={Object.values(Types.ScheduleFormat)}
+                    data={Object.values(Types.ScheduleFormat).map(value => ({ value, label: value === "English" ? t("English expression") : "CRON" }))}
                     w={{ base: "85%", lg: 400 }}
                   />
                 </ConfigItem>
@@ -221,6 +223,7 @@ export default function ProcedureConfig({ id }: { id: string }) {
                 label: "Expression",
                 description: (
                   <Stack gap="0" pt="0.2rem">
+                    <Text c="dimmed">{(update.schedule_format ?? config.schedule_format) === "Cron" ? t("CRON fields: second, minute, hour, day, month, day of week.") : t("Schedule examples use English input; copy the expression without the leading dash.")}</Text>
                     {(update.schedule_format ?? config.schedule_format) ===
                     "Cron" ? (
                       <code>
@@ -259,6 +262,7 @@ export default function ProcedureConfig({ id }: { id: string }) {
                 );
               },
               schedule_alert: {
+                label: "Schedule Alert",
                 description: "Send an alert when the scheduled run occurs",
               },
             },
@@ -302,8 +306,9 @@ export default function ProcedureConfig({ id }: { id: string }) {
                   path={`/procedure/${idOrName === "Id" ? id : encodeURIComponent(name ?? "...")}/${branch}`}
                 />
               ),
-              webhook_enabled: true,
+              webhook_enabled: { label: "Webhook Enabled" },
               webhook_secret: {
+                label: "Webhook Secret",
                 description:
                   "Provide a custom webhook secret for this resource, or use the global default.",
                 placeholder: "Input custom secret",

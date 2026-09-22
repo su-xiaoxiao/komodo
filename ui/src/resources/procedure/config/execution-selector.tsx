@@ -1,9 +1,9 @@
+import { executionLabel } from "./execution-labels";
 import { Types } from "komodo_client";
 import { PROCEDURE_EXECUTIONS } from "./executions";
 import { filterBySplit } from "mogh_ui";
 import { Button, ButtonProps, Combobox, ComboboxProps } from "@mantine/core";
 import { ChevronsUpDown } from "lucide-react";
-import { fmtUpperCamelcase } from "mogh_ui";
 import { ICONS } from "@/lib/icons";
 import { useSearchCombobox } from "mogh_ui";
 
@@ -29,7 +29,7 @@ export default function ProcedureExecutionSelector({
 
   const { search, setSearch, combobox } = useSearchCombobox();
 
-  const filtered = filterBySplit(executionTypes, search, (item) => item);
+  const filtered = filterBySplit(executionTypes, search, (item) => item + " " + executionLabel(item));
 
   return (
     <Combobox
@@ -53,7 +53,7 @@ export default function ProcedureExecutionSelector({
           maw={{ base: 200, lg: 300 }}
           {...targetProps}
         >
-          {fmtUpperCamelcase(type)}
+          {executionLabel(type)}
         </Button>
       </Combobox.Target>
       <Combobox.Dropdown>
@@ -67,7 +67,7 @@ export default function ProcedureExecutionSelector({
           {!search && <Combobox.Option value="None">None</Combobox.Option>}
           {filtered.map((type) => (
             <Combobox.Option key={type} value={type}>
-              {fmtUpperCamelcase(type)}
+              {executionLabel(type)}
             </Combobox.Option>
           ))}
           {filtered.length === 0 && (

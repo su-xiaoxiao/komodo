@@ -33,5 +33,7 @@
   "http{0}://",
   "{0} GB",
   "{0} MB",
-  "my.server.int"
+  "my.server.int",
+  "0 0 0 ? * SUN",
+  "CRON"
 ]

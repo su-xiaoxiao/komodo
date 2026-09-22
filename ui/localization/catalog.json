@@ -166,6 +166,10 @@
   "% Full": [
     "src/resources/server/stats/disks.tsx:87"
   ],
+  "0 0 0 ? * SUN": [
+    "src/resources/action/config.tsx:204",
+    "src/resources/procedure/config/index.tsx:245"
+  ],
   "15m": [
     "src/resources/server/table/stats.tsx:222"
   ],
@@ -201,6 +205,9 @@
   ],
   "Add '.toml' files or folders to the sync. Relative to '/syncs/{sync_name}'.": [
     "src/resources/sync/config.tsx:228"
+  ],
+  "Add / Remove": [
+    "src/resources/procedure/config/stage.tsx:195"
   ],
   "Add additional env files to pass with '--env-file'. Relative to the 'Run Directory'. Uncheck 'Track' for externally managed files (e.g., sops decrypted).": [
     "src/resources/stack/config/index.tsx:352"
@@ -263,7 +270,7 @@
     "src/components/permissions/specific-selector.tsx:56"
   ],
   "Add Stage": [
-    "src/resources/procedure/config/index.tsx:166"
+    "src/resources/procedure/config/index.tsx:167"
   ],
   "Add User": [
     "src/pages/user-group/add-user.tsx:61"
@@ -286,7 +293,7 @@
   ],
   "Alert": [
     "src/resources/action/config.tsx:134",
-    "src/resources/procedure/config/index.tsx:174"
+    "src/resources/procedure/config/index.tsx:175"
   ],
   "Alert message": [
     "src/resources/procedure/config/executions.tsx:1466"
@@ -390,8 +397,47 @@
     "src/resources/not-found.tsx:22",
     "node_modules/mogh_ui/dist/components/back-button.js:12"
   ],
+  "Backup Core Database": [
+    "src/resources/procedure/config/execution-labels.tsx:65"
+  ],
   "Base Permissions on Resource Types": [
     "src/components/permissions/base-section.tsx:85"
+  ],
+  "Batch Build Repo": [
+    "src/resources/procedure/config/execution-labels.tsx:42"
+  ],
+  "Batch Clone Repo": [
+    "src/resources/procedure/config/execution-labels.tsx:38"
+  ],
+  "Batch Deploy": [
+    "src/resources/procedure/config/execution-labels.tsx:14"
+  ],
+  "Batch Deploy Stack": [
+    "src/resources/procedure/config/execution-labels.tsx:24"
+  ],
+  "Batch Deploy Stack If Changed": [
+    "src/resources/procedure/config/execution-labels.tsx:26"
+  ],
+  "Batch Destroy Deployment": [
+    "src/resources/procedure/config/execution-labels.tsx:22"
+  ],
+  "Batch Destroy Stack": [
+    "src/resources/procedure/config/execution-labels.tsx:35"
+  ],
+  "Batch Pull Repo": [
+    "src/resources/procedure/config/execution-labels.tsx:40"
+  ],
+  "Batch Pull Stack": [
+    "src/resources/procedure/config/execution-labels.tsx:28"
+  ],
+  "Batch Run Action": [
+    "src/resources/procedure/config/execution-labels.tsx:9"
+  ],
+  "Batch Run Build": [
+    "src/resources/procedure/config/execution-labels.tsx:11"
+  ],
+  "Batch Run Procedure": [
+    "src/resources/procedure/config/execution-labels.tsx:7"
   ],
   "Blacklist": [
     "src/resources/alerter/config/resources.tsx:166"
@@ -403,8 +449,8 @@
     "src/resources/server/stats/containers.tsx:101"
   ],
   "Branch": [
-    "src/resources/action/config.tsx:259",
-    "src/resources/procedure/config/index.tsx:277",
+    "src/resources/action/config.tsx:262",
+    "src/resources/procedure/config/index.tsx:281",
     "src/resources/repo/table.tsx:70",
     "src/resources/sync/table.tsx:66"
   ],
@@ -421,6 +467,9 @@
   ],
   "Build Images": [
     "src/resources/stack/config/index.tsx:679"
+  ],
+  "Build Repo": [
+    "src/resources/procedure/config/execution-labels.tsx:41"
   ],
   "Builder": [
     "src/resources/build/config.tsx:130",
@@ -445,7 +494,11 @@
   ],
   "Cancel Build": [
     "src/resources/build/executions.tsx:57",
+    "src/resources/procedure/config/execution-labels.tsx:12",
     "src/resources/repo/executions.tsx:136"
+  ],
+  "Cancel Repo Build": [
+    "src/resources/procedure/config/execution-labels.tsx:43"
   ],
   "Cancel Run": [
     "src/resources/action/executions.tsx:58",
@@ -487,14 +540,17 @@
     "src/resources/deployment/config/network.tsx:40"
   ],
   "Choose whether to provide English or CRON schedule expression": [
-    "src/resources/action/config.tsx:164",
-    "src/resources/procedure/config/index.tsx:204"
+    "src/resources/action/config.tsx:165",
+    "src/resources/procedure/config/index.tsx:206"
   ],
   "Clear Filter Tags": [
     "src/app/topbar/keyboard-shortcuts.tsx:61"
   ],
   "Clear on close": [
     "src/app/topbar/omni-search/index.tsx:67"
+  ],
+  "Clear Repo Cache": [
+    "src/resources/procedure/config/execution-labels.tsx:64"
   ],
   "Click to reconnect": [
     "src/app/topbar/websocket-status.tsx:42"
@@ -504,6 +560,9 @@
   ],
   "Clone Path": [
     "src/resources/repo/config.tsx:184"
+  ],
+  "Clone Repo": [
+    "src/resources/procedure/config/execution-labels.tsx:37"
   ],
   "Close": [
     "src/components/api-keys/new.tsx:153",
@@ -539,6 +598,9 @@
     "src/resources/repo/config.tsx:172",
     "src/resources/stack/config/index.tsx:829",
     "src/resources/sync/config.tsx:302"
+  ],
+  "Commit Sync": [
+    "src/resources/procedure/config/execution-labels.tsx:63"
   ],
   "Compose File": [
     "src/resources/stack/config/index.tsx:938"
@@ -594,8 +656,14 @@
   "Configure the --restart behavior.": [
     "src/resources/deployment/config/restart.tsx:20"
   ],
+  "Configure the Action to run at defined times using English or CRON.": [
+    "src/resources/action/config.tsx:146"
+  ],
   "Configure the endpoint to send the alert to.": [
     "src/resources/alerter/config/endpoint.tsx:26"
+  ],
+  "Configure the Procedure to run at defined times using English or CRON.": [
+    "src/resources/procedure/config/index.tsx:187"
   ],
   "Configure where the built image is pushed.": [
     "src/resources/build/config.tsx:229"
@@ -666,6 +734,10 @@
   "Copy the onboarding key below. ": [
     "src/pages/settings/onboarding/new.tsx:123"
   ],
+  "Copy the webhook given here, and configure your {0}-style repo provider to send webhooks to Komodo": [
+    "src/resources/action/config.tsx:253",
+    "src/resources/procedure/config/index.tsx:272"
+  ],
   "Core Count": [
     "src/resources/server/stats/system-info.tsx:63"
   ],
@@ -728,6 +800,14 @@
     "src/resources/swarm/docker/configs.tsx:81",
     "src/resources/swarm/docker/secrets.tsx:105"
   ],
+  "CRON": [
+    "src/resources/action/config.tsx:176",
+    "src/resources/procedure/config/index.tsx:217"
+  ],
+  "CRON fields: second, minute, hour, day, month, day of week.": [
+    "src/resources/action/config.tsx:185",
+    "src/resources/procedure/config/index.tsx:226"
+  ],
   "Current": [
     "src/resources/server/stats/current/index.tsx:26"
   ],
@@ -745,6 +825,9 @@
   ],
   "Custom Name": [
     "src/resources/deployment/config/index.tsx:302"
+  ],
+  "Custom scripts using the Komodo client.": [
+    "src/resources/action/index.tsx:69"
   ],
   "custom-public-key": [
     "src/resources/server/config.tsx:82"
@@ -799,6 +882,7 @@
   ],
   "Deploy": [
     "src/resources/deployment/executions.tsx:91",
+    "src/resources/procedure/config/execution-labels.tsx:13",
     "src/resources/stack/executions.tsx:69",
     "src/resources/stack/executions.tsx:81"
   ],
@@ -807,6 +891,12 @@
   ],
   "Deploy Error": [
     "src/resources/sync/pending.tsx:71"
+  ],
+  "Deploy Stack": [
+    "src/resources/procedure/config/execution-labels.tsx:23"
+  ],
+  "Deploy Stack If Changed": [
+    "src/resources/procedure/config/execution-labels.tsx:25"
   ],
   "Deployed config:": [
     "src/resources/stack/info.tsx:205"
@@ -836,6 +926,15 @@
   ],
   "Destroy Before Deploy": [
     "src/resources/stack/config/index.tsx:726"
+  ],
+  "Destroy Container": [
+    "src/resources/procedure/config/execution-labels.tsx:49"
+  ],
+  "Destroy Deployment": [
+    "src/resources/procedure/config/execution-labels.tsx:21"
+  ],
+  "Destroy Stack": [
+    "src/resources/procedure/config/execution-labels.tsx:34"
   ],
   "Detach": [
     "src/resources/procedure/config/executions.tsx:956"
@@ -952,10 +1051,11 @@
     "src/pages/docker/network.tsx:119",
     "src/pages/schedules.tsx:137",
     "src/pages/settings/onboarding/index.tsx:161",
-    "src/resources/action/config.tsx:149",
+    "src/resources/action/config.tsx:150",
     "src/resources/alerter/config/index.tsx:35",
     "src/resources/alerter/table.tsx:69",
-    "src/resources/procedure/config/index.tsx:189",
+    "src/resources/procedure/config/index.tsx:191",
+    "src/resources/procedure/config/stage.tsx:231",
     "src/resources/server/config.tsx:64",
     "src/resources/server/config.tsx:68",
     "node_modules/mogh_ui/dist/components/enable-switch.js:28"
@@ -963,6 +1063,10 @@
   "Endpoint": [
     "src/resources/alerter/config/endpoint.tsx:25",
     "src/resources/alerter/config/index.tsx:44"
+  ],
+  "English expression": [
+    "src/resources/action/config.tsx:176",
+    "src/resources/procedure/config/index.tsx:217"
   ],
   "Enroll Passkey 2FA": [
     "node_modules/mogh_ui/dist/auth/profile/passkey.js:55"
@@ -975,6 +1079,10 @@
   ],
   "Enter command (Optional)": [
     "src/resources/procedure/config/executions.tsx:878"
+  ],
+  "Enter English expression": [
+    "src/resources/action/config.tsx:205",
+    "src/resources/procedure/config/index.tsx:246"
   ],
   "Enter name": [
     "node_modules/mogh_ui/dist/components/entity-header.js:64"
@@ -1015,11 +1123,18 @@
   "Execute a shell command before running docker compose up. The 'path' is relative to the Run Directory": [
     "src/resources/stack/config/index.tsx:482"
   ],
+  "Execute API": [
+    "src/resources/action/config.tsx:70",
+    "src/resources/action/config.tsx:74"
+  ],
   "Execute Change": [
     "src/resources/sync/pending.tsx:178"
   ],
   "Execute Sync": [
     "src/resources/sync/executions.tsx:90"
+  ],
+  "Execution": [
+    "src/resources/procedure/config/stage.tsx:133"
   ],
   "Executions will delete any resources not found in the resource files. Only use this when using one sync for everything.": [
     "src/resources/sync/config.tsx:151"
@@ -1039,8 +1154,8 @@
     "src/components/export-toml.tsx:32"
   ],
   "Expression": [
-    "src/resources/action/config.tsx:181",
-    "src/resources/procedure/config/index.tsx:221"
+    "src/resources/action/config.tsx:182",
+    "src/resources/procedure/config/index.tsx:223"
   ],
   "External Address": [
     "src/resources/server/config.tsx:140"
@@ -1075,6 +1190,10 @@
   "Failed to select passkey": [
     "node_modules/mogh_ui/dist/auth/index.js:95",
     "node_modules/mogh_ui/dist/auth/login/index.js:88"
+  ],
+  "Failure Alert": [
+    "src/resources/action/config.tsx:138",
+    "src/resources/procedure/config/index.tsx:179"
   ],
   "file": [
     "src/resources/sync/pending.tsx:45"
@@ -1123,8 +1242,8 @@
     "src/resources/procedure/config/executions.tsx:1455"
   ],
   "Format": [
-    "src/resources/action/config.tsx:163",
-    "src/resources/procedure/config/index.tsx:203"
+    "src/resources/action/config.tsx:164",
+    "src/resources/procedure/config/index.tsx:205"
   ],
   "From config file:": [
     "src/pages/settings/providers/from-config.tsx:34"
@@ -1146,7 +1265,8 @@
     "src/pages/settings/providers/index.tsx:65"
   ],
   "Global Auto Update": [
-    "src/pages/dashboard/active.tsx:191"
+    "src/pages/dashboard/active.tsx:191",
+    "src/resources/procedure/config/execution-labels.tsx:66"
   ],
   "Go Home": [
     "src/app/topbar/keyboard-shortcuts.tsx:46"
@@ -1303,6 +1423,10 @@
   "Input custom provider domain": [
     "src/components/config/provider-selector.tsx:40"
   ],
+  "Input custom secret": [
+    "src/resources/action/config.tsx:295",
+    "src/resources/procedure/config/index.tsx:314"
+  ],
   "Input ID": [
     "src/resources/builder/config/aws.tsx:75"
   ],
@@ -1371,6 +1495,9 @@
   "Key": [
     "src/components/api-keys/new.tsx:135"
   ],
+  "Key-value pairs": [
+    "src/resources/action/config.tsx:114"
+  ],
   "key=value": [
     "src/resources/swarm/docker/nodes/update.tsx:138"
   ],
@@ -1429,8 +1556,8 @@
     "src/resources/swarm/config.tsx:156"
   ],
   "Listen on branch?": [
-    "src/resources/action/config.tsx:258",
-    "src/resources/procedure/config/index.tsx:276"
+    "src/resources/action/config.tsx:261",
+    "src/resources/procedure/config/index.tsx:280"
   ],
   "Load Average": [
     "src/resources/server/stats/current/load-average.tsx:39"
@@ -1483,6 +1610,12 @@
   ],
   "Manage terminals across all servers.": [
     "src/pages/terminals/index.tsx:65"
+  ],
+  "Manage the action file contents here.": [
+    "src/resources/action/config.tsx:59"
+  ],
+  "Manage the action file default arguments.": [
+    "src/resources/action/config.tsx:93"
   ],
   "Managed": [
     "src/resources/sync/config.tsx:159"
@@ -1706,8 +1839,8 @@
     "src/resources/procedure/index.tsx:117"
   ],
   "No branch check": [
-    "src/resources/action/config.tsx:266",
-    "src/resources/procedure/config/index.tsx:284"
+    "src/resources/action/config.tsx:269",
+    "src/resources/procedure/config/index.tsx:288"
   ],
   "No configuration provided for stack. Cannot get stack state. Either paste the compose file contents into the UI, or configure a git repo containing your files.": [
     "src/resources/stack/index.tsx:282"
@@ -1760,6 +1893,7 @@
   ],
   "None": [
     "src/resources/build/config.tsx:519",
+    "src/resources/procedure/config/execution-labels.tsx:5",
     "src/resources/procedure/config/execution-selector.tsx:67",
     "src/resources/repo/config.tsx:159",
     "src/resources/stack/config/index.tsx:666",
@@ -1838,6 +1972,9 @@
   "OR": [
     "src/resources/new-with-deploy-target.tsx:54"
   ],
+  "Orchestrate multiple Komodo executions.": [
+    "src/resources/procedure/index.tsx:71"
+  ],
   "Organization": [
     "src/components/config/organization-selector.tsx:28",
     "src/components/config/organization-selector.tsx:55"
@@ -1886,8 +2023,20 @@
     "src/resources/stack/executions.tsx:363",
     "src/resources/swarm/docker/nodes/update.tsx:128"
   ],
+  "Pause All Containers": [
+    "src/resources/procedure/config/execution-labels.tsx:52"
+  ],
+  "Pause Container": [
+    "src/resources/procedure/config/execution-labels.tsx:46"
+  ],
   "Pause Containers": [
     "src/resources/server/index.tsx:396"
+  ],
+  "Pause Deployment": [
+    "src/resources/procedure/config/execution-labels.tsx:18"
+  ],
+  "Pause Stack": [
+    "src/resources/procedure/config/execution-labels.tsx:31"
   ],
   "Pending": [
     "src/resources/sync/index.tsx:59"
@@ -1977,6 +2126,10 @@
   "Project Name": [
     "src/resources/stack/config/index.tsx:465"
   ],
+  "Provide a custom webhook secret for this resource, or use the global default.": [
+    "src/resources/action/config.tsx:294",
+    "src/resources/procedure/config/index.tsx:313"
+  ],
   "Provide your passkey to finish login...": [
     "node_modules/mogh_ui/dist/auth/login/index.js:193"
   ],
@@ -1989,6 +2142,27 @@
   "Prune {0}": [
     "src/resources/server/executions.tsx:68",
     "src/resources/server/executions.tsx:80"
+  ],
+  "Prune Buildx": [
+    "src/resources/procedure/config/execution-labels.tsx:60"
+  ],
+  "Prune Containers": [
+    "src/resources/procedure/config/execution-labels.tsx:55"
+  ],
+  "Prune Docker Builders": [
+    "src/resources/procedure/config/execution-labels.tsx:59"
+  ],
+  "Prune Images": [
+    "src/resources/procedure/config/execution-labels.tsx:57"
+  ],
+  "Prune Networks": [
+    "src/resources/procedure/config/execution-labels.tsx:56"
+  ],
+  "Prune System": [
+    "src/resources/procedure/config/execution-labels.tsx:61"
+  ],
+  "Prune Volumes": [
+    "src/resources/procedure/config/execution-labels.tsx:58"
   ],
   "Pruning": [
     "src/resources/server/config.tsx:182"
@@ -2006,6 +2180,9 @@
   "Pull": [
     "src/resources/repo/executions.tsx:74"
   ],
+  "Pull Deployment": [
+    "src/resources/procedure/config/execution-labels.tsx:15"
+  ],
   "Pull Image": [
     "src/resources/deployment/executions.tsx:177",
     "src/resources/procedure/config/executions.tsx:976"
@@ -2016,6 +2193,12 @@
   "Pull Images": [
     "src/resources/stack/config/index.tsx:637"
   ],
+  "Pull Repo": [
+    "src/resources/procedure/config/execution-labels.tsx:39"
+  ],
+  "Pull Stack": [
+    "src/resources/procedure/config/execution-labels.tsx:27"
+  ],
   "Pulling": [
     "src/resources/repo/index.tsx:56"
   ],
@@ -2024,6 +2207,10 @@
   ],
   "RAM Usage": [
     "src/resources/server/stats/current/ram.tsx:26"
+  ],
+  "Read API": [
+    "src/resources/action/config.tsx:70",
+    "src/resources/action/config.tsx:74"
   ],
   "Recently Viewed": [
     "src/pages/dashboard/recents.tsx:82"
@@ -2065,10 +2252,10 @@
     "src/resources/sync/config.tsx:372"
   ],
   "Reload": [
-    "src/resources/action/config.tsx:238"
+    "src/resources/action/config.tsx:241"
   ],
   "Reload Dependencies": [
-    "src/resources/action/config.tsx:242"
+    "src/resources/action/config.tsx:245"
   ],
   "Remote Error": [
     "src/resources/stack/index.tsx:335"
@@ -2138,11 +2325,23 @@
     "src/resources/deployment/executions.tsx:211",
     "src/resources/stack/executions.tsx:217"
   ],
+  "Restart All Containers": [
+    "src/resources/procedure/config/execution-labels.tsx:51"
+  ],
+  "Restart Container": [
+    "src/resources/procedure/config/execution-labels.tsx:45"
+  ],
   "Restart Containers": [
     "src/resources/server/index.tsx:362"
   ],
+  "Restart Deployment": [
+    "src/resources/procedure/config/execution-labels.tsx:17"
+  ],
   "Restart Mode": [
     "src/resources/deployment/config/restart.tsx:19"
+  ],
+  "Restart Stack": [
+    "src/resources/procedure/config/execution-labels.tsx:30"
   ],
   "Role": [
     "src/resources/swarm/docker/nodes/index.tsx:81",
@@ -2151,20 +2350,38 @@
   "Rotate": [
     "src/resources/server/config.tsx:108"
   ],
+  "Rotate All Server Keys": [
+    "src/resources/procedure/config/execution-labels.tsx:67"
+  ],
+  "Rotate Core Keys": [
+    "src/resources/procedure/config/execution-labels.tsx:68"
+  ],
   "Run Action": [
-    "src/resources/action/executions.tsx:69"
+    "src/resources/action/executions.tsx:69",
+    "src/resources/procedure/config/execution-labels.tsx:8"
+  ],
+  "Run Build": [
+    "src/resources/procedure/config/execution-labels.tsx:10"
   ],
   "Run Directory": [
     "src/resources/stack/config/index.tsx:748"
   ],
   "Run on Startup": [
-    "src/resources/action/config.tsx:231"
+    "src/resources/action/config.tsx:234"
   ],
   "Run Procedure": [
+    "src/resources/procedure/config/execution-labels.tsx:6",
     "src/resources/procedure/executions.tsx:71"
   ],
   "Run Stack Service": [
+    "src/resources/procedure/config/execution-labels.tsx:36",
     "src/resources/procedure/config/executions.tsx:845"
+  ],
+  "Run Sync": [
+    "src/resources/procedure/config/execution-labels.tsx:62"
+  ],
+  "Run this action on completion of startup of Komodo Core": [
+    "src/resources/action/config.tsx:236"
   ],
   "Running": [
     "src/resources/action/index.tsx:52",
@@ -2203,12 +2420,20 @@
   "Schedule": [
     "src/components/maintenance-windows.tsx:95",
     "src/pages/schedules.tsx:119",
-    "src/resources/action/config.tsx:143",
-    "src/resources/procedure/config/index.tsx:183"
+    "src/resources/action/config.tsx:144",
+    "src/resources/procedure/config/index.tsx:185"
+  ],
+  "Schedule Alert": [
+    "src/resources/action/config.tsx:224",
+    "src/resources/procedure/config/index.tsx:265"
   ],
   "Schedule Error": [
     "src/resources/action/index.tsx:134",
     "src/resources/procedure/index.tsx:138"
+  ],
+  "Schedule examples use English input; copy the expression without the leading dash.": [
+    "src/resources/action/config.tsx:185",
+    "src/resources/procedure/config/index.tsx:226"
   ],
   "Schedule Type": [
     "src/components/maintenance-windows.tsx:310"
@@ -2365,8 +2590,8 @@
     "src/resources/deployment/config/termination.tsx:24"
   ],
   "Select specific IANA timezone for schedule expression.": [
-    "src/resources/action/config.tsx:209",
-    "src/resources/procedure/config/index.tsx:249"
+    "src/resources/action/config.tsx:211",
+    "src/resources/procedure/config/index.tsx:252"
   ],
   "Select Swarm": [
     "src/resources/deployment/config/index.tsx:82",
@@ -2422,6 +2647,15 @@
   "Send a 'Warning' alert if the memory usage in % is above these thresholds": [
     "src/resources/server/config.tsx:249"
   ],
+  "Send Alert": [
+    "src/resources/procedure/config/execution-labels.tsx:69"
+  ],
+  "Send an alert any time the Action fails": [
+    "src/resources/action/config.tsx:139"
+  ],
+  "Send an alert any time the Procedure fails": [
+    "src/resources/procedure/config/index.tsx:180"
+  ],
   "Send an alert if the CPU usage is above the configured thresholds.": [
     "src/resources/server/config.tsx:223"
   ],
@@ -2436,6 +2670,10 @@
   ],
   "Send an alert if the Periphery version differs from the Core version.": [
     "src/resources/server/config.tsx:212"
+  ],
+  "Send an alert when the scheduled run occurs": [
+    "src/resources/action/config.tsx:225",
+    "src/resources/procedure/config/index.tsx:266"
   ],
   "Send CPU Alerts": [
     "src/resources/server/config.tsx:221"
@@ -2579,6 +2817,9 @@
   "Skip TLS Verification": [
     "src/resources/server/config.tsx:135"
   ],
+  "Sleep": [
+    "src/resources/procedure/config/execution-labels.tsx:70"
+  ],
   "Sort By:": [
     "src/pages/stats.tsx:179"
   ],
@@ -2608,22 +2849,34 @@
     "src/resources/build/info.tsx:202"
   ],
   "Stages": [
-    "src/resources/procedure/config/index.tsx:79"
+    "src/resources/procedure/config/index.tsx:80"
   ],
   "Start": [
     "src/pages/docker/container/executions.tsx:113",
     "src/resources/deployment/executions.tsx:241",
     "src/resources/stack/executions.tsx:280"
   ],
+  "Start All Containers": [
+    "src/resources/procedure/config/execution-labels.tsx:50"
+  ],
+  "Start Container": [
+    "src/resources/procedure/config/execution-labels.tsx:44"
+  ],
   "Start Containers": [
     "src/resources/server/index.tsx:337"
+  ],
+  "Start Deployment": [
+    "src/resources/procedure/config/execution-labels.tsx:16"
+  ],
+  "Start Stack": [
+    "src/resources/procedure/config/execution-labels.tsx:29"
   ],
   "Start Time": [
     "src/components/maintenance-windows.tsx:104",
     "src/components/maintenance-windows.tsx:346"
   ],
   "Startup": [
-    "src/resources/action/config.tsx:227"
+    "src/resources/action/config.tsx:230"
   ],
   "State": [
     "src/components/docker/containers-section.tsx:111",
@@ -2667,8 +2920,20 @@
     "src/resources/deployment/executions.tsx:298",
     "src/resources/stack/executions.tsx:293"
   ],
+  "Stop All Containers": [
+    "src/resources/procedure/config/execution-labels.tsx:54"
+  ],
+  "Stop Container": [
+    "src/resources/procedure/config/execution-labels.tsx:48"
+  ],
   "Stop Containers": [
     "src/resources/server/index.tsx:453"
+  ],
+  "Stop Deployment": [
+    "src/resources/procedure/config/execution-labels.tsx:20"
+  ],
+  "Stop Stack": [
+    "src/resources/procedure/config/execution-labels.tsx:33"
   ],
   "Stopped": [
     "src/resources/deployment/index.tsx:90",
@@ -2745,6 +3010,8 @@
     "src/resources/build/config.tsx:277"
   ],
   "Tags": [
+    "src/resources/action/table.tsx:82",
+    "src/resources/procedure/table.tsx:88",
     "src/resources/server/table/standard.tsx:113"
   ],
   "Tags:": [
@@ -2757,7 +3024,8 @@
     "src/components/permissions/specific-section.tsx:75",
     "src/pages/schedules.tsx:106",
     "src/pages/terminals/index.tsx:129",
-    "src/resources/alerter/config/resources.tsx:150"
+    "src/resources/alerter/config/resources.tsx:150",
+    "src/resources/procedure/config/stage.tsx:161"
   ],
   "Tasks": [
     "src/components/swarm/tasks-section.tsx:57"
@@ -2797,6 +3065,9 @@
   ],
   "The compose project is not on the host. If the compose stack is running, the 'Project Name' needs to be set. This can be found with 'docker compose ls'.": [
     "src/resources/stack/index.tsx:315"
+  ],
+  "The executions in a stage are all run in parallel. The stages themselves are run sequentially.": [
+    "src/resources/procedure/config/index.tsx:82"
   ],
   "The secret will not be shown again.": [
     "src/components/api-keys/new.tsx:131"
@@ -2839,8 +3110,8 @@
   ],
   "Timezone": [
     "src/components/maintenance-windows.tsx:363",
-    "src/resources/action/config.tsx:208",
-    "src/resources/procedure/config/index.tsx:248"
+    "src/resources/action/config.tsx:210",
+    "src/resources/procedure/config/index.tsx:251"
   ],
   "To get started, create a server.": [
     "src/pages/dashboard/no-resources.tsx:15"
@@ -2947,8 +3218,20 @@
     "src/resources/deployment/executions.tsx:361",
     "src/resources/stack/executions.tsx:345"
   ],
+  "Unpause All Containers": [
+    "src/resources/procedure/config/execution-labels.tsx:53"
+  ],
+  "Unpause Container": [
+    "src/resources/procedure/config/execution-labels.tsx:47"
+  ],
   "Unpause Containers": [
     "src/resources/server/index.tsx:430"
+  ],
+  "Unpause Deployment": [
+    "src/resources/procedure/config/execution-labels.tsx:19"
+  ],
+  "Unpause Stack": [
+    "src/resources/procedure/config/execution-labels.tsx:32"
   ],
   "Unreachable": [
     "src/resources/server/config.tsx:195",
@@ -3112,6 +3395,14 @@
   "Warning": [
     "src/resources/server/index.tsx:66"
   ],
+  "Webhook Enabled": [
+    "src/resources/action/config.tsx:290",
+    "src/resources/procedure/config/index.tsx:309"
+  ],
+  "Webhook Secret": [
+    "src/resources/action/config.tsx:292",
+    "src/resources/procedure/config/index.tsx:311"
+  ],
   "Webhook URL": [
     "src/components/webhook/copy-url.tsx:18"
   ],
@@ -3135,19 +3426,22 @@
     "src/resources/sync/config.tsx:336"
   ],
   "Webhook URL - Run": [
-    "src/resources/action/config.tsx:282",
-    "src/resources/procedure/config/index.tsx:300"
+    "src/resources/action/config.tsx:285",
+    "src/resources/procedure/config/index.tsx:304"
   ],
   "Webhooks": [
-    "src/resources/action/config.tsx:249",
+    "src/resources/action/config.tsx:252",
     "src/resources/build/config.tsx:563",
-    "src/resources/procedure/config/index.tsx:267",
+    "src/resources/procedure/config/index.tsx:271",
     "src/resources/repo/config.tsx:256",
     "src/resources/stack/config/index.tsx:887",
     "src/resources/sync/config.tsx:312"
   ],
   "Websocket Status": [
     "src/app/topbar/websocket-status.tsx:41"
+  ],
+  "Whether deno will be instructed to reload all dependencies. This can usually be kept disabled outside of development.": [
+    "src/resources/action/config.tsx:247"
   ],
   "Whether to attempt to connect to this host / send alerts if offline. Disabling will also convert all attached resource's state to 'Unknown'.": [
     "src/resources/server/config.tsx:70"
@@ -3179,6 +3473,10 @@
   ],
   "Wrapper": [
     "src/resources/stack/config/index.tsx:512"
+  ],
+  "Write API": [
+    "src/resources/action/config.tsx:70",
+    "src/resources/action/config.tsx:74"
   ],
   "You may click the text in bold to copy it": [
     "src/components/docker/batch-executions.tsx:227",

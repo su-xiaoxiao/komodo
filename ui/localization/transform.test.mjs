@@ -70,3 +70,25 @@ test('historical chart keys stay English while display labels translate', () => 
  assert.ok(out.includes('value, label: t(value)'));
  assert.ok(!out.includes('key: __komodoTranslate'));
 });
+
+test('workflow localization leaves executable examples and payload values intact', () => {
+ const source=`const config={failure_alert:{label:"Failure Alert",description:"Send alerts"}}; const v=<><Select value="Cron"/><code>Run every day at 4:00 pm</code><MonacoEditor value="RunAction"/><Text>Workflow help</Text></>; api({type:"RunAction",params:{action:"example"}});`;
+ const out=transform(source,'src/resources/procedure/config/index.tsx').code;
+ assert.ok(out.includes('description:__komodoTranslate("Send alerts")'));
+ assert.ok(out.includes('<code>Run every day at 4:00 pm</code>'));
+ assert.ok(out.includes('value="RunAction"'));
+ assert.ok(out.includes('type:"RunAction"'));
+ assert.ok(out.includes('value="Cron"'));
+ parse(out,{sourceType:'module',plugins:['typescript','jsx']});
+});
+test('every supported workflow execution has a separate display label', () => {
+ const impl=fs.readFileSync(new URL('../src/resources/procedure/config/executions.tsx',import.meta.url),'utf8');
+ const labels=fs.readFileSync(new URL('../src/resources/procedure/config/execution-labels.tsx',import.meta.url),'utf8');
+ const keys=[...impl.matchAll(/^  (\w+): \{/gm)].map(m=>m[1]);
+ const names=[...labels.matchAll(/^  (\w+): \(\) => t\(/gm)].map(m=>m[1]);
+ assert.deepEqual(keys.sort(),names.sort());
+ const selector=fs.readFileSync(new URL('../src/resources/procedure/config/execution-selector.tsx',import.meta.url),'utf8');
+ assert.ok(selector.includes('value={type}'));
+ assert.ok(selector.includes('onSelect?.(type as Types.Execution["type"])'));
+ assert.ok(selector.includes('item + " " + executionLabel(item)'));
+});
