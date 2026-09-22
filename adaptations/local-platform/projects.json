@@ -12,6 +12,12 @@
       "prefix": "mcp",
       "actions": ["deploy", "rollback"],
       "note": "仅发布已验证快照/镜像清单；管理台尚非 Git 仓库，源码自动构建未启用。"
+    },
+    "software-engineering": {
+      "title": "软件工程平台",
+      "prefix": "spec",
+      "actions": ["build-deploy", "deploy", "rollback"],
+      "note": "源码构建（后端 Java 21 + 前端 Node，均在镜像内编译测试）与隔离 HTTP 验收；可构建分支见平台配方。发布只取 main 的完整提交，不含工作区未提交改动。"
     }
   }
 }
