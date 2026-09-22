@@ -21,7 +21,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { t } from "@/localization/runtime";
 import { useRead, useSetTitle } from "@/lib/hooks";
@@ -248,6 +248,14 @@ function RefsSection({
   const approved = refs?.approved ?? [];
   const tips = refs?.approved_ref_tips ?? {};
   const released = refs?.released_commit ?? null;
+
+  // Preselect the registered default (falling back to the first approved ref) as soon as the
+  // refreshed list arrives, so the build button is usable without a second click.
+  useEffect(() => {
+    if (!refs || ref) return;
+    const preferred = refs.default_ref && approved.includes(refs.default_ref) ? refs.default_ref : approved[0];
+    if (preferred) setRef(preferred);
+  }, [refs, ref, approved]);
 
   return (
     <SectionCard
