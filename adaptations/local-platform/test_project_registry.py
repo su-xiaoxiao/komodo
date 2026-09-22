@@ -138,6 +138,33 @@ class RegistryTests(unittest.TestCase):
         self.assertNotIn('部署',refs_action['file_contents'])
         self.assertNotIn('submit_once',refs_action['file_contents'])
 
+    def test_installer_adds_version_view_and_source_editor_for_source_projects(self):
+        class API:
+            def __init__(self): self.calls=[]
+            def call(self,path,body):
+                self.calls.append((path,body))
+                return [] if path.startswith('read/') else {}
+        sources={'mqtt-sandbox':{'mode':'remote','remote':'upstream','refs':['dev_necal'],'default_ref':'dev_necal'}}
+        api=API(); install(api, None, None, sources)
+        created={body['name']:body['config'] for path,body in api.calls if path=='write/CreateAction'}
+        self.assertIn('mqtt-versions',created)
+        self.assertIn('mqtt-edit-source',created)
+        self.assertNotIn('mcp-versions',created)
+        self.assertNotIn('mcp-edit-source',created)
+        versions=created['mqtt-versions']
+        self.assertEqual(json.loads(versions['arguments']),{})
+        self.assertIn('action: "versions"',versions['file_contents'])
+        editor=created['mqtt-edit-source']
+        self.assertEqual(json.loads(editor['arguments']),
+                         {'mode':'remote','remote':'upstream','refs':'dev_necal','default_ref':'dev_necal'})
+        self.assertIn('action: "set-source"',editor['file_contents'])
+        self.assertNotIn('__PROJECT__',editor['file_contents'])
+        self.assertNotIn('__TITLE__',editor['file_contents'])
+        # no source registry passed: nothing is invented, the entry still installs with blanks
+        api2=API(); install(api2)
+        created2={body['name']:body['config'] for path,body in api2.calls if path=='write/CreateAction'}
+        self.assertEqual(json.loads(created2['mqtt-edit-source']['arguments'])['refs'],'')
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -32,7 +32,35 @@ class Komodo:
             return json.load(response)
 
 
+def platform_sources(platform_root):
+    """Read the authoritative source block per project (mode, remote, refs, default_ref)."""
+    root = Path(platform_root)
+    module_path = root / 'services/project-console/recipe.py'
+    config_path = root / 'config/project-console.json'
+    if not module_path.is_file() or not config_path.is_file():
+        raise ValueError('Platform recipe module or config not found under ' + str(root))
+    spec = importlib.util.spec_from_file_location('platform_recipe', module_path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    config = json.loads(config_path.read_text(encoding='utf-8-sig'))
+    sources = {}
+    for project, recipe in config.get('recipes', {}).items():
+        try:
+            source = module.normalize(recipe)['source']
+        except ValueError:
+            sources[project] = None
+            continue
+        sources[project] = {'mode': source.get('mode'), 'remote': source.get('remote'),
+                            'refs': list(source.get('refs') or []), 'default_ref': source.get('default_ref')}
+    return sources
+
+
 def default_refs(platform_root):
+    """Default branch per project, derived from the authority (kept for callers/tests)."""
+    return {project: (source or {}).get('default_ref') for project, source in platform_sources(platform_root).items()}
+
+
+def _legacy_default_refs(platform_root):
     """Read the authoritative recipes so a branch default has exactly one source.
 
     Loads the platform's recipe module by path: this repository must not grow a
@@ -69,8 +97,11 @@ def platform_groups(platform_root):
     return sorted(groups)
 
 
-def install(api, refs=None, groups=None):
-    from project_registry import load_projects, render_action, render_stack_action
+def install(api, refs=None, groups=None, sources=None):
+    from project_registry import load_projects, render_action, render_project_utility, render_stack_action
+    sources = sources or {}
+    if refs is None:
+        refs = {project: (source or {}).get('default_ref') for project, source in sources.items()}
     refs = refs or {}
     actions = {item['name']: item for item in api.call('read/ListActions', {})}
     procedures = {item['name']: item for item in api.call('read/ListProcedures', {})}
@@ -86,11 +117,23 @@ def install(api, refs=None, groups=None):
             definitions.append(('deploy-version', {'operation':'deploy','version':''}))
         if 'rollback' in policy['actions']:
             definitions.append(('rollback', {'operation':'rollback'}))
+        if 'build-deploy' in policy['actions']:
+            # Version view and the reviewed source editor belong to the same entry set.
+            definitions.append(('versions', {}))
+            current = sources.get(project) or {}
+            definitions.append(('edit-source', {'mode': current.get('mode') or 'local',
+                                                'remote': current.get('remote') or '',
+                                                'refs': ','.join(current.get('refs') or []),
+                                                'default_ref': current.get('default_ref') or ''}))
         for suffix, arguments in definitions:
             name = prefix + '-' + suffix
             if suffix == 'list-refs':
                 body = render_action(project, policy, None, template='release-refs.ts',
                                      target={'type':'Action','id':name})
+            elif suffix == 'versions':
+                body = render_project_utility(project, policy, 'release-versions.ts')
+            elif suffix == 'edit-source':
+                body = render_project_utility(project, policy, 'release-source.ts')
             else:
                 body = source
             config = dict(file_contents=body, arguments=json.dumps(arguments), arguments_format='json',
@@ -141,4 +184,4 @@ if __name__ == '__main__':
     parser.add_argument('--platform-root', type=Path, default=Path('E:/jvjv/local-platform'),
                         help='Platform checkout holding config/project-console.json')
     options = parser.parse_args()
-    install(Komodo(), default_refs(options.platform_root), platform_groups(options.platform_root))
+    install(Komodo(), None, platform_groups(options.platform_root), platform_sources(options.platform_root))

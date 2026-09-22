@@ -52,15 +52,26 @@ def validate(body, identity, projects=None, *, admission=True):
         # exist is decided by the platform group registry, not by this approval list.
         raise ValueError('Unregistered project')
     allowed = {'build-deploy': {'ref'}, 'deploy': {'version'}, 'rollback': set(), 'list-refs': {'ref'},
-               'stack': {'operation', 'group'}}
+               'stack': {'operation', 'group'}, 'versions': set(),
+               'set-source': {'mode', 'remote', 'refs', 'default_ref'}}
     action, options = body['action'], body['options']
     policy = projects.get(body['project'], {})
     if not isinstance(action, str) or action not in allowed or not isinstance(options, dict) or set(options) != allowed[action]:
         raise ValueError('Unsupported action or options')
-    if admission and action not in ('list-refs', 'stack') and action not in policy['actions']:
+    if admission and action in ('set-source', 'versions') and 'build-deploy' not in policy.get('actions', []):
+        raise ValueError('This project has no source release adapter')
+    if admission and action not in ('list-refs', 'stack', 'versions', 'set-source') and action not in policy['actions']:
         # list-refs only reveals refs of a source the recipe already declares, so it
         # needs no separate approval; every action that executes does.
         raise ValueError('This project has no approved adapter for the requested action')
+    if action == 'set-source':
+        # Reviewed write to the authoritative recipe: shape only, the platform module
+        # validates the block with the same normalizer the pipeline uses.
+        if (options['mode'] not in ('local', 'remote') or not isinstance(options['remote'], str)
+                or not isinstance(options['default_ref'], str) or not isinstance(options['refs'], list)
+                or not 0 < len(options['refs']) <= 20
+                or any(not isinstance(item, str) or not item for item in options['refs'])):
+            raise ValueError('Invalid source edit payload')
     if action == 'stack':
         # Lifecycle requests carry the *group* in the project field; the platform's
         # compose-groups.json is the authority for which groups exist, and the shared
@@ -122,6 +133,16 @@ class Bridge:
                     if not time.time() < request['expires_at'] <= time.time()+120:
                         raise ValueError('Request expired or invalid deadline')
                     self.answer_stack(identity, request, target)
+                    continue
+                if intent['action'] == 'versions' and not claim.exists():
+                    if not time.time() < request['expires_at'] <= time.time()+120:
+                        raise ValueError('Request expired or invalid deadline')
+                    self.answer_versions(identity, request, target)
+                    continue
+                if intent['action'] == 'set-source' and not claim.exists():
+                    if not time.time() < request['expires_at'] <= time.time()+120:
+                        raise ValueError('Request expired or invalid deadline')
+                    self.answer_source_edit(identity, request, target)
                     continue
                 if claim.exists():
                     saved = read(claim)
@@ -262,6 +283,33 @@ class Bridge:
         if state['error']:
             result['error'] = state['error']
         write(target, result)
+
+    def answer_versions(self, identity, request, target):
+        """Read-only version view: repository HEAD, candidate, release, running images."""
+        try:
+            versions = self.pipeline.versions(request['project'])
+        except (ValueError, RuntimeError, TimeoutError, OSError) as error:
+            write(target, dict(id=identity, status='failed', kind='versions', error=str(error)[:500]))
+            return
+        write(target, dict(id=identity, status='succeeded', kind='versions', stage='versions', project=request['project'],
+                           observed_at=time.time(), **versions))
+
+    def answer_source_edit(self, identity, request, target):
+        """Reviewed source edit; the platform module validates, backs up and writes atomically."""
+        options = request['options']
+        payload = {'mode': options['mode'], 'refs': list(options['refs']), 'default_ref': options['default_ref']}
+        if options['remote']:
+            payload['remote'] = options['remote']
+        try:
+            report = self.pipeline.apply_source(request['project'], payload)
+        except (ValueError, RuntimeError, TimeoutError, OSError) as error:
+            write(target, dict(id=identity, status='failed', kind='source-edit', error=str(error)[:500]))
+            return
+        holder = self.lifecycle_lock()
+        if holder:
+            report['lock_holder'] = holder
+        write(target, dict(id=identity, status='succeeded', kind='source-edit', stage='applied',
+                           observed_at=time.time(), **report))
 
     def active(self):
         # Observation files are never authoritative for stopping an executor.

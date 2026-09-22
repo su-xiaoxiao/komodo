@@ -58,3 +58,8 @@ def render_action(project, config, default_ref=None, template='release-action.ts
 def render_stack_action(group, operation):
     """Render the lifecycle Action for one Compose group."""
     return render_template('release-stack.ts', {'__GROUP__':group,'__OPERATION__':operation})
+
+
+def render_project_utility(project, config, template):
+    """Render a per-project read-only/utility Action (versions, source edit)."""
+    return render_template(template, {'__PROJECT__':project,'__TITLE__':config['title']})

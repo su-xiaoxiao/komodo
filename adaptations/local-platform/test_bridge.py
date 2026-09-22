@@ -62,6 +62,22 @@ class Pipeline:
                           commit='f' * 40 if ref in result['approved'] else None)
         return result
 
+    def versions(self, project):
+        self.versions_calls = getattr(self, 'versions_calls', 0) + 1
+        if project != 'mqtt-sandbox':
+            raise ValueError('Unknown project')
+        return {'repository': {'head': 'a' * 40, 'branch': 'main', 'dirty': False, 'untracked': 1},
+                'recipe': {'digest': 'b' * 64, 'source_mode': 'remote', 'approved_refs': ['dev_necal'], 'default_ref': 'dev_necal'},
+                'candidate': None, 'release': {'version': 'v1'}, 'running': [], 'verdict': '运行镜像与最近成功发布一致'}
+
+    def apply_source(self, project, payload):
+        if not isinstance(payload, dict) or payload.get('mode') not in ('local', 'remote'):
+            raise ValueError('Invalid source edit payload')
+        return {'project': project, 'applied_at': 'stamp', 'source': {'mode': payload['mode'], 'refs': payload['refs'],
+                                                                      'default_ref': payload['default_ref']},
+                'previous_source': {'mode': 'remote'}, 'recipe_digest': 'c' * 64,
+                'backup': '.local/config-backups/x.json', 'unchanged_sections': ['build', 'release', 'verify']}
+
     def submit_once(self, identity, project, action, **options):
         self.calls += 1
         job = dict(id=identity, project=project, action=action, options=options,
@@ -253,21 +269,56 @@ class BridgeTests(unittest.TestCase):
         self.assertEqual(self.pipeline.calls, 1)
         self.assertEqual(self.response()['status'], 'failed')
 
-    def stack_request(self, **changes):
-        body = dict(id=self.identity, project='spec', action='stack',
-                    options={'operation': 'status', 'group': 'spec'}, expires_at=time.time() + 60)
-        body.update(changes)
-        path = self.home / 'requests' / (self.identity + '.json')
-        path.write_text(json.dumps(body))
-        return path
+    def test_versions_action_answers_read_only(self):
+        body = dict(id=self.identity, project='mqtt-sandbox', action='versions', options={}, expires_at=time.time() + 60)
+        (self.home / 'requests' / (self.identity + '.json')).write_text(json.dumps(body))
+        self.bridge.tick()
+        result = self.response()
+        self.assertEqual(result['status'], 'succeeded')
+        self.assertEqual(result['kind'], 'versions')
+        self.assertEqual(result['recipe']['approved_refs'], ['dev_necal'])
+        self.assertEqual(result['verdict'], '运行镜像与最近成功发布一致')
+        self.assertEqual(self.pipeline.calls, 0)
+        self.assertFalse((self.home / 'claims' / (self.identity + '.json')).exists())
+        self.bridge.tick()
+        self.assertEqual(self.response(), result)
 
-    def test_changed_request_identity_rejected(self):
-        self.request()
+    def test_versions_action_reports_shape_failures(self):
+        body = dict(id=self.identity, project='mqtt-sandbox', action='versions', options={'ref': 'x'}, expires_at=time.time() + 60)
+        (self.home / 'requests' / (self.identity + '.json')).write_text(json.dumps(body))
         self.bridge.tick()
-        self.request(action='rollback', options={})
-        self.bridge.tick()
-        self.assertEqual(self.pipeline.calls, 1)
         self.assertEqual(self.response()['status'], 'failed')
+        self.assertIn('Unsupported action', self.response()['error'])
+
+    def test_source_edit_action_writes_through_the_pipeline(self):
+        body = dict(id=self.identity, project='mqtt-sandbox', action='set-source',
+                    options={'mode': 'local', 'remote': '', 'refs': ['main', 'dev_necal'], 'default_ref': 'main'},
+                    expires_at=time.time() + 60)
+        (self.home / 'requests' / (self.identity + '.json')).write_text(json.dumps(body))
+        self.bridge.tick()
+        result = self.response()
+        self.assertEqual(result['status'], 'succeeded')
+        self.assertEqual(result['kind'], 'source-edit')
+        self.assertEqual(result['source']['refs'], ['main', 'dev_necal'])
+        self.assertEqual(result['backup'], '.local/config-backups/x.json')
+        self.assertEqual(result['unchanged_sections'], ['build', 'release', 'verify'])
+        self.assertEqual(self.pipeline.calls, 0)
+
+    def test_source_edit_action_validates_and_needs_a_source_project(self):
+        for project, options, message in (
+            ('mqtt-sandbox', {'mode': 'nonsense', 'remote': '', 'refs': ['main'], 'default_ref': 'main'}, 'Invalid source edit payload'),
+            ('mqtt-sandbox', {'mode': 'local', 'remote': '', 'refs': 'main', 'default_ref': 'main'}, 'Invalid source edit payload'),
+            ('mqtt-sandbox', {'mode': 'local', 'remote': '', 'refs': [], 'default_ref': ''}, 'Invalid source edit payload'),
+            ('mcp-gateway', {'mode': 'local', 'remote': '', 'refs': ['main'], 'default_ref': 'main'}, 'no source release adapter'),
+        ):
+            with self.subTest(project=project, options=options):
+                body = dict(id=self.identity, project=project, action='set-source', options=options, expires_at=time.time() + 60)
+                (self.home / 'requests' / (self.identity + '.json')).write_text(json.dumps(body))
+                self.bridge.tick()
+                self.assertEqual(self.response()['status'], 'failed')
+                self.assertIn(message, self.response()['error'])
+                (self.home / 'responses' / (self.identity + '.json')).unlink()
+        self.assertEqual(self.pipeline.calls, 0)
 
     def stack_request(self, **changes):
         body = dict(id=self.identity, project='spec', action='stack',
