@@ -5,9 +5,7 @@
       "title": "MQTT",
       "prefix": "mqtt",
       "actions": ["build-deploy", "deploy", "rollback"],
-      "refs": ["dev_necal"],
-      "default_ref": "dev_necal",
-      "note": "源码构建、隔离 HTTP/代理/MQTT 验收；动态变量重启恢复问题仍待修复。"
+      "note": "源码构建、隔离 HTTP/代理/MQTT 验收；可构建分支由平台权威配方 config/project-console.json 限定，本清单只批准项目与操作。动态变量重启恢复问题仍待修复。"
     },
     "mcp-gateway": {
       "title": "MCP 管理台与网关",

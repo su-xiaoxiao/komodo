@@ -1,7 +1,16 @@
-"""Explicitly approved publishing capabilities; registration never invents a verifier."""
+"""Explicitly approved publishing capabilities; registration never invents a verifier.
+
+This registry is the **approval** list: which project may run which action. It must
+not hold a second copy of source, branch or command definitions - those live in the
+platform authority `config/project-console.json` and are enforced by the pipeline,
+so a branch or build command is defined in exactly one place. Unexpected keys are
+rejected so the duplication cannot creep back in.
+"""
 import json
 from pathlib import Path
 import re
+
+ALLOWED_KEYS = {'title', 'prefix', 'actions', 'note'}
 
 
 def load_projects(path=None, *, data=None):
@@ -13,6 +22,9 @@ def load_projects(path=None, *, data=None):
     for project, item in data['projects'].items():
         if not re.fullmatch(r'[a-z][a-z0-9-]{0,79}',project) or not isinstance(item,dict):
             raise ValueError('Invalid project identity')
+        unexpected=sorted(set(item)-ALLOWED_KEYS)
+        if unexpected:
+            raise ValueError('Registry must not redefine source, refs or builds: '+', '.join(unexpected))
         prefix=item.get('prefix')
         if not isinstance(prefix,str) or not re.fullmatch(r'[a-z][a-z0-9-]{0,79}',prefix) or prefix in prefixes:
             raise ValueError('Invalid or duplicate resource prefix')
@@ -22,17 +34,17 @@ def load_projects(path=None, *, data=None):
             raise ValueError('Invalid actions')
         if not isinstance(item.get('title'),str) or not 0<len(item['title'])<=120:
             raise ValueError('Invalid title')
-        if 'build-deploy' in actions:
-            refs=item.get('refs')
-            if not isinstance(refs,list) or not refs or any(not isinstance(ref,str) or not re.fullmatch(r'[A-Za-z0-9_][A-Za-z0-9_./-]{0,255}',ref) for ref in refs) or item.get('default_ref') not in refs:
-                raise ValueError('Invalid approved build refs')
+        if 'note' in item and not isinstance(item['note'],str):
+            raise ValueError('Invalid note')
     return data['projects']
 
 
-def render_action(project, config):
-    source=Path(__file__).with_name('release-action.ts').read_text(encoding='utf-8')
-    target={'type':'Procedure','id':config['prefix']+'-release'} if 'build-deploy' in config['actions'] else {'type':'Action','id':config['prefix']+'-deploy-version'}
-    values={'__PROJECT__':project,'__TITLE__':config['title'],'__DEFAULT_REF__':config.get('default_ref'),
+def render_action(project, config, default_ref=None, template='release-action.ts', target=None):
+    """Render an Action template. `default_ref` comes from the platform authority."""
+    source=Path(__file__).with_name(template).read_text(encoding='utf-8')
+    if target is None:
+        target={'type':'Procedure','id':config['prefix']+'-release'} if 'build-deploy' in config['actions'] else {'type':'Action','id':config['prefix']+'-deploy-version'}
+    values={'__PROJECT__':project,'__TITLE__':config['title'],'__DEFAULT_REF__':default_ref,
             '__NOTE__':config.get('note',''),'__METADATA_TARGET__':target}
     return re.sub('|'.join(map(re.escape,values)),
                   lambda match: json.dumps(values[match.group()],ensure_ascii=False),source)

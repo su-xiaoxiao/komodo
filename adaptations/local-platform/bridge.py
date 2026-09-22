@@ -47,17 +47,23 @@ def validate(body, identity, projects=None, *, admission=True):
         raise ValueError('Invalid request identity or project')
     if admission and body['project'] not in projects:
         raise ValueError('Unregistered project')
-    allowed = {'build-deploy': {'ref'}, 'deploy': {'version'}, 'rollback': set()}
+    allowed = {'build-deploy': {'ref'}, 'deploy': {'version'}, 'rollback': set(), 'list-refs': {'ref'}}
     action, options = body['action'], body['options']
     policy = projects.get(body['project'], {})
     if not isinstance(action, str) or action not in allowed or not isinstance(options, dict) or set(options) != allowed[action]:
         raise ValueError('Unsupported action or options')
-    if admission and action not in policy['actions']:
+    if admission and action not in policy['actions'] and action != 'list-refs':
+        # list-refs only reveals refs of a source the recipe already declares, so it
+        # needs no separate approval; every action that executes does.
         raise ValueError('This project has no approved adapter for the requested action')
+    if action == 'list-refs' and (not isinstance(options['ref'], str) or len(options['ref']) > 256
+            or (options['ref'] and (options['ref'].startswith('-') or not re.fullmatch(r'[A-Za-z0-9_./-]+', options['ref'])))):
+        raise ValueError('Invalid ref')
     if action == 'build-deploy' and (not isinstance(options['ref'],str)
-            or not re.fullmatch(r'[A-Za-z0-9_][A-Za-z0-9_./-]{0,255}',options['ref'])
-            or (admission and options['ref'] not in policy['refs'])):
-        raise ValueError('Unregistered ref')
+            or not re.fullmatch(r'[A-Za-z0-9_][A-Za-z0-9_./-]{0,255}',options['ref'])):
+        # Which branches may be built is defined once, in the platform recipe that
+        # the pipeline validates; this registry only approves the action itself.
+        raise ValueError('Invalid ref')
     if action == 'deploy' and (not isinstance(options['version'], str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,120}', options['version'])):
         raise ValueError('Invalid version')
     if type(body['expires_at']) not in (int, float) or not 0 < body['expires_at'] < 1e12:
@@ -90,6 +96,14 @@ class Bridge:
                 request = read(path)
                 # Admission can be revoked without changing already accepted identities/history.
                 intent = validate(request, identity, self.projects, admission=not claim.exists())
+                if intent['action'] == 'list-refs' and not claim.exists():
+                    # Read-only capability: answered inline, without a claim or a job, so it
+                    # can never execute, deploy or replay. The terminal guard above stops
+                    # repeated work once an answer exists.
+                    if not time.time() < request['expires_at'] <= time.time()+120:
+                        raise ValueError('Request expired or invalid deadline')
+                    self.answer_refs(identity, request, target)
+                    continue
                 if claim.exists():
                     saved = read(claim)
                     if saved and saved != intent:
@@ -99,7 +113,12 @@ class Bridge:
                     except json.JSONDecodeError:
                         raise
                     except ValueError:
-                        write(target, dict(id=identity, status='interrupted', error='Claim has no execution record; reconcile manually; do not retry automatically'))
+                        # A claim recorded before a rejected submission has no execution
+                        # record. Keep the recorded rejection instead of replacing it with
+                        # 'interrupted', which would hide the real admission error.
+                        recorded = read(target) if target.exists() else None
+                        if not (recorded and recorded.get('status') in TERMINAL):
+                            write(target, dict(id=identity, status='interrupted', error='Claim has no execution record; reconcile manually; do not retry automatically'))
                         continue
                     if any(job.get(key) != value for key, value in intent.items()):
                         raise ValueError('Job identity mismatch')
@@ -142,6 +161,18 @@ class Bridge:
                 if not observing:
                     raise
                 print(f'Result observation unavailable for {identity}; reconciliation will retry', file=sys.stderr, flush=True)
+
+    def answer_refs(self, identity, request, target):
+        """Answer a read-only ref listing. Failures are reported as failures, never as an empty list."""
+        options = request['options']
+        try:
+            refs = self.pipeline.list_refs(request['project'], options.get('ref') or None)
+        except (ValueError, RuntimeError, TimeoutError, OSError) as error:
+            write(target, dict(id=identity, status='failed', kind='refs', error=str(error)[:500]))
+            return
+        result = dict(id=identity, status='succeeded', kind='refs', stage='refs', project=request['project'],
+                      observed_at=time.time(), **refs)
+        write(target, result)
 
     def active(self):
         # Observation files are never authoritative for stopping an executor.

@@ -28,7 +28,7 @@ python adaptations/local-platform/export_stacks.py --root E:\jvjv\local-platform
 
 Komodo 管理发布入口；`bridge.py` 调用本机 `E:/jvjv/local-platform/services/project-console/pipeline.py` 和同目录依赖、`scripts/release_ops.py`。旧发布台的 HTTP 服务不是桥接依赖，但这一套构建/发布引擎、配方、工作树和历史目录仍需保留。并非将 Windows Java/Maven 强行搬进 Core 容器。
 
-Core 只额外挂专用 `.local/mqtt-queue`，不是整个 E 盘。将 `KOMODO_LOCAL_QUEUE=E:/jvjv/komodo/.local/mqtt-queue` 写入未跟踪的 `.local/komodo.env`，预先建立 requests/responses/claims 子目录；任务入口按 `projects.json` 限定项目、操作及分支，仅允许登记过的构建、已验证版本发布和回退，没有通用 shell/命令/URL 参数，也不监听额外网络端口。具有 Core 管理权限的用户属于本机可信操作者。
+Core 只额外挂专用 `.local/mqtt-queue`，不是整个 E 盘。将 `KOMODO_LOCAL_QUEUE=E:/jvjv/komodo/.local/mqtt-queue` 写入未跟踪的 `.local/komodo.env`，预先建立 requests/responses/claims 子目录；任务入口按 `projects.json` **只限定项目与操作**（批准清单），可构建分支、构建命令与验收配方只在平台权威文件 `E:/jvjv/local-platform/config/project-console.json` 里定义一次，由 pipeline 拒绝未登记分支——本仓库不再保存第二份分支白名单，`projects.json` 出现 `refs`/`default_ref`/`build_commands` 等键会直接报错。仅允许登记过的构建、已验证版本发布和回退，没有通用 shell/命令/URL 参数，也不监听额外网络端口。具有 Core 管理权限的用户属于本机可信操作者。
 
 启动入口：
 
@@ -38,20 +38,21 @@ pwsh -NoProfile -File E:\jvjv\komodo\adaptations\local-platform\Komodo.ps1 -Acti
 
 `Start` 启动容器及 Windows 后台工作进程，`Status` 查询工作进程，`StopWorker` 请求空闲后停止；不强杀正在运行的发布。Docker 重启会恢复容器，但 Windows 工作进程需要上述启动入口，不能把容器 online 误认成 Windows 构建工具已启动。
 
-`python adaptations/local-platform/komodo_api.py` 按 `projects.json` 幂等安装各项目允许的 Action/Procedure，升级时保留操作者已选的参数，账号由本机 env 读取，默认禁用定时和 webhook：
+`python adaptations/local-platform/komodo_api.py` 按 `projects.json` 幂等安装各项目允许的 Action/Procedure，升级时保留操作者已选的参数，账号由本机 env 读取，默认禁用定时和 webhook。安装时用 `--platform-root`（默认 `E:/jvjv/local-platform`）读取平台配方，把 `build-deploy` 的默认分支从权威文件派生出来，不再从本仓库的清单里取：
 
 | 入口 | 用途 |
 | --- | --- |
 | 流水线 `mqtt-release` | 独立 worktree → Maven 测试 → 构建 API/Web → 独立网络/卷验收 → 发布及健康检查 |
 | 流水线 `mqtt-restore` | 使用同一发布引擎回退上一已验证版本 |
 | 操作 `mqtt-deploy-version` | 运行参数中填写已存在清单的 `version`，重新部署该版本 |
+| 操作 `mqtt-list-refs` | 只读：留空 `ref` 刷新来源分支/标签与已登记清单；填写 `ref` 预览该分支是否已登记及将构建的完整提交。不写 claim、不建任务、不构建不部署 |
 | 操作 `mqtt-reconcile` / `mcp-reconcile` | 填写已有 Windows 任务 ID `job`，重新读取执行结果，不提交新任务 |
 | 操作 `mcp-deploy-version` | 发布已验证 MCP 版本清单；当前为源码快照叠加镜像，不是 Git 构建 |
 | 流水线 `mcp-restore` | 回退上一已验证 MCP 版本 |
 
 Action 日志包含 Windows 任务 ID、阶段、提交、不可变镜像 ID 和结果。成功后同步 `mqtt-release` 或 `mcp-deploy-version` 的说明，标明最近一次验证的版本/镜像；这不是实时容器监控，实时状态仍看 Local 的容器页。
 
-任务先持久化领取记录，再交给 Pipeline；同 ID 只对账、不重跑。启动时发现活跃执行记录会拒绝启动，需核对容器/发布历史后处理；不能删除记录或换 ID 重试不确定的发布。**取消 Komodo Action 只停止等待，已领取的 Windows 发布事务会继续完成**，请使用日志中的任务 ID 查询 `.local/mqtt-queue/responses/<ID>.json`。
+任务先持久化领取记录，再交给 Pipeline；同 ID 只对账、不重跑。若 Pipeline 在入队前拒绝（例如分支未在权威配方登记、来源模式不可构建），结果里保留该失败原因并保持 `failed`，不会被后续对账改写成 `interrupted`；`interrupted` 只用于"已领取但没有执行记录"的真崩溃现场。启动时发现活跃执行记录会拒绝启动，需核对容器/发布历史后处理；不能删除记录或换 ID 重试不确定的发布。**取消 Komodo Action 只停止等待，已领取的 Windows 发布事务会继续完成**，请使用日志中的任务 ID 查询 `.local/mqtt-queue/responses/<ID>.json`。
 
 交接时旧控制面以 `CONSOLE_READ_ONLY_PROJECTS=mqtt-sandbox,mcp-gateway` 禁用三个写入 API，并将按钮变为只读，原历史卷保留。这个开关依赖已更新的本机 controller.py；不能只给旧镜像添加环境变量便认为已禁用。维护脚本 Stack/Update-Service 仍保留人工修复能力，不能在 Komodo 发布期间并行使用。
 

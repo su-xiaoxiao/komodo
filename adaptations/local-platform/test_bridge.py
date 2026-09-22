@@ -10,6 +10,13 @@ class Pipeline:
     def __init__(self):
         self.jobs = {}
         self.calls = 0
+        self.refs = 0
+        self.refs_result = {'mode': 'remote', 'remote': 'upstream', 'approved': ['dev_necal'],
+                            'default_ref': 'dev_necal', 'branches': ['dev_necal', 'main'],
+                            'branch_count': 2, 'tags': [], 'tag_count': 0,
+                            'requested_ref': None, 'requested_ref_approved': None,
+                            'commit': None, 'resolution_error': None}
+        self.refs_error = None
 
     def get_job(self, identity):
         if identity not in self.jobs:
@@ -18,6 +25,16 @@ class Pipeline:
 
     def list_jobs(self):
         return list(self.jobs.values())
+
+    def list_refs(self, project, ref=None):
+        self.refs += 1
+        if self.refs_error:
+            raise self.refs_error
+        result = dict(self.refs_result)
+        if ref:
+            result.update(requested_ref=ref, requested_ref_approved=ref in result['approved'],
+                          commit='f' * 40 if ref in result['approved'] else None)
+        return result
 
     def submit_once(self, identity, project, action, **options):
         self.calls += 1
@@ -135,6 +152,64 @@ class BridgeTests(unittest.TestCase):
         self.bridge.tick()
         self.assertEqual(self.pipeline.calls, 0)
         self.assertEqual(self.response()['status'], 'interrupted')
+
+    def test_pipeline_rejection_is_reported_and_kept(self):
+        class Rejecting(Pipeline):
+            def submit_once(self, identity, project, action, **options):
+                raise ValueError('Unknown ref')
+
+        bridge = Bridge(self.home, Rejecting())
+        self.request()
+        bridge.tick()
+        first = json.loads((self.home/'responses'/ (self.identity+'.json')).read_text())
+        self.assertEqual(first['status'], 'failed')
+        self.assertIn('Unknown ref', first['error'])
+        self.assertTrue((self.home/'claims'/ (self.identity+'.json')).exists())
+        bridge.tick()
+        again = json.loads((self.home/'responses'/ (self.identity+'.json')).read_text())
+        self.assertEqual(again, first, 'the recorded admission error must not become interrupted')
+
+    def test_list_refs_answers_without_claim_or_job(self):
+        self.request(action='list-refs', options={'ref': ''})
+        self.bridge.tick()
+        result = self.response()
+        self.assertEqual(result['status'], 'succeeded')
+        self.assertEqual(result['kind'], 'refs')
+        self.assertEqual(result['branches'], ['dev_necal', 'main'])
+        self.assertEqual(self.pipeline.calls, 0)
+        self.assertEqual(self.pipeline.refs, 1)
+        self.assertFalse((self.home/'claims'/ (self.identity+'.json')).exists())
+        self.bridge.tick()
+        self.assertEqual(self.pipeline.refs, 1, 'a terminal ref answer must not be recomputed')
+        self.assertEqual(self.response(), result)
+
+    def test_list_refs_preview_reports_the_resolved_commit(self):
+        self.request(action='list-refs', options={'ref': 'dev_necal'})
+        self.bridge.tick()
+        result = self.response()
+        self.assertEqual(result['requested_ref'], 'dev_necal')
+        self.assertTrue(result['requested_ref_approved'])
+        self.assertEqual(result['commit'], 'f' * 40)
+        self.assertEqual(self.pipeline.calls, 0)
+
+    def test_list_refs_failure_is_reported_not_empty(self):
+        self.pipeline.refs_error = RuntimeError('git exited 128; see logs')
+        self.request(action='list-refs', options={'ref': ''})
+        self.bridge.tick()
+        result = self.response()
+        self.assertEqual(result['status'], 'failed')
+        self.assertIn('git exited 128', result['error'])
+        self.assertEqual(self.pipeline.calls, 0)
+        self.assertFalse((self.home/'claims'/ (self.identity+'.json')).exists())
+
+    def test_list_refs_rejects_invalid_ref_shape_without_asking_the_pipeline(self):
+        for ref in ('--help', 'bad;cmd', 'x' * 257):
+            with self.subTest(ref=ref):
+                self.request(action='list-refs', options={'ref': ref})
+                self.bridge.tick()
+                self.assertEqual(self.response()['status'], 'failed')
+                self.assertEqual(self.pipeline.refs, 0)
+                (self.home/'responses'/ (self.identity+'.json')).unlink()
 
     def test_changed_request_identity_rejected(self):
         self.request()
