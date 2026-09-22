@@ -48,8 +48,19 @@ while (Date.now() < deadline) {
 if (!result || !settled.includes(result.status)) {
   throw new Error(`等待超时，结果未知；用同一入口回查 job=${id}（只读结果，不会重复执行启停）`);
 }
+// 报告的结果与后台是否仍在执行是两件事：超时只说明"没等到结论"，
+// 停止 Docker 客户端也不等于服务端已撤销，必须核对容器状态。
+const execution = result.execution ?? {};
+if (execution.running) {
+  console.log("后台执行：仍在执行（结果未知；Docker 服务端操作可能仍在进行，必须核对容器状态）");
+} else if (execution.outcome) {
+  console.log(`后台执行：已结束，实际结果 ${execution.outcome}${execution.restarted ? "（执行器重启过，结论需核对）" : ""}`);
+  if (execution.error) console.log(`后台执行错误：${execution.error}`);
+}
 if (result.status === "timed_out") {
-  throw new Error(`${group}：${operation} 超时，结果未知（${result.error ?? "执行器已超时"}）；用 job=${id} 回查真实状态，不要重复提交`);
+  const background = execution.running ? "仍在执行" : `已结束（实际结果 ${execution.outcome ?? "未知"}）`;
+  throw new Error(`${group}：${operation} 超时，结果未知（${result.error ?? "执行器已超时"}）；后台${background}；`
+    + `用 job=${id} 回查并核对容器状态，不要重复提交`);
 }
 if (result.status !== "succeeded") throw new Error(result.error ?? result.status);
 console.log(`${group}：${operation} 完成`);

@@ -24,6 +24,11 @@ class Stack:
 
     def execute(self, action, groups=(), services=()):
         CALLS.append((action, list(groups)))
+        if BLOCK.get('burn'):
+            # Stand-in for an operation that consumes the whole budget without a live docker call.
+            time.sleep(BLOCK['burn'])
+        if BLOCK.get('marker'):
+            self.run(BLOCK['marker'])
         if BLOCK.get('hang'):
             self.run(BLOCK['hang'])
         if BLOCK['event'] is not None:
@@ -471,6 +476,101 @@ class BridgeTests(unittest.TestCase):
         finally:
             stub.BLOCK['event'].set()
             stub.BLOCK['event'] = None
+
+    def test_a_timed_out_operation_stays_busy_until_the_background_ends(self):
+        import importlib, threading
+        stub = importlib.import_module('stack_groups')
+        stub.BLOCK['event'] = threading.Event()
+        self.bridge.stack_timeout = 0.2
+        try:
+            self.stack_request()
+            self.bridge.tick()
+            self.assertEqual(self.response()['status'], 'running')
+            time.sleep(0.3)
+            self.bridge.tick()
+            reported = self.response()
+            self.assertEqual(reported['status'], 'timed_out')
+            # The verdict says 'unknown', but the background operation is still running: the
+            # executor must not judge itself idle, and a release must still be refused.
+            self.assertTrue(reported['execution']['running'])
+            self.assertIn('still running', reported['error'])
+            self.assertIn('reconcile', reported['execution']['note'])
+            self.assertTrue(self.bridge.active())
+            self.request(identity='b' * 32)
+            self.bridge.tick()
+            self.assertEqual(self.pipeline.calls, 0)
+            self.assertIn('lifecycle operation is in progress', self.response('b' * 32)['error'])
+        finally:
+            stub.BLOCK['event'].set()
+            stub.BLOCK['event'] = None
+        deadline = time.time() + 5
+        while time.time() < deadline and self.response()['execution']['running']:
+            time.sleep(0.05)
+            self.bridge.tick()
+        settled = self.response()
+        self.assertEqual(settled['status'], 'timed_out', 'the reported verdict is never rewritten')
+        self.assertEqual(settled['stage'], 'timeout')
+        self.assertEqual(settled['execution']['outcome'], 'succeeded', 'the real outcome is recorded separately')
+        self.assertFalse(settled['execution']['running'])
+        self.assertIn('reconcile', settled['execution']['note'])
+        self.assertFalse(self.bridge.active())
+        self.bridge.tick()
+        self.assertEqual(self.response(), settled, 'once the outcome is recorded the answer stops changing')
+
+    def test_no_further_docker_command_is_started_after_the_deadline(self):
+        import importlib, tempfile
+        from pathlib import Path
+        stub = importlib.import_module('stack_groups')
+        with tempfile.TemporaryDirectory() as sandbox:
+            marker = Path(sandbox) / 'second-command-ran'
+            stub.BLOCK['burn'] = 1.0                       # the operation spends its whole budget
+            stub.BLOCK['marker'] = [sys.executable, '-c',
+                                    'import pathlib; pathlib.Path(r"{0}").write_text("ran")'.format(marker)]
+            self.bridge.stack_timeout = 0.2
+            try:
+                self.stack_request()
+                self.bridge.tick()
+                deadline = time.time() + 10
+                while time.time() < deadline and self.response()['execution']['running']:
+                    time.sleep(0.05)
+                    self.bridge.tick()
+                result = self.response()
+                self.assertFalse(marker.exists(), 'a command must not be started after the overall deadline')
+                self.assertTrue(result['execution']['deadline_guard'])
+                self.assertIn('deadline', result['execution']['error'])
+                self.assertIn('does not cancel', result['execution']['error'])
+                self.assertEqual(self.response()['status'], 'timed_out', 'the operator still gets the unknown verdict')
+            finally:
+                stub.BLOCK['burn'] = None
+                stub.BLOCK['marker'] = None
+
+    def test_restart_clears_a_stale_still_executing_record(self):
+        import importlib
+        stub = importlib.import_module('stack_groups')
+        before = len(stub.CALLS)
+        self.stack_request()
+        (self.home / 'claims' / (self.identity + '.json')).write_text(json.dumps(
+            {'id': self.identity, 'project': 'spec', 'action': 'stack', 'kind': 'stack',
+             'options': {'operation': 'start', 'group': 'spec'}, 'claimed_at': time.time()}))
+        reported = {'id': self.identity, 'kind': 'stack', 'project': 'spec', 'group': 'spec', 'operation': 'start',
+                    'status': 'timed_out', 'stage': 'timeout', 'job': self.identity[:8], 'output': [],
+                    'error': 'Lifecycle operation exceeded 900s', 'observed_at': time.time(),
+                    'execution': {'running': True, 'outcome': None, 'finished_at': None, 'deadline_guard': False,
+                                  'note': 'verdict reported while the background operation was still running'}}
+        (self.home / 'responses' / (self.identity + '.json')).write_text(json.dumps(reported))
+        restarted = Bridge(self.home, self.pipeline, self.root)
+        result = self.response()
+        # The verdict stands, the stale 'still executing' claim does not.
+        self.assertEqual(result['status'], 'timed_out')
+        self.assertEqual(result['stage'], 'timeout')
+        self.assertEqual(result['error'], reported['error'])
+        self.assertFalse(result['execution']['running'])
+        self.assertTrue(result['execution']['restarted'])
+        self.assertIn('reconcile', result['execution']['note'])
+        self.assertFalse(restarted.active())
+        restarted.tick()
+        self.assertEqual(self.response(), result, 'a reconciled answer must not keep changing')
+        self.assertEqual(len(stub.CALLS), before, 'reconciliation must never execute anything')
 
     def test_a_hung_docker_call_fails_instead_of_reporting_progress_forever(self):
         import importlib

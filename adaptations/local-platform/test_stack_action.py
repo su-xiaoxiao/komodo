@@ -111,12 +111,34 @@ class StackActionTests(unittest.TestCase):
         code, output, error, captured = self.run_action(
             {'operation': 'start'},
             scripted=[{'kind': 'stack', 'status': 'timed_out', 'project': 'spec', 'stage': 'timeout',
-                       'error': 'Lifecycle operation exceeded 900s; the result is unknown.', 'output': []}])
+                       'error': 'Lifecycle operation exceeded 900s. The reported result is unknown AND the background '
+                                'operation is still running.',
+                       'output': [], 'execution': {'running': True, 'outcome': None, 'finished_at': None,
+                                                   'deadline_guard': False, 'note': 'verdict reported while running'}}])
         identity = captured['requests'][0]['id']
         self.assertNotEqual(code, 0)
         self.assertIn('超时，结果未知', error)
         self.assertIn('job=' + identity, error, 'the operator must be told how to re-check')
         self.assertIn('900s', error)
+        self.assertIn('后台仍在执行', error, 'the report must not imply the background work stopped')
+        self.assertIn('核对容器状态', error)
+        self.assertIn('后台执行：仍在执行', output)
+
+    def test_a_late_outcome_after_the_timeout_verdict_is_surfaced(self):
+        code, output, error, captured = self.run_action(
+            {'operation': 'start'},
+            scripted=[{'kind': 'stack', 'status': 'timed_out', 'project': 'spec', 'stage': 'timeout',
+                       'error': 'Lifecycle operation exceeded 900s.', 'output': [],
+                       'execution': {'running': False, 'outcome': 'succeeded', 'finished_at': 1.0,
+                                     'deadline_guard': True, 'restarted': True,
+                                     'error': 'Operation deadline reached; no further docker command was started',
+                                     'note': 'the background operation has since finished'}}])
+        identity = captured['requests'][0]['id']
+        self.assertNotEqual(code, 0, 'the verdict is still unknown: it must not be reported as success')
+        self.assertIn('后台已结束（实际结果 succeeded）', error)
+        self.assertIn('job=' + identity, error)
+        self.assertIn('后台执行：已结束，实际结果 succeeded（执行器重启过，结论需核对）', output)
+        self.assertIn('后台执行错误：Operation deadline reached', output)
 
     def test_unanswered_operation_tells_the_operator_to_reconcile(self):
         code, output, error, captured = self.run_action({'operation': 'stop'}, scripted=[])
