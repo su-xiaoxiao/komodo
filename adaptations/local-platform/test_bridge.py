@@ -69,6 +69,15 @@ class Pipeline:
                           commit='f' * 40 if ref in result['approved'] else None)
         return result
 
+    def groups(self):
+        self.groups_calls = getattr(self, 'groups_calls', 0) + 1
+        if getattr(self, 'groups_error', None):
+            raise self.groups_error
+        return {'groups': [{'name': 'spec', 'services': ['spec-api'], 'containers': [
+                    {'name': 'spec-api', 'state': 'running', 'health': 'healthy', 'image_id': 'sha256:' + 'a' * 64}],
+                    'running': 1, 'total': 1, 'expected': 1, 'missing': [], 'unexpected': [], 'projects': [], 'managed': True}],
+                'lock': {'held': False}, 'docker_error': None, 'generated_at': 'stamp'}
+
     def versions(self, project):
         self.versions_calls = getattr(self, 'versions_calls', 0) + 1
         if project != 'mqtt-sandbox':
@@ -336,6 +345,46 @@ class BridgeTests(unittest.TestCase):
         path = self.home / 'requests' / (self.identity + '.json')
         path.write_text(json.dumps(body))
         return path
+
+    def groups_request(self, **changes):
+        body = dict(id=self.identity, project='platform', action='groups', options={}, expires_at=time.time() + 60)
+        body.update(changes)
+        path = self.home / 'requests' / (self.identity + '.json')
+        path.write_text(json.dumps(body))
+        return path
+
+    def test_groups_action_is_read_only_and_carries_the_lock_state(self):
+        self.groups_request()
+        self.bridge.tick()
+        result = self.response()
+        self.assertEqual(result['status'], 'succeeded')
+        self.assertEqual(result['kind'], 'groups')
+        self.assertEqual(result['groups'][0]['name'], 'spec')
+        self.assertEqual(result['groups'][0]['containers'][0]['state'], 'running')
+        self.assertFalse(result['lock']['held'])
+        self.assertEqual(self.pipeline.calls, 0, 'a read-only overview must never create a release job')
+        self.assertFalse((self.home / 'claims' / (self.identity + '.json')).exists(), 'inline read: no claim')
+        self.assertEqual(self.pipeline.groups_calls, 1)
+
+    def test_groups_action_reports_failure_instead_of_an_empty_view(self):
+        self.pipeline.groups_error = RuntimeError('docker unavailable')
+        try:
+            self.groups_request()
+            self.bridge.tick()
+            result = self.response()
+            self.assertEqual(result['status'], 'failed')
+            self.assertIn('docker unavailable', result['error'])
+            self.assertNotIn('groups', result, 'a failure must not look like an empty group list')
+        finally:
+            self.pipeline.groups_error = None
+
+    def test_groups_request_shape_is_validated(self):
+        for changes in ({'options': {'group': 'spec'}}, {'action': 'groups', 'project': 'spec'}):
+            with self.subTest(changes=changes):
+                self.groups_request(**changes)
+                self.bridge.tick()
+                self.assertEqual(self.response()['status'], 'failed')
+                (self.home / 'responses' / (self.identity + '.json')).unlink()
 
     def test_stack_operation_runs_on_the_platform_engine(self):
         self.stack_request()

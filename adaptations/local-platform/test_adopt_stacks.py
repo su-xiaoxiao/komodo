@@ -1,5 +1,48 @@
 import unittest
-from adopt_stacks import inventory, config
+from adopt_stacks import MARKER, inventory, config, retire
+
+
+class RetireGuardTests(unittest.TestCase):
+    """Komodo's DeleteStack tears down a running stack (Stack::pre_delete), so retire() must
+    refuse unless the caller acknowledges that, and must never touch a foreign stack."""
+
+    def test_retire_refuses_without_acknowledgement_and_makes_no_call(self):
+        class API:
+            def __init__(self):
+                self.calls = []
+
+            def call(self, path, body):
+                self.calls.append(path)
+                raise AssertionError('no API call may happen before the acknowledgement')
+
+        api = API()
+        with self.assertRaisesRegex(ValueError, 'destroys running stacks'):
+            retire(api)
+        self.assertEqual(api.calls, [])
+
+    def test_retire_only_touches_owned_stacks(self):
+        class API:
+            def __init__(self):
+                self.calls = []
+
+            def call(self, path, body):
+                self.calls.append((path, body))
+                if path == 'read/ListStacks':
+                    return [{'name': 'spec', 'id': '1'}, {'name': 'foreign', 'id': '2'}]
+                if path == 'read/GetStack':
+                    return {'description': MARKER + ' owned' if body['stack'] == '1' else 'someone else'}
+                return {}
+
+        api = API()
+        result = retire(api, acknowledge_destroy=True)
+        self.assertEqual(result['removed'], ['spec'])
+        self.assertEqual(result['skipped_not_owned'], ['foreign'])
+        self.assertEqual([body['id'] for path, body in api.calls if path == 'write/DeleteStack'], ['1'])
+
+    def test_registration_blocks_native_start(self):
+        settings = config('app', {'api': {'image': 'sha256:fixed'}}, 'server')
+        self.assertEqual(settings['compose_cmd_wrapper_include'], ['up'])
+        self.assertIn('Native stack start is disabled', settings['compose_cmd_wrapper'])
 
 
 class AdoptionTests(unittest.TestCase):

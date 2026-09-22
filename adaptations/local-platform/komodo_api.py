@@ -193,6 +193,22 @@ def install(api, refs=None, groups=None, sources=None):
         # by hand: refresh it on every install so the page always states the real boundary.
         api.call('write/UpdateResourceMeta', {'target':{'type':'Action','id':name},'description':description})
         print(name, result.get('_id', result.get('id')))
+    # One platform-wide read-only Action: the registered Compose groups with their containers
+    # and the shared release lock, so the page can put the group lifecycle controls next to the
+    # container list instead of leaving Komodo's native Stack buttons (which bypass the lock).
+    name = 'platform-groups'
+    body = (Path(__file__).with_name('release-groups.ts')).read_text(encoding='utf-8')
+    config = dict(file_contents=body, arguments=json.dumps({}), arguments_format='json',
+                  run_at_startup=False, schedule_enabled=False, webhook_enabled=False)
+    if name in actions:
+        config.pop('arguments')
+        config.pop('arguments_format')
+        result = api.call('write/UpdateAction', {'id': actions[name]['id'], 'config': config})
+    else:
+        result = api.call('write/CreateAction', {'name': name, 'config': config})
+    api.call('write/UpdateResourceMeta', {'target': {'type': 'Action', 'id': name},
+                                          'description': '只读：已登记 Compose 组 + 各容器状态 + 发布锁持有者；启停请用各组的 <组名>-stack 入口（与发布事务共用 releases/.release.lock）。'})
+    print(name, result.get('_id', result.get('id')))
 
 
 if __name__ == '__main__':

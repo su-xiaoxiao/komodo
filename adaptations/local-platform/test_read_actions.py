@@ -172,6 +172,37 @@ class ReadActionTests(unittest.TestCase):
         self.assertIsNone(parsed)
         self.assertEqual(captured['requests'], [], 'an offline executor must not be sent a request')
 
+    def test_groups_overview_line_carries_groups_containers_and_lock(self):
+        response = {'id': 'e' * 32, 'status': 'succeeded', 'kind': 'groups', 'docker_error': None, 'generated_at': 'stamp',
+                    'lock': {'held': True, 'kind': 'release', 'subject': 'software-engineering', 'pid': 4242},
+                    'groups': [
+                        {'name': 'spec', 'services': ['spec-api', 'spec-web'], 'running': 1, 'total': 1, 'expected': 2,
+                         'missing': ['spec-web'], 'unexpected': [], 'managed': True, 'projects': [],
+                         'containers': [{'name': 'spec-api', 'container_name': 'spec-spec-api-1', 'state': 'running',
+                                         'health': 'healthy', 'image_id': 'sha256:' + 'a' * 64, 'drift': False}]},
+                        {'name': 'other', 'services': ['other-api'], 'running': 1, 'total': 1, 'expected': 1,
+                         'missing': [], 'unexpected': ['other-db'], 'managed': False, 'projects': [], 'containers': []}]}
+        body = (Path(__file__).with_name('release-groups.ts')).read_text(encoding='utf-8')
+        code, output, error, captured, parsed = self.run_template(body, scripted=[response])
+        self.assertEqual(code, 0, output + error)
+        self.assertEqual(parsed['kind'], 'groups')
+        self.assertEqual(parsed['lock']['subject'], 'software-engineering')
+        self.assertEqual([group['name'] for group in parsed['groups']], ['spec', 'other'])
+        self.assertEqual(parsed['groups'][0]['missing'], ['spec-web'])
+        self.assertEqual(captured['requests'][0]['action'], 'groups')
+        self.assertEqual(captured['requests'][0]['project'], 'platform')
+        self.assertIn('发布锁：被持有', output)
+        self.assertIn('缺少 spec-web', output)
+        self.assertIn('多出 other-db', output)
+
+    def test_groups_overview_failure_still_prints_the_reason(self):
+        response = {'id': 'e' * 32, 'status': 'failed', 'kind': 'groups', 'error': 'Docker 暂不可用'}
+        body = (Path(__file__).with_name('release-groups.ts')).read_text(encoding='utf-8')
+        code, output, error, captured, parsed = self.run_template(body, scripted=[response])
+        self.assertNotEqual(code, 0)
+        self.assertEqual(parsed['status'], 'failed')
+        self.assertIn('Docker 暂不可用', error)
+
 
 if __name__ == '__main__':
     unittest.main()

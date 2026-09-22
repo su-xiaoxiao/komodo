@@ -6,6 +6,11 @@ import { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { t } from "@/localization/runtime";
 
+// The group lifecycle (start/stop/logs) now lives on the platform page, whose controls take
+// releases/.release.lock. Komodo's native Stack page is left out of the sidebar so there is one
+// place to manage groups; the route still works for deep links and inspection.
+const HIDDEN_SIDEBAR_RESOURCES: string[] = ["Stack"];
+
 const Sidebar = ({ close }: { close: () => void }) => {
   const location = useLocation().pathname;
   const linkProps = { location, close };
@@ -48,7 +53,7 @@ const Sidebar = ({ close }: { close: () => void }) => {
             my="0.1rem"
           />
 
-          {SIDEBAR_RESOURCES.map((type) => {
+          {SIDEBAR_RESOURCES.filter((type) => !HIDDEN_SIDEBAR_RESOURCES.includes(type)).map((type) => {
             const Icon = ICONS[type];
             return (
               <SidebarLink

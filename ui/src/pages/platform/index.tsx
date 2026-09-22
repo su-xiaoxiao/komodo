@@ -19,33 +19,29 @@ import {
   Title,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { notifications } from "@mantine/notifications";
-import { Types } from "komodo_client";
+
+
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { t } from "@/localization/runtime";
-import { useExecute, useRead, useSetTitle } from "@/lib/hooks";
+import { useRead, useSetTitle } from "@/lib/hooks";
 import {
   PlatformProject,
   PlatformRefs,
-
   PlatformSourceEdit,
   PlatformVersions,
-  actionFailureText,
-  parsePlatformPayload,
   platformProjects,
-  sourceDefaults,
   refArgs,
   releaseArgs,
   shortSha,
   sourceArgs,
-  updateText,
+  sourceDefaults,
 } from "@/lib/platform";
+import GroupsSection from "./groups";
+import { parsePlatformPayload, updateText } from "@/lib/platform";
+import { SectionCard, data, usePlatformRun, type Running } from "./run";
 
-type Running = {
-  title: string;
-  id: string;
-} | null;
+
 
 export default function Platform() {
   useSetTitle("Platform");
@@ -96,6 +92,8 @@ export default function Platform() {
         </Alert>
       )}
 
+      <GroupsSection installed={actions} onRun={setRun} />
+
       {project && (
         <Stack gap="lg">
           <SourceSection project={project} onRun={setRun} />
@@ -109,88 +107,7 @@ export default function Platform() {
   );
 }
 
-/**
- * Shared plumbing: every section runs one installed Action and follows the resulting update.
- * The machine-readable line of the completed update becomes the section's data, so the page
- * shows exactly what the executor reported, and the log panel can still be opened.
- */
-function usePlatformRun(onRun: (run: Running) => void, label: string) {
-  const { mutateAsync: execute, isPending } = useExecute("RunAction");
-  const [updateId, setUpdateId] = useState<string>();
-  const { data: update } = useRead(
-    "GetUpdate",
-    { id: updateId as string },
-    { enabled: !!updateId, refetchInterval: updateId ? 1_500 : false },
-  );
-  const complete = update?.status === "Complete";
-  const payload = useMemo(
-    () => (complete ? parsePlatformPayload<unknown>(update?.logs) : undefined),
-    [complete, update?.logs],
-  );
-  // An Action that fails before answering (for example an invalid source block) has no
-  // machine-readable line; the section must still say what went wrong.
-  const failure = complete && !payload ? actionFailureText(update?.logs) : undefined;
-  const start = async (action: string, args: Record<string, string>) => {
-    setUpdateId(undefined);
-    try {
-      const submitted = (await execute({ action, args })) as Types.Update;
-      const id = submitted?._id?.$oid;
-      if (!id) throw new Error("no update id");
-      setUpdateId(id);
-      onRun({ title: `${label} · ${action}`, id });
-      notifications.show({
-        title: t("Task submitted"),
-        message: `${action} · ${id}`,
-        color: "blue",
-      });
-      return id;
-    } catch (error) {
-      notifications.show({
-        title: t("Task could not be submitted"),
-        message: String((error as Error)?.message ?? error),
-        color: "red",
-      });
-      return undefined;
-    }
-  };
-  return { start, isPending, update, complete, payload, failure };
-}
 
-function SectionCard({
-  title,
-  action,
-  onRefresh,
-  children,
-}: {
-  title: string;
-  action?: string;
-  onRefresh?: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <Card withBorder>
-      <Group justify="space-between" mb="sm">
-        <Group gap="sm">
-          <Title order={4}>{title}</Title>
-          {action && (
-            <Code>
-              {action}
-            </Code>
-          )}
-        </Group>
-        {onRefresh && (
-          <Button size="xs" variant="default" onClick={onRefresh}>
-            {t("Refresh")}
-          </Button>
-        )}
-      </Group>
-      {children}
-    </Card>
-  );
-}
-
-const data = <T,>(payload: unknown): T | undefined =>
-  payload && typeof payload === "object" ? (payload as T) : undefined;
 
 function SourceSection({
   project,

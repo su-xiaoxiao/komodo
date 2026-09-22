@@ -139,6 +139,40 @@ export type PlatformSourceEdit = {
   error?: string;
 };
 
+export type PlatformGroups = {
+  schema: number;
+  job: string;
+  groups: {
+    name: string;
+    services: string[];
+    managed: boolean;
+    running: number;
+    total: number;
+    expected: number;
+    missing: string[];
+    unexpected: string[];
+    projects: { id: string; title?: string }[];
+    containers: {
+      name: string;
+      container_name: string;
+      state: string;
+      health?: string | null;
+      image_id: string;
+      image_reference?: string;
+      ports?: Record<string, unknown>;
+      drift?: boolean | null;
+    }[];
+  }[];
+  lock: { held: boolean; kind?: string; subject?: string | null; pid?: number | null; started_at?: string | null };
+  docker_error?: string | null;
+  generated_at: string;
+  status: string;
+  error?: string;
+};
+
+/** The locked lifecycle entry installed for one registered group. */
+export const stackAction = (group: string) => `${group}-stack`;
+
 export type PlatformRelease = {
   schema: number;
   kind: "release";
