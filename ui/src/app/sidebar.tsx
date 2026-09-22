@@ -86,6 +86,12 @@ const Sidebar = ({ close }: { close: () => void }) => {
           <Divider my="xs" />
 
           <SidebarLink
+            label={t("Platform")}
+            icon={<ICONS.Stack size="1rem" />}
+            to="/platform"
+            {...linkProps}
+          />
+          <SidebarLink
             label="Schedules"
             icon={<ICONS.Schedule size="1rem" />}
             to="/schedules"

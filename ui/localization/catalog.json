@@ -185,6 +185,9 @@
   "5m": [
     "src/resources/server/table/stats.tsx:214"
   ],
+  "A remote name configured on the build host": [
+    "src/pages/platform/index.tsx:240"
+  ],
   "Account": [
     "src/app/topbar/user-dropdown.tsx:113",
     "src/components/config/account-selector.tsx:61",
@@ -454,10 +457,25 @@
     "src/resources/repo/table.tsx:70",
     "src/resources/sync/table.tsx:66"
   ],
+  "Branch {0}": [
+    "src/pages/platform/index.tsx:530"
+  ],
+  "Branch and commit": [
+    "src/pages/platform/index.tsx:320"
+  ],
+  "Branches": [
+    "src/pages/platform/index.tsx:302"
+  ],
   "Build": [
     "src/resources/build/executions.tsx:67",
     "src/resources/deployment/config/index.tsx:139",
     "src/resources/repo/executions.tsx:147"
+  ],
+  "Build and deploy": [
+    "src/pages/platform/index.tsx:345"
+  ],
+  "Build and deploy {0}": [
+    "src/pages/platform/index.tsx:464"
   ],
   "Build Args": [
     "src/resources/build/config.tsx:335"
@@ -488,8 +506,13 @@
   "Builds": [
     "src/resources/repo/resources.tsx:25"
   ],
+  "Builds the selected ref in an isolated worktree, runs the project verification, releases the images and checks health. The previous images stay available for rollback.": [
+    "src/pages/platform/index.tsx:469"
+  ],
   "Cancel": [
     "src/components/maintenance-windows.tsx:400",
+    "src/pages/platform/index.tsx:474",
+    "src/pages/platform/index.tsx:679",
     "src/resources/swarm/docker/nodes/update.tsx:167"
   ],
   "Cancel Build": [
@@ -503,6 +526,9 @@
   "Cancel Run": [
     "src/resources/action/executions.tsx:58",
     "src/resources/procedure/executions.tsx:60"
+  ],
+  "Candidate {0} · {1}{2}": [
+    "src/pages/platform/index.tsx:578"
   ],
   "Changes Made": [
     "src/components/updates/details.tsx:149"
@@ -566,14 +592,21 @@
   ],
   "Close": [
     "src/components/api-keys/new.tsx:153",
+    "src/pages/platform/index.tsx:754",
     "src/pages/settings/onboarding/new.tsx:134",
     "src/resources/swarm/join-commands.tsx:74"
   ],
   "Close Alert": [
     "src/components/alerts/details.tsx:146"
   ],
+  "Closing or cancelling this view does not stop the Windows transaction; check the task id before resubmitting.": [
+    "src/pages/platform/index.tsx:770"
+  ],
   "Combined usage:": [
     "src/resources/server/diskUsage.tsx:35"
+  ],
+  "Comma separated; only these may be built": [
+    "src/pages/platform/index.tsx:246"
   ],
   "command": [
     "src/components/updates/details.tsx:185",
@@ -589,6 +622,9 @@
   "Command working directory": [
     "src/components/config/system-command.tsx:23"
   ],
+  "Commit {0}": [
+    "src/pages/platform/index.tsx:557"
+  ],
   "Commit Changes": [
     "src/resources/sync/executions.tsx:123",
     "src/resources/sync/executions.tsx:135"
@@ -601,6 +637,9 @@
   ],
   "Commit Sync": [
     "src/resources/procedure/config/execution-labels.tsx:63"
+  ],
+  "Compared to the released commit": [
+    "src/pages/platform/index.tsx:386"
   ],
   "Compose File": [
     "src/resources/stack/config/index.tsx:938"
@@ -667,6 +706,9 @@
   ],
   "Configure where the built image is pushed.": [
     "src/resources/build/config.tsx:229"
+  ],
+  "Configured source": [
+    "src/pages/platform/index.tsx:540"
   ],
   "Confirm": [
     "src/resources/procedure/config/executions.tsx:989",
@@ -814,6 +856,9 @@
   "Current Labels": [
     "src/resources/swarm/docker/nodes/update.tsx:153"
   ],
+  "Current tip": [
+    "src/pages/platform/index.tsx:385"
+  ],
   "Custom": [
     "src/components/terminal/new.tsx:148"
   ],
@@ -848,6 +893,13 @@
   ],
   "Default ({0})": [
     "src/components/timezone-selector.tsx:28"
+  ],
+  "Default {0}": [
+    "src/pages/platform/index.tsx:366",
+    "src/pages/platform/index.tsx:546"
+  ],
+  "Default ref": [
+    "src/pages/platform/index.tsx:249"
   ],
   "Default termination signal": [
     "src/resources/deployment/config/termination.tsx:17"
@@ -897,6 +949,9 @@
   ],
   "Deploy Stack If Changed": [
     "src/resources/procedure/config/execution-labels.tsx:25"
+  ],
+  "Deploy this version": [
+    "src/pages/platform/index.tsx:650"
   ],
   "Deployed config:": [
     "src/resources/stack/info.tsx:205"
@@ -1311,6 +1366,9 @@
   "Groups": [
     "src/pages/user/member-groups.tsx:28"
   ],
+  "HEAD {0}": [
+    "src/pages/platform/index.tsx:529"
+  ],
   "Healthy": [
     "src/resources/server/index.tsx:64",
     "src/resources/swarm/index.tsx:56"
@@ -1380,6 +1438,7 @@
   "Image": [
     "src/components/docker/containers-section.tsx:126",
     "src/pages/containers.tsx:152",
+    "src/pages/platform/index.tsx:599",
     "src/resources/deployment/config/index.tsx:140",
     "src/resources/deployment/table.tsx:65",
     "src/resources/stack/services.tsx:95",
@@ -1450,6 +1509,9 @@
   "Inspect": [
     "src/components/inspect-section.tsx:52"
   ],
+  "Install the local platform adapters first: the page only lists projects that have the versions and list-refs Actions.": [
+    "src/pages/platform/index.tsx:91"
+  ],
   "Instance Type": [
     "src/resources/builder/table.tsx:66"
   ],
@@ -1519,6 +1581,9 @@
   "Labels to Remove": [
     "src/resources/swarm/docker/nodes/update.tsx:144"
   ],
+  "Last release": [
+    "src/pages/platform/index.tsx:553"
+  ],
   "Last run:": [
     "src/resources/action/last-run.tsx:40",
     "src/resources/action/last-run.tsx:57"
@@ -1570,6 +1635,12 @@
   ],
   "Local": [
     "src/components/config/image-registry-config.tsx:45"
+  ],
+  "local or remote": [
+    "src/pages/platform/index.tsx:233"
+  ],
+  "Local repository": [
+    "src/pages/platform/index.tsx:363"
   ],
   "Log In": [
     "node_modules/mogh_ui/dist/auth/login/header.js:24",
@@ -1671,6 +1742,12 @@
     "src/resources/procedure/config/executions.tsx:1105",
     "src/resources/sync/config.tsx:186"
   ],
+  "Matches the candidate": [
+    "src/pages/platform/index.tsx:601"
+  ],
+  "Matches the release": [
+    "src/pages/platform/index.tsx:600"
+  ],
   "MCP Manager": [
     "src/app/topbar/index.tsx:85"
   ],
@@ -1703,7 +1780,11 @@
     "src/components/docker/container-ports.tsx:145"
   ],
   "Mode": [
+    "src/pages/platform/index.tsx:230",
     "src/pages/terminals/new.tsx:156"
+  ],
+  "Mode {0}": [
+    "src/pages/platform/index.tsx:542"
   ],
   "Monitoring": [
     "src/resources/server/config.tsx:171"
@@ -1716,6 +1797,9 @@
   ],
   "Move Up": [
     "src/resources/procedure/config/stage.tsx:64"
+  ],
+  "Must be one of the registered refs": [
+    "src/pages/platform/index.tsx:252"
   ],
   "Must configure Branch before webhooks will work.": [
     "src/resources/build/config.tsx:579",
@@ -1823,6 +1907,9 @@
   "New API Key": [
     "src/components/api-keys/new.tsx:160"
   ],
+  "New commits since the release": [
+    "src/pages/platform/index.tsx:409"
+  ],
   "New Onboarding Key": [
     "src/pages/settings/onboarding/new.tsx:141"
   ],
@@ -1838,9 +1925,15 @@
     "src/resources/action/index.tsx:113",
     "src/resources/procedure/index.tsx:117"
   ],
+  "No": [
+    "src/pages/platform/index.tsx:719"
+  ],
   "No branch check": [
     "src/resources/action/config.tsx:269",
     "src/resources/procedure/config/index.tsx:288"
+  ],
+  "No candidate build": [
+    "src/pages/platform/index.tsx:585"
   ],
   "No configuration provided for stack. Cannot get stack state. Either paste the compose file contents into the UI, or configure a git repo containing your files.": [
     "src/resources/stack/index.tsx:282"
@@ -1856,6 +1949,16 @@
   ],
   "No network found with given name: ": [
     "src/pages/docker/network.tsx:84"
+  ],
+  "No platform project found": [
+    "src/pages/platform/index.tsx:89"
+  ],
+  "No ref is registered for this project, so nothing can be built. Register one in the source section first.": [
+    "src/pages/platform/index.tsx:448"
+  ],
+  "No release record yet": [
+    "src/pages/platform/index.tsx:401",
+    "src/pages/platform/index.tsx:566"
   ],
   "No resources found.": [
     "src/pages/dashboard/no-resources.tsx:12"
@@ -1878,6 +1981,9 @@
   ],
   "No Terminals": [
     "src/components/terminal/section.tsx:150"
+  ],
+  "No tracked changes": [
+    "src/pages/platform/index.tsx:533"
   ],
   "No TTY": [
     "src/resources/procedure/config/executions.tsx:936"
@@ -1949,11 +2055,17 @@
   "Only Open": [
     "src/pages/alerts.tsx:137"
   ],
+  "Only registered, already verified manifests can be deployed. A rollback restores the previous image set, never the data.": [
+    "src/pages/platform/index.tsx:659"
+  ],
   "Only send alerts of certain types.": [
     "src/resources/alerter/config/alert-types.tsx:47"
   ],
   "Open menu": [
     "src/resources/procedure/config/stage.tsx:55"
+  ],
+  "Open the task": [
+    "src/pages/platform/index.tsx:751"
   ],
   "Optional": [
     "src/components/api-keys/new.tsx:98",
@@ -2070,6 +2182,10 @@
   "PIDs": [
     "src/resources/server/stats/containers.tsx:107"
   ],
+  "Platform": [
+    "src/app/sidebar.tsx:89",
+    "src/pages/platform/index.tsx:61"
+  ],
   "Please enter ": [
     "src/components/docker/batch-executions.tsx:222",
     "src/resources/batch-executions.tsx:192",
@@ -2108,6 +2224,15 @@
   "Pre-Existing Key": [
     "src/pages/settings/onboarding/new.tsx:88"
   ],
+  "Preview commit": [
+    "src/pages/platform/index.tsx:342"
+  ],
+  "Preview for {0}": [
+    "src/pages/platform/index.tsx:423"
+  ],
+  "Previous {0}": [
+    "src/pages/platform/index.tsx:562"
+  ],
   "private key": [
     "src/pages/settings/onboarding/new.tsx:129"
   ],
@@ -2119,6 +2244,9 @@
   ],
   "Profile": [
     "src/app/topbar/user-dropdown.tsx:125"
+  ],
+  "Project": [
+    "src/pages/platform/index.tsx:73"
   ],
   "Project Missing": [
     "src/resources/stack/index.tsx:310"
@@ -2212,8 +2340,17 @@
     "src/resources/action/config.tsx:70",
     "src/resources/action/config.tsx:74"
   ],
+  "Recent commits": [
+    "src/pages/platform/index.tsx:436"
+  ],
   "Recently Viewed": [
     "src/pages/dashboard/recents.tsx:82"
+  ],
+  "Recipe digest {0}": [
+    "src/pages/platform/index.tsx:547"
+  ],
+  "Recipe digest {0} · backup {1} · untouched sections {2}": [
+    "src/pages/platform/index.tsx:279"
   ],
   "Reclone": [
     "src/resources/repo/executions.tsx:47"
@@ -2227,12 +2364,33 @@
     "src/resources/stack/update-available.tsx:114"
   ],
   "Refresh": [
+    "src/pages/platform/index.tsx:164",
+    "src/pages/platform/index.tsx:353",
     "src/resources/batch-executions.tsx:90",
     "src/resources/sync/executions.tsx:39"
+  ],
+  "Refresh first": [
+    "src/pages/platform/index.tsx:331"
+  ],
+  "Refresh to load the registered refs and their current tips.": [
+    "src/pages/platform/index.tsx:456"
+  ],
+  "Refresh to load the repository HEAD, the configured source, the candidate build, the last release and the running images.": [
+    "src/pages/platform/index.tsx:519"
   ],
   "Region": [
     "src/resources/server/config.tsx:146",
     "src/resources/server/table/standard.tsx:93"
+  ],
+  "Registered ref": [
+    "src/pages/platform/index.tsx:327",
+    "src/pages/platform/index.tsx:384"
+  ],
+  "Registered refs": [
+    "src/pages/platform/index.tsx:243"
+  ],
+  "Registered refs {0}": [
+    "src/pages/platform/index.tsx:543"
   ],
   "Registry": [
     "src/resources/build/config.tsx:223"
@@ -2251,11 +2409,23 @@
     "src/resources/stack/config/index.tsx:865",
     "src/resources/sync/config.tsx:372"
   ],
+  "Released commit {0}": [
+    "src/pages/platform/index.tsx:376"
+  ],
   "Reload": [
     "src/resources/action/config.tsx:241"
   ],
   "Reload Dependencies": [
     "src/resources/action/config.tsx:245"
+  ],
+  "Remote": [
+    "src/pages/platform/index.tsx:236"
+  ],
+  "Remote {0}": [
+    "src/pages/platform/index.tsx:362"
+  ],
+  "Remote branches {0} · tags {1}": [
+    "src/pages/platform/index.tsx:369"
   ],
   "Remote Error": [
     "src/resources/stack/index.tsx:335"
@@ -2282,6 +2452,16 @@
   ],
   "Repos": [
     "src/resources/server/resources.tsx:32"
+  ],
+  "Repository": [
+    "src/pages/platform/index.tsx:527"
+  ],
+  "Repository source": [
+    "src/pages/platform/index.tsx:183",
+    "src/pages/platform/index.tsx:226"
+  ],
+  "Repository source, branch/commit selection and running images, driven by the installed Actions.": [
+    "src/pages/platform/index.tsx:64"
   ],
   "Request Ntfy to send an email to this address. SMTP must be configured on the Ntfy instance. Only one email address per alerter is supported.": [
     "src/resources/alerter/config/endpoint.tsx:55"
@@ -2343,9 +2523,18 @@
   "Restart Stack": [
     "src/resources/procedure/config/execution-labels.tsx:30"
   ],
+  "Restores the previous verified image set for this project and checks health. Business data is not touched.": [
+    "src/pages/platform/index.tsx:674"
+  ],
   "Role": [
     "src/resources/swarm/docker/nodes/index.tsx:81",
     "src/resources/swarm/docker/nodes/update.tsx:102"
+  ],
+  "Roll back {0}": [
+    "src/pages/platform/index.tsx:669"
+  ],
+  "Roll back to the previous version": [
+    "src/pages/platform/index.tsx:653"
   ],
   "Rotate": [
     "src/resources/server/config.tsx:108"
@@ -2405,6 +2594,9 @@
   "Same as Build": [
     "src/resources/deployment/config/index.tsx:172"
   ],
+  "Same as released": [
+    "src/pages/platform/index.tsx:405"
+  ],
   "Save": [
     "src/app/topbar/keyboard-shortcuts.tsx:44",
     "src/resources/server/config.tsx:99",
@@ -2413,6 +2605,12 @@
   ],
   "Save recovery keys": [
     "node_modules/mogh_ui/dist/auth/profile/totp.js:58"
+  ],
+  "Save source": [
+    "src/pages/platform/index.tsx:262"
+  ],
+  "Saving goes through the reviewed source editor: one block only, normalised and validated, full backup, no write when unchanged.": [
+    "src/pages/platform/index.tsx:258"
   ],
   "Scan this QR code with your authenticator app, and enter the 6 digit code below.": [
     "node_modules/mogh_ui/dist/auth/profile/totp.js:63"
@@ -2439,7 +2637,7 @@
     "src/components/maintenance-windows.tsx:310"
   ],
   "Schedules": [
-    "src/app/sidebar.tsx:89",
+    "src/app/sidebar.tsx:95",
     "src/app/topbar/omni-search/hooks.tsx:165",
     "src/pages/schedules.tsx:70"
   ],
@@ -2511,6 +2709,9 @@
   ],
   "Select {0} domain": [
     "src/components/config/provider-selector.tsx:111"
+  ],
+  "Select a branch": [
+    "src/pages/platform/index.tsx:331"
   ],
   "Select account": [
     "src/components/config/account-selector.tsx:67"
@@ -2719,6 +2920,7 @@
   ],
   "Service": [
     "src/components/swarm/tasks-section.tsx:107",
+    "src/pages/platform/index.tsx:597",
     "src/pages/terminals/new.tsx:433",
     "src/resources/procedure/config/executions.tsx:863",
     "src/resources/stack/services.tsx:59",
@@ -2767,7 +2969,7 @@
     "src/pages/settings/variables/index.tsx:108"
   ],
   "Settings": [
-    "src/app/sidebar.tsx:95",
+    "src/app/sidebar.tsx:101",
     "src/pages/resource.tsx:73",
     "src/pages/user-group/index.tsx:77",
     "src/pages/user/index.tsx:59"
@@ -2832,6 +3034,12 @@
     "src/resources/sync/config.tsx:247",
     "src/resources/sync/table.tsx:58"
   ],
+  "Source update failed": [
+    "src/pages/platform/index.tsx:273"
+  ],
+  "Source updated": [
+    "src/pages/platform/index.tsx:272"
+  ],
   "Stack": [
     "src/pages/terminals/new.tsx:420",
     "src/resources/procedure/config/executions.tsx:851"
@@ -2882,6 +3090,7 @@
     "src/components/docker/containers-section.tsx:111",
     "src/components/swarm/tasks-section.tsx:121",
     "src/pages/containers.tsx:136",
+    "src/pages/platform/index.tsx:598",
     "src/resources/action/table.tsx:54",
     "src/resources/build/table.tsx:72",
     "src/resources/deployment/table.tsx:108",
@@ -2938,6 +3147,10 @@
   "Stopped": [
     "src/resources/deployment/index.tsx:90",
     "src/resources/stack/index.tsx:93"
+  ],
+  "Submit": [
+    "src/pages/platform/index.tsx:482",
+    "src/pages/platform/index.tsx:688"
   ],
   "Super Admin": [
     "src/components/user/header.tsx:32"
@@ -3027,6 +3240,15 @@
     "src/resources/alerter/config/resources.tsx:150",
     "src/resources/procedure/config/stage.tsx:161"
   ],
+  "Task could not be submitted": [
+    "src/pages/platform/index.tsx:130"
+  ],
+  "Task logs": [
+    "src/pages/platform/index.tsx:83"
+  ],
+  "Task submitted": [
+    "src/pages/platform/index.tsx:123"
+  ],
   "Tasks": [
     "src/components/swarm/tasks-section.tsx:57"
   ],
@@ -3083,6 +3305,9 @@
   ],
   "This ": [
     "src/components/template-marker.tsx:14"
+  ],
+  "This ref cannot be resolved to a commit": [
+    "src/pages/platform/index.tsx:429"
   ],
   "This resource type does not have any containers.": [
     "src/pages/docker/container/index.tsx:37"
@@ -3142,6 +3367,9 @@
   "Track": [
     "src/resources/stack/config/index.tsx:307"
   ],
+  "Tracked changes present": [
+    "src/pages/platform/index.tsx:532"
+  ],
   "Trigger an execution of the sync.": [
     "src/resources/sync/config.tsx:346"
   ],
@@ -3166,6 +3394,9 @@
   ],
   "uid:gid or user (Optional)": [
     "src/resources/procedure/config/executions.tsx:898"
+  ],
+  "Unchanged: nothing was written": [
+    "src/pages/platform/index.tsx:271"
   ],
   "Unenroll Passkey 2FA": [
     "node_modules/mogh_ui/dist/auth/profile/passkey.js:67"
@@ -3239,6 +3470,9 @@
   ],
   "Unsaved changes": [
     "node_modules/mogh_ui/dist/components/config/unsaved-changes.js:14"
+  ],
+  "Untracked files {0}": [
+    "src/pages/platform/index.tsx:534"
   ],
   "Unused": [
     "src/pages/swarm/config/index.tsx:53",
@@ -3381,6 +3615,15 @@
   "Version the image with major.minor.patch. It can be interpolated using [[$VERSION]].": [
     "src/resources/build/config.tsx:179"
   ],
+  "Version to deploy": [
+    "src/pages/platform/index.tsx:638"
+  ],
+  "Versions": [
+    "src/pages/platform/index.tsx:498"
+  ],
+  "Versions and running images": [
+    "src/pages/platform/index.tsx:511"
+  ],
   "View historical alerts": [
     "src/pages/alerts.tsx:79"
   ],
@@ -3458,6 +3701,9 @@
   "whitelisted": [
     "src/resources/alerter/config/resources.tsx:114"
   ],
+  "Will build commit {0}": [
+    "src/pages/platform/index.tsx:427"
+  ],
   "Will the dockerfile contents be defined in UI, stored on the server, or pulled from a git repo?": [
     "src/resources/build/config.tsx:201"
   ],
@@ -3477,6 +3723,9 @@
   "Write API": [
     "src/resources/action/config.tsx:70",
     "src/resources/action/config.tsx:74"
+  ],
+  "Yes": [
+    "src/pages/platform/index.tsx:719"
   ],
   "You may click the text in bold to copy it": [
     "src/components/docker/batch-executions.tsx:227",

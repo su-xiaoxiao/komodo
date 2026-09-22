@@ -39,6 +39,11 @@ for (let attempt = 0; attempt < 3600; attempt++) {
   }
   for (const line of result.logs ?? []) if (!seen.has(line)) { console.log(line); seen.add(line); }
   if (["succeeded", "failed", "interrupted"].includes(result.status)) {
+    // 机器可读行（单行）：页面用它渲染发布结果/版本/镜像；人类可读摘要照旧保留。
+    console.log("__PLATFORM_JSON__ " + JSON.stringify({ schema: 1, kind: "release", job: id, project, title,
+      operation, status: result.status, error: result.error ?? null, version: result.version ?? null,
+      source_commit: result.source_commit ?? null, images: result.images ?? null,
+      current_release: result.current_release ?? null, observed_at: result.observed_at ?? null }));
     console.log(JSON.stringify({ id, status: result.status, version: result.version,
       source_commit: result.source_commit, images: result.images, current_release: result.current_release }, null, 2));
     if (result.status !== "succeeded") throw new Error(result.error ?? result.status);

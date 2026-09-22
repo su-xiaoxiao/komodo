@@ -26,6 +26,7 @@ const Profile = lazy(() => import("@/pages/profile"));
 const User = lazy(() => import("@/pages/user"));
 const UserGroup = lazy(() => import("@/pages/user-group"));
 const Schedules = lazy(() => import("@/pages/schedules"));
+const Platform = lazy(() => import("@/pages/platform"));
 const Stats = lazy(() => import("@/pages/stats"));
 const Terminals = lazy(() => import("@/pages/terminals"));
 const Terminal = lazy(() => import("@/pages/terminal"));
@@ -65,6 +66,7 @@ export const Router = () => {
             <Route path="terminals" element={<Terminals />} />
             <Route path="stats" element={<Stats />} />
             <Route path="schedules" element={<Schedules />} />
+            <Route path="platform" element={<Platform />} />
             <Route path="profile" element={<Profile />} />
             <Route path="settings" element={<Settings />} />
             <Route path="user-groups/:id" element={<UserGroup />} />

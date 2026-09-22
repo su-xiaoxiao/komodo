@@ -30,7 +30,7 @@ for (let attempt = 0; attempt < 60; attempt++) {
 }
 if (!result || result.kind !== "source-edit") throw new Error(`未取到来源修改结果，核对 Windows 任务 ${id}`);
 // 机器可读行：页面用它回显"改了什么/配方 digest/备份"；失败时也先输出结构化原因。
-console.log("__PLATFORM_JSON__ " + JSON.stringify({ schema: 1, job: id, ...result }));
+console.log("__PLATFORM_JSON__ " + JSON.stringify({ schema: 1, job: id, title, ...result }));
 if (result.status !== "succeeded") throw new Error(result.error ?? result.status);
 console.log(`已应用：模式 ${result.source.mode}｜已登记分支 ${(result.source.refs ?? []).join(", ")}｜默认 ${result.source.default_ref}`);
 console.log(`配方 digest：${String(result.recipe_digest).slice(0, 12)}｜备份：${result.backup}｜未改动的段落：${(result.unchanged_sections ?? []).join(", ")}`);

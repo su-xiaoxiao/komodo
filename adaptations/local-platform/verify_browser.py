@@ -31,14 +31,14 @@ with sync_playwright() as p:
     page.get_by_role('button', name='简体中文', exact=True).click()
     page.get_by_role('link', name='概览', exact=True).wait_for()
     assert page.locator('html').get_attribute('lang') == 'zh-CN'
-    for route, title in [('/stacks', 'Compose 项目'), ('/builds', '镜像构建'), ('/procedures', '流水线'), ('/containers', '容器')]:
+    for route, title in [('/stacks', '应用栈（容器组）'), ('/builds', '镜像构建'), ('/procedures', '流水线'), ('/containers', '容器'), ('/platform', '本机平台')]:
         page.goto(base + route, wait_until='networkidle')
         page.locator('main').get_by_text(title, exact=True).first.wait_for()
         assert page.locator('html').get_attribute('lang') == 'zh-CN'
     page.screenshot(path=str(root / '.local/containers-zh.png'), full_page=True)
     assert not errors, errors
     report = {'login': True, 'language_switch': True, 'mcp_link': True,
-              'routes': ['/', '/stacks', '/builds', '/procedures', '/containers'], 'page_errors': errors}
+              'routes': ['/', '/stacks', '/builds', '/procedures', '/containers', '/platform'], 'page_errors': errors}
     (root / '.local/browser-verification.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
     print(json.dumps(report))
     browser.close()
