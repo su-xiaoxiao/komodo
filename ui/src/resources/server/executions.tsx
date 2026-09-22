@@ -1,3 +1,4 @@
+import { t } from "@/localization/runtime";
 import {
   useExecute,
   useInvalidate,
@@ -64,7 +65,7 @@ export const Prune = ({
         loading={pending}
         disabled={!canExecute || pending}
       >
-        {`Prune ${type}`}
+        {t("Prune {0}", {0: t(type)})}
       </ConfirmButton>
     );
   } else {
@@ -76,7 +77,7 @@ export const Prune = ({
         loading={pending}
         disabled={!canExecute || pending}
       >
-        {`Prune ${type}`}
+        {t("Prune {0}", {0: t(type)})}
       </ConfirmModalWithDisable>
     );
   }

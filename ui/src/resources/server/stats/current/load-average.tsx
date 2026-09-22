@@ -1,3 +1,4 @@
+import { t } from "@/localization/runtime";
 import { Types } from "komodo_client";
 import { useRead } from "@/lib/hooks";
 import { hexColorByIntention } from "mogh_ui";
@@ -62,7 +63,7 @@ export function ServerLoadAverage({
         ).map(([label, value]) => (
           <Stack key={label} gap="0.1rem">
             <Group justify="space-between" gap="0">
-              <Text c="dimmed">{label}</Text>
+              <Text c="dimmed">{t(label)}</Text>
               <Text c={textColor(value)}>{value.toFixed(2)}</Text>
             </Group>
             <Progress value={pct(value) ?? 0} color="bw" />

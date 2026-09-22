@@ -6,9 +6,6 @@
   ".env",
   "· ZFS ARC ",
   "/path/to/disk",
-  "15m",
-  "1m",
-  "5m",
   "API",
   "compose up",
   "compose.yaml",
@@ -33,5 +30,8 @@
   "Toml",
   "URI",
   "v",
-  "http{0}://"
+  "http{0}://",
+  "{0} GB",
+  "{0} MB",
+  "my.server.int"
 ]

@@ -1,3 +1,4 @@
+import { t } from "@/localization/runtime";
 import { fmtVersion } from "@/lib/formatting";
 import { useRead } from "@/lib/hooks";
 import { useWebsocketMessages } from "@/lib/socket";
@@ -85,7 +86,7 @@ export function UpdateDetailsContent({ id }: { id: string }) {
       {/** HEADER */}
       <Group justify="space-between">
         <Text fz="h2">
-          {fmtUpperCamelcase(update.operation)}{" "}
+          {t(fmtUpperCamelcase(update.operation))}{" "}
           {!versionIsNone(update.version) && fmtVersion(update.version)}
         </Text>
         <ActionIcon size="lg" variant="filled" color="red" onClick={close}>

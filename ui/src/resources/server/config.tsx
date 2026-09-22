@@ -65,6 +65,7 @@ export default function ServerConfig({
             labelHidden: true,
             fields: {
               enabled: {
+                label: "Enabled",
                 description:
                   t("Whether to attempt to connect to this host / send alerts if offline. Disabling will also convert all attached resource's state to 'Unknown'."),
               },
@@ -114,6 +115,7 @@ export default function ServerConfig({
                 />
               ),
               auto_rotate_keys: {
+                label: "Auto Rotate Keys",
                 description:
                   "Include in key rotation with 'RotateAllServerKeys'.",
               },
@@ -124,20 +126,24 @@ export default function ServerConfig({
             labelHidden: true,
             fields: {
               address: {
+                label: "Address",
                 description:
                   "For Core -> Periphery connection mode, specify address of periphery in your network.",
                 placeholder: "12.34.56.78:8120",
               },
               insecure_tls: {
+                label: "Skip TLS Verification",
                 hidden: !tlsAddress,
                 description: "Skip Periphery TLS certificate validation.",
               },
               external_address: {
+                label: "External Address",
                 description:
                   "Optional. The address of the server used in container links, if different than the Address.",
                 placeholder: "my.server.int",
               },
               region: {
+                label: "Region",
                 description:
                   "Optional. Attach a region to the server for visual grouping.",
                 placeholder: "Configure Region",
@@ -184,12 +190,13 @@ export default function ServerConfig({
             },
           },
         ],
-        alerts: [
+        [t("Alerts")]: [
           {
             label: "Unreachable",
             labelHidden: true,
             fields: {
               send_unreachable_alerts: {
+                label: "Send Unreachable Alerts",
                 description:
                   "Send an alert if the Periphery agent cannot be reached.",
               },
@@ -216,10 +223,12 @@ export default function ServerConfig({
                   "Send an alert if the CPU usage is above the configured thresholds.",
               },
               cpu_warning: {
+                label: "CPU Warning",
                 description:
                   "Send a 'Warning' alert if the CPU usage in % is above these thresholds",
               },
               cpu_critical: {
+                label: "CPU Critical",
                 description:
                   "Send a 'Critical' alert if the CPU usage in % is above these thresholds",
               },
@@ -251,14 +260,17 @@ export default function ServerConfig({
             labelHidden: true,
             fields: {
               send_disk_alerts: {
+                label: "Send Disk Alerts",
                 description:
                   "Send an alert if the Disk Usage (for any mounted disk) is above the configured thresholds.",
               },
               disk_warning: {
+                label: "Disk Warning",
                 description:
                   "Send a 'Warning' alert if the disk usage in % is above these thresholds",
               },
               disk_critical: {
+                label: "Disk Critical",
                 description:
                   "Send a 'Critical' alert if the disk usage in % is above these thresholds",
               },

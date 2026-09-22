@@ -1,3 +1,4 @@
+import { t } from "@/localization/runtime";
 import { BoxProps, Flex, FlexProps, Group, Loader, Stack } from "@mantine/core";
 import { Types } from "komodo_client";
 import { UpdateStatus } from "komodo_client/dist/types";
@@ -33,7 +34,7 @@ export default function UpdateCard({
     >
       <Group wrap="nowrap" gap="xs">
         <Icon update={update} />
-        {fmtUpperCamelcase(update.operation)}
+        {t(fmtUpperCamelcase(update.operation))}
         {!versionIsNone(update.version) && (
           <Group c="dimmed" gap="xs">
             <ICONS.Version size="1rem" />

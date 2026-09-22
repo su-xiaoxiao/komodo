@@ -1,3 +1,4 @@
+import { t } from "@/localization/runtime";
 import { UsableResource } from "@/resources";
 import { Types } from "komodo_client";
 import sanitizeHtml from "sanitize-html";
@@ -325,5 +326,5 @@ export function parseVersion(version: string): Types.Version {
 /** Crumb linking to the list page for a resource type, eg. `Servers` -> /servers */
 export function resourceTypeCrumb(type: UsableResource): Crumb {
   const name = type === "ResourceSync" ? "Resource Sync" : type;
-  return { label: `${name}s`, to: `/${usableResourcePath(type)}` };
+  return { label: t(`${name}s`), to: `/${usableResourcePath(type)}` };
 }

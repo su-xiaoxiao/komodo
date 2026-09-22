@@ -1,3 +1,4 @@
+import { t } from "@/localization/runtime";
 import { DataTable } from "mogh_ui";
 import { Section } from "mogh_ui";
 import { Types } from "komodo_client";
@@ -62,8 +63,8 @@ export default function ServerSystemInfo({
             header: "Core Count",
             accessorFn: ({ core_count, logical_core_count }) =>
               logical_core_count
-                ? `${logical_core_count} Logical / ${core_count} Physical Core${(core_count || 0) > 1 ? "s" : ""}`
-                : `${core_count} Physical Core${(core_count || 0) > 1 ? "s" : ""}`,
+                ? t("{0} logical / {1} physical cores", {0: logical_core_count, 1: core_count})
+                : t("{0} physical cores", {0: core_count}),
           },
           {
             header: "Total Memory",

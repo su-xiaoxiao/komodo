@@ -29,3 +29,5 @@ CI 工作流 `.github/workflows/downstream-localization.yml` 重复执行检查�
 上游可能改变组件结构或把静态文案改成动态表达式，因此不能承诺任何版本都免人工修改。新/移除文案检查、固定依赖、单元测试和页面验收共同构成升级流程。
 
 配置对象说明、片段等自动提取暂未覆盖的位置可显式导入 `@/localization/runtime` 的 `t`。提取器识别该导入及别名，将字符串纳入源文变更检查，并避免二次包装；不会把任意同名函数当作翻译调用。2026-09-22 补齐主机连接说明与 Swarm 介绍。
+
+服务器页面另覆盖配置对象的 description/placeholder、表格 header 和 JSX Fragment，并为自动字段标题提供显式 label。此扩展按 resources/server/ 目录限定，不扫描任意 API 对象。历史图表使用不翻译的 key 作为数据与颜色索引，标题/图例/提示单独翻译；监控粒度选项保留原 value，只翻译 label。动态系统词条可能在 stale 中保留，不代表应删除。

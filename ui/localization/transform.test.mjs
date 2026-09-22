@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { parse } from '@babel/parser';
@@ -47,4 +48,25 @@ test('explicit display translations join catalog without double wrapping', () =>
   const source = `import {t as translate} from '@/localization/runtime'; const config={description:translate('Host connection help')}; const other=t('User data');`;
   assert.deepEqual(scan(source).map(e => e.source), ['Host connection help']);
   assert.equal(transform(source, 'config.tsx'), null);
+});
+
+test('server display metadata and fragments preserve configuration keys and values', () => {
+ const source = `const view=<Config groups={{alerts:[{fields:{auto_rotate_keys:{description:"Rotate keys",placeholder:"Region"}}}]}}><>Server help</></Config>; const column={header:"Hostname",accessorKey:"host_name"};`;
+ const output=transform(source,'src/resources/server/config.tsx').code;
+ assert.match(output,/auto_rotate_keys:/);
+ assert.match(output,/accessorKey:"host_name"/);
+ for(const text of ['Rotate keys','Region','Server help','Hostname']) assert.ok(output.includes('__komodoTranslate('+JSON.stringify(text)+')'));
+ parse(output,{sourceType:'module',plugins:['typescript','jsx']});
+});
+
+test('historical chart keys stay English while display labels translate', () => {
+ const src=fs.readFileSync(new URL('../src/resources/server/stats/historical.tsx',import.meta.url),'utf8');
+ const out=transform(src,'src/resources/server/stats/historical.tsx').code;
+ assert.match(out,/key: "Used"/);
+ assert.match(out,/key: "Cache\/Buffers"/);
+ assert.match(out,/colors\[series.key\]/);
+ assert.match(out,/dataKey=\{series.key\}/);
+ assert.ok(out.includes('t(String(entry.value))'));
+ assert.ok(out.includes('value, label: t(value)'));
+ assert.ok(!out.includes('key: __komodoTranslate'));
 });

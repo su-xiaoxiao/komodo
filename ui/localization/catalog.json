@@ -38,7 +38,9 @@
     "src/resources/server/stats/current/ram.tsx:38",
     "src/resources/server/stats/current/ram.tsx:39",
     "src/resources/server/stats/disks.tsx:33",
-    "src/resources/server/stats/disks.tsx:37"
+    "src/resources/server/stats/disks.tsx:37",
+    "src/resources/server/stats/disks.tsx:68",
+    "src/resources/server/stats/disks.tsx:75"
   ],
   " GB ": [
     "src/resources/server/diskUsage.tsx:59",
@@ -46,6 +48,9 @@
   ],
   " GB available": [
     "src/resources/server/stats/current/ram.tsx:37"
+  ],
+  " in use": [
+    "src/resources/server/stats/current/index.tsx:49"
   ],
   " is a template.": [
     "src/components/template-marker.tsx:14"
@@ -64,10 +69,11 @@
     "src/components/docker/container-ports.tsx:159"
   ],
   " of": [
+    "src/resources/server/stats/current/index.tsx:48",
     "src/resources/server/stats/current/ram.tsx:33"
   ],
   " of ": [
-    "src/components/updates/details.tsx:172",
+    "src/components/updates/details.tsx:173",
     "src/pages/stats.tsx:232",
     "src/pages/stats.tsx:367",
     "src/resources/build/info.tsx:203"
@@ -127,30 +133,43 @@
   "{0} - Value": [
     "src/pages/settings/variables/index.tsx:91"
   ],
-  "{0} Core{1}": [
-    "src/resources/server/index.tsx:208"
+  "{0} cores": [
+    "src/resources/server/index.tsx:209"
+  ],
+  "{0} GB": [
+    "src/resources/server/stats/processes.tsx:79"
   ],
   "{0} lines": [
     "src/components/log-section.tsx:196"
+  ],
+  "{0} logical / {1} physical cores": [
+    "src/resources/server/stats/system-info.tsx:66"
+  ],
+  "{0} MB": [
+    "src/resources/server/stats/processes.tsx:80"
+  ],
+  "{0} physical cores": [
+    "src/resources/server/stats/system-info.tsx:67"
   ],
   "{0}-name": [
     "src/resources/new.tsx:82"
   ],
   "{0}% of {1} Cores": [
-    "src/resources/server/stats/current/load-average.tsx:47"
+    "src/resources/server/stats/current/load-average.tsx:48"
   ],
   "/path/to/disk": [
-    "src/resources/server/config.tsx:159"
+    "src/resources/server/config.tsx:165"
   ],
   "/work/dir (Optional)": [
     "src/resources/procedure/config/executions.tsx:889"
   ],
+  "% Full": [
+    "src/resources/server/stats/disks.tsx:87"
+  ],
   "15m": [
-    "src/resources/server/stats/historical.tsx:145",
     "src/resources/server/table/stats.tsx:222"
   ],
   "1m": [
-    "src/resources/server/stats/historical.tsx:143",
     "src/resources/server/table/stats.tsx:206"
   ],
   "2FA": [
@@ -160,7 +179,6 @@
     "node_modules/mogh_ui/dist/auth/login/index.js:203"
   ],
   "5m": [
-    "src/resources/server/stats/historical.tsx:144",
     "src/resources/server/table/stats.tsx:214"
   ],
   "Account": [
@@ -257,7 +275,8 @@
     "src/resources/stack/config/index.tsx:282"
   ],
   "Address": [
-    "src/resources/server/config.tsx:123"
+    "src/resources/server/config.tsx:125",
+    "src/resources/server/config.tsx:129"
   ],
   "Admin": [
     "src/components/user/header.tsx:34"
@@ -278,6 +297,7 @@
   "Alerts": [
     "src/app/sidebar.tsx:74",
     "src/pages/alerts.tsx:77",
+    "src/resources/server/config.tsx:193",
     "src/resources/swarm/config.tsx:119",
     "src/resources/sync/config.tsx:204"
   ],
@@ -325,6 +345,9 @@
   "Apply To": [
     "src/resources/stack/config/index.tsx:536"
   ],
+  "Arch": [
+    "src/resources/server/stats/system-info.tsx:59"
+  ],
   "Arguments": [
     "src/resources/action/config.tsx:92"
   ],
@@ -341,13 +364,16 @@
     "src/resources/server/docker/networks.tsx:104"
   ],
   "Auth": [
-    "src/resources/server/config.tsx:74"
+    "src/resources/server/config.tsx:75"
   ],
   "Auth style?": [
     "src/components/webhook/builder.tsx:27"
   ],
   "Auto Prune Images": [
-    "src/resources/server/config.tsx:180"
+    "src/resources/server/config.tsx:186"
+  ],
+  "Auto Rotate Keys": [
+    "src/resources/server/config.tsx:118"
   ],
   "Auto Update": [
     "src/resources/deployment/config/index.tsx:278",
@@ -413,9 +439,6 @@
   "Builds": [
     "src/resources/repo/resources.tsx:25"
   ],
-  "Cache/Buffers": [
-    "src/resources/server/stats/historical.tsx:158"
-  ],
   "Cancel": [
     "src/components/maintenance-windows.tsx:400",
     "src/resources/swarm/docker/nodes/update.tsx:167"
@@ -429,7 +452,7 @@
     "src/resources/procedure/executions.tsx:60"
   ],
   "Changes Made": [
-    "src/components/updates/details.tsx:148"
+    "src/components/updates/details.tsx:149"
   ],
   "Charting the first ": [
     "src/pages/stats.tsx:366"
@@ -494,7 +517,7 @@
     "src/resources/server/diskUsage.tsx:35"
   ],
   "command": [
-    "src/components/updates/details.tsx:184",
+    "src/components/updates/details.tsx:185",
     "src/resources/build/info.tsx:215"
   ],
   "Command": [
@@ -559,8 +582,14 @@
   "Configure custom alert message": [
     "src/resources/procedure/config/executions.tsx:1468"
   ],
+  "Configure maintenance windows to temporarily disable alerts during scheduled maintenance periods. When a maintenance window is active, alerts from this server will be suppressed.": [
+    "src/resources/server/config.tsx:282"
+  ],
   "Configure port mappings.": [
     "src/resources/deployment/config/index.tsx:206"
+  ],
+  "Configure Region": [
+    "src/resources/server/config.tsx:149"
   ],
   "Configure the --restart behavior.": [
     "src/resources/deployment/config/restart.tsx:20"
@@ -593,6 +622,9 @@
   ],
   "confirm-password": [
     "src/pages/settings/users/new-local-user.tsx:44"
+  ],
+  "Connect servers for alerting, building, and deploying.": [
+    "src/resources/server/index.tsx:84"
   ],
   "Connection": [
     "src/resources/builder/config/aws.tsx:107",
@@ -634,6 +666,9 @@
   "Copy the onboarding key below. ": [
     "src/pages/settings/onboarding/new.tsx:123"
   ],
+  "Core Count": [
+    "src/resources/server/stats/system-info.tsx:63"
+  ],
   "Core Info": [
     "src/pages/settings/core-info.tsx:61"
   ],
@@ -641,16 +676,23 @@
     "src/pages/settings/variables/index.tsx:177"
   ],
   "CPU": [
-    "src/resources/server/config.tsx:210",
+    "src/resources/server/config.tsx:217",
     "src/resources/server/stats-card.tsx:102",
     "src/resources/server/stats/containers.tsx:75",
     "src/resources/server/stats/processes.tsx:67",
+    "src/resources/server/stats/system-info.tsx:55",
     "src/resources/server/table/stats.tsx:75"
+  ],
+  "CPU Critical": [
+    "src/resources/server/config.tsx:231"
   ],
   "CPU Usage": [
     "src/pages/stats.tsx:248",
     "src/resources/server/stats/current/cpu.tsx:11",
     "src/resources/server/stats/current/index.tsx:31"
+  ],
+  "CPU Warning": [
+    "src/resources/server/config.tsx:226"
   ],
   "Create": [
     "src/components/api-keys/new.tsx:120",
@@ -705,7 +747,7 @@
     "src/resources/deployment/config/index.tsx:302"
   ],
   "custom-public-key": [
-    "src/resources/server/config.tsx:81"
+    "src/resources/server/config.tsx:82"
   ],
   "Dashboard": [
     "src/app/sidebar.tsx:18",
@@ -815,22 +857,28 @@
   ],
   "Disabled": [
     "src/pages/docker/network.tsx:119",
-    "src/resources/server/index.tsx:75",
+    "src/resources/server/index.tsx:76",
     "src/resources/server/stats-card.tsx:149",
     "node_modules/mogh_ui/dist/components/enable-switch.js:28"
   ],
   "Disk": [
-    "src/resources/server/config.tsx:250",
+    "src/resources/server/config.tsx:259",
     "src/resources/server/stats-card.tsx:114",
     "src/resources/server/table/stats.tsx:101"
+  ],
+  "Disk Critical": [
+    "src/resources/server/config.tsx:273"
   ],
   "Disk Usage": [
     "src/pages/stats.tsx:276",
     "src/resources/server/diskUsage.tsx:33",
     "src/resources/server/stats/current/index.tsx:42"
   ],
+  "Disk Warning": [
+    "src/resources/server/config.tsx:268"
+  ],
   "Disks": [
-    "src/resources/server/config.tsx:148",
+    "src/resources/server/config.tsx:154",
     "src/resources/server/stats/disks.tsx:27"
   ],
   "Docker resources are not available": [
@@ -909,6 +957,7 @@
     "src/resources/alerter/table.tsx:69",
     "src/resources/procedure/config/index.tsx:189",
     "src/resources/server/config.tsx:64",
+    "src/resources/server/config.tsx:68",
     "node_modules/mogh_ui/dist/components/enable-switch.js:28"
   ],
   "Endpoint": [
@@ -952,6 +1001,9 @@
   "example config": [
     "node_modules/mogh_ui/dist/auth/login/index.js:236"
   ],
+  "Exe": [
+    "src/resources/server/stats/processes.tsx:56"
+  ],
   "Execute": [
     "src/components/docker/batch-executions.tsx:134",
     "src/resources/batch-executions.tsx:80",
@@ -989,6 +1041,9 @@
   "Expression": [
     "src/resources/action/config.tsx:181",
     "src/resources/procedure/config/index.tsx:221"
+  ],
+  "External Address": [
+    "src/resources/server/config.tsx:140"
   ],
   "Extra Args": [
     "src/resources/build/config.tsx:382",
@@ -1057,6 +1112,9 @@
   ],
   "Folder:": [
     "src/resources/sync/info.tsx:145"
+  ],
+  "For Core -> Periphery connection mode, specify address of periphery in your network.": [
+    "src/resources/server/config.tsx:131"
   ],
   "for information on configuring auth.": [
     "node_modules/mogh_ui/dist/auth/login/index.js:240"
@@ -1134,7 +1192,7 @@
     "src/pages/user/member-groups.tsx:28"
   ],
   "Healthy": [
-    "src/resources/server/index.tsx:63",
+    "src/resources/server/index.tsx:64",
     "src/resources/swarm/index.tsx:56"
   ],
   "Hide": [
@@ -1145,7 +1203,7 @@
   ],
   "Historical": [
     "src/pages/stats.tsx:338",
-    "src/resources/server/stats/historical.tsx:60"
+    "src/resources/server/stats/historical.tsx:61"
   ],
   "History": [
     "src/pages/docker/image.tsx:163"
@@ -1155,6 +1213,7 @@
     "src/resources/stack/table.tsx:73"
   ],
   "Hostname": [
+    "src/resources/server/stats/system-info.tsx:43",
     "src/resources/swarm/docker/nodes/index.tsx:60"
   ],
   "http{0}://": [
@@ -1180,16 +1239,16 @@
     "src/resources/builder/config/server.tsx:43"
   ],
   "If provided, the associated private key must be set as Periphery 'private_key'. For Periphery -> Core connection, either this or using 'periphery_public_key' in Core config is required for Periphery to be able to connect.": [
-    "src/resources/server/config.tsx:80"
+    "src/resources/server/config.tsx:81"
   ],
   "If undesired disk mount points are coming through in server stats, filter them out here.": [
-    "src/resources/server/config.tsx:153"
+    "src/resources/server/config.tsx:159"
   ],
   "If your compose file has init services that exit early, ignore them here so your stack will report the correct health.": [
     "src/resources/stack/config/index.tsx:619"
   ],
   "Ignore Disks": [
-    "src/resources/server/config.tsx:154"
+    "src/resources/server/config.tsx:160"
   ],
   "Ignore Services": [
     "src/resources/stack/config/index.tsx:613",
@@ -1217,6 +1276,9 @@
   ],
   "Include": [
     "src/resources/sync/config.tsx:167"
+  ],
+  "Include in key rotation with 'RotateAllServerKeys'.": [
+    "src/resources/server/config.tsx:120"
   ],
   "Info": [
     "src/resources/stack/index.tsx:342"
@@ -1300,6 +1362,9 @@
   "Join Commands": [
     "src/resources/swarm/index.tsx:112"
   ],
+  "Kernel": [
+    "src/resources/server/stats/system-info.tsx:51"
+  ],
   "key": [
     "src/resources/swarm/docker/nodes/update.tsx:145"
   ],
@@ -1368,7 +1433,7 @@
     "src/resources/procedure/config/index.tsx:276"
   ],
   "Load Average": [
-    "src/resources/server/stats/current/load-average.tsx:38"
+    "src/resources/server/stats/current/load-average.tsx:39"
   ],
   "Load Average (1m)": [
     "src/pages/stats.tsx:447"
@@ -1407,7 +1472,7 @@
   ],
   "Maintenance": [
     "src/resources/alerter/config/index.tsx:86",
-    "src/resources/server/config.tsx:268",
+    "src/resources/server/config.tsx:280",
     "src/resources/swarm/config.tsx:128"
   ],
   "Make Admin": [
@@ -1477,20 +1542,20 @@
     "src/app/topbar/index.tsx:85"
   ],
   "Memory": [
-    "src/resources/server/config.tsx:229",
+    "src/resources/server/config.tsx:238",
     "src/resources/server/stats-card.tsx:108",
     "src/resources/server/stats/containers.tsx:81",
     "src/resources/server/stats/processes.tsx:74",
     "src/resources/server/table/stats.tsx:88"
   ],
   "Memory Critical": [
-    "src/resources/server/config.tsx:243"
+    "src/resources/server/config.tsx:252"
   ],
   "Memory Usage": [
     "src/pages/stats.tsx:261"
   ],
   "Memory Warning": [
-    "src/resources/server/config.tsx:238"
+    "src/resources/server/config.tsx:247"
   ],
   "message": [
     "src/components/hash-compare.tsx:55"
@@ -1508,7 +1573,7 @@
     "src/pages/terminals/new.tsx:156"
   ],
   "Monitoring": [
-    "src/resources/server/config.tsx:165"
+    "src/resources/server/config.tsx:171"
   ],
   "Mount:": [
     "src/resources/server/diskUsage.tsx:52"
@@ -1525,14 +1590,17 @@
     "src/resources/stack/config/index.tsx:903",
     "src/resources/sync/config.tsx:328"
   ],
+  "my.server.int": [
+    "src/resources/server/config.tsx:143"
+  ],
   "N/A": [
     "src/resources/deployment/index.tsx:198",
-    "src/resources/server/index.tsx:209",
-    "src/resources/server/index.tsx:236",
-    "src/resources/server/index.tsx:260",
-    "src/resources/server/index.tsx:288",
+    "src/resources/server/index.tsx:210",
+    "src/resources/server/index.tsx:237",
+    "src/resources/server/index.tsx:261",
+    "src/resources/server/index.tsx:289",
     "src/resources/server/stats-card.tsx:189",
-    "src/resources/server/stats/current/load-average.tsx:48",
+    "src/resources/server/stats/current/load-average.tsx:49",
     "src/resources/server/table/stats.tsx:210",
     "src/resources/server/table/stats.tsx:218",
     "src/resources/server/table/stats.tsx:226",
@@ -1563,6 +1631,7 @@
     "src/resources/server/docker/networks.tsx:68",
     "src/resources/server/docker/volumes.tsx:53",
     "src/resources/server/stats/containers.tsx:62",
+    "src/resources/server/stats/processes.tsx:52",
     "src/resources/server/table/standard.tsx:59",
     "src/resources/server/table/stats.tsx:58",
     "src/resources/stack/table.tsx:50",
@@ -1741,7 +1810,7 @@
   ],
   "ongoing": [
     "src/components/alerts/details.tsx:131",
-    "src/components/updates/details.tsx:134"
+    "src/components/updates/details.tsx:135"
   ],
   "Only Open": [
     "src/pages/alerts.tsx:137"
@@ -1757,6 +1826,12 @@
     "src/pages/settings/onboarding/new.tsx:82",
     "src/pages/settings/onboarding/new.tsx:92"
   ],
+  "Optional. Attach a region to the server for visual grouping.": [
+    "src/resources/server/config.tsx:148"
+  ],
+  "Optional. The address of the server used in container links, if different than the Address.": [
+    "src/resources/server/config.tsx:142"
+  ],
   "Options": [
     "src/resources/procedure/config/executions.tsx:927"
   ],
@@ -1766,6 +1841,9 @@
   "Organization": [
     "src/components/config/organization-selector.tsx:28",
     "src/components/config/organization-selector.tsx:55"
+  ],
+  "Os": [
+    "src/resources/server/stats/system-info.tsx:47"
   ],
   "Output of '": [
     "src/resources/stack/info.tsx:206"
@@ -1794,7 +1872,8 @@
   ],
   "Path": [
     "src/components/config/system-command.tsx:22",
-    "src/resources/repo/config.tsx:180"
+    "src/resources/repo/config.tsx:180",
+    "src/resources/server/stats/disks.tsx:56"
   ],
   "Path:": [
     "src/resources/build/info.tsx:73",
@@ -1808,7 +1887,7 @@
     "src/resources/swarm/docker/nodes/update.tsx:128"
   ],
   "Pause Containers": [
-    "src/resources/server/index.tsx:395"
+    "src/resources/server/index.tsx:396"
   ],
   "Pending": [
     "src/resources/sync/index.tsx:59"
@@ -1831,7 +1910,7 @@
   "Periphery Public Key": [
     "src/resources/builder/config/aws.tsx:111",
     "src/resources/builder/config/url.tsx:49",
-    "src/resources/server/config.tsx:79"
+    "src/resources/server/config.tsx:80"
   ],
   "Periphery version ": [
     "src/resources/server/version.tsx:41"
@@ -1908,14 +1987,14 @@
     "node_modules/mogh_ui/dist/auth/profile/linked-logins.js:69"
   ],
   "Prune {0}": [
-    "src/resources/server/executions.tsx:67",
-    "src/resources/server/executions.tsx:79"
+    "src/resources/server/executions.tsx:68",
+    "src/resources/server/executions.tsx:80"
   ],
   "Pruning": [
-    "src/resources/server/config.tsx:176"
+    "src/resources/server/config.tsx:182"
   ],
   "Public IP (click to copy)": [
-    "src/resources/server/index.tsx:188"
+    "src/resources/server/index.tsx:189"
   ],
   "public key": [
     "src/pages/settings/core-info.tsx:43"
@@ -1965,6 +2044,7 @@
     "src/resources/sync/executions.tsx:39"
   ],
   "Region": [
+    "src/resources/server/config.tsx:146",
     "src/resources/server/table/standard.tsx:93"
   ],
   "Registry": [
@@ -2059,7 +2139,7 @@
     "src/resources/stack/executions.tsx:217"
   ],
   "Restart Containers": [
-    "src/resources/server/index.tsx:361"
+    "src/resources/server/index.tsx:362"
   ],
   "Restart Mode": [
     "src/resources/deployment/config/restart.tsx:19"
@@ -2069,7 +2149,7 @@
     "src/resources/swarm/docker/nodes/update.tsx:102"
   ],
   "Rotate": [
-    "src/resources/server/config.tsx:107"
+    "src/resources/server/config.tsx:108"
   ],
   "Run Action": [
     "src/resources/action/executions.tsx:69"
@@ -2110,7 +2190,7 @@
   ],
   "Save": [
     "src/app/topbar/keyboard-shortcuts.tsx:44",
-    "src/resources/server/config.tsx:98",
+    "src/resources/server/config.tsx:99",
     "node_modules/mogh_ui/dist/components/config/confirm.js:93",
     "node_modules/mogh_ui/dist/components/config/confirm.js:112"
   ],
@@ -2324,14 +2404,53 @@
   "Select which docker {0} subcommands to wrap.": [
     "src/resources/stack/config/index.tsx:537"
   ],
-  "Send CPU Alerts": [
-    "src/resources/server/config.tsx:214"
-  ],
-  "Send Memory Alerts": [
+  "Send a 'Critical' alert if the CPU usage in % is above these thresholds": [
     "src/resources/server/config.tsx:233"
   ],
+  "Send a 'Critical' alert if the disk usage in % is above these thresholds": [
+    "src/resources/server/config.tsx:275"
+  ],
+  "Send a 'Critical' alert if the memory usage in % is above these thresholds": [
+    "src/resources/server/config.tsx:254"
+  ],
+  "Send a 'Warning' alert if the CPU usage in % is above these thresholds": [
+    "src/resources/server/config.tsx:228"
+  ],
+  "Send a 'Warning' alert if the disk usage in % is above these thresholds": [
+    "src/resources/server/config.tsx:270"
+  ],
+  "Send a 'Warning' alert if the memory usage in % is above these thresholds": [
+    "src/resources/server/config.tsx:249"
+  ],
+  "Send an alert if the CPU usage is above the configured thresholds.": [
+    "src/resources/server/config.tsx:223"
+  ],
+  "Send an alert if the Disk Usage (for any mounted disk) is above the configured thresholds.": [
+    "src/resources/server/config.tsx:265"
+  ],
+  "Send an alert if the memory usage is above the configured thresholds.": [
+    "src/resources/server/config.tsx:244"
+  ],
+  "Send an alert if the Periphery agent cannot be reached.": [
+    "src/resources/server/config.tsx:201"
+  ],
+  "Send an alert if the Periphery version differs from the Core version.": [
+    "src/resources/server/config.tsx:212"
+  ],
+  "Send CPU Alerts": [
+    "src/resources/server/config.tsx:221"
+  ],
+  "Send Disk Alerts": [
+    "src/resources/server/config.tsx:263"
+  ],
+  "Send Memory Alerts": [
+    "src/resources/server/config.tsx:242"
+  ],
+  "Send Unreachable Alerts": [
+    "src/resources/server/config.tsx:199"
+  ],
   "Send Version Mismatch Alerts": [
-    "src/resources/server/config.tsx:203"
+    "src/resources/server/config.tsx:210"
   ],
   "Server": [
     "src/pages/containers.tsx:126",
@@ -2417,7 +2536,7 @@
   ],
   "shareable link": [
     "src/components/alerts/details.tsx:136",
-    "src/components/updates/details.tsx:139"
+    "src/components/updates/details.tsx:140"
   ],
   "shift + s": [
     "src/app/topbar/omni-search/index.tsx:33"
@@ -2451,8 +2570,14 @@
   "Skip 2FA for external logins": [
     "src/pages/profile.tsx:175"
   ],
+  "Skip Periphery TLS certificate validation.": [
+    "src/resources/server/config.tsx:137"
+  ],
   "Skip redeploy": [
     "src/resources/procedure/config/executions.tsx:1436"
+  ],
+  "Skip TLS Verification": [
+    "src/resources/server/config.tsx:135"
   ],
   "Sort By:": [
     "src/pages/stats.tsx:179"
@@ -2479,7 +2604,7 @@
     "src/resources/swarm/resources.tsx:18"
   ],
   "Stage ": [
-    "src/components/updates/details.tsx:171",
+    "src/components/updates/details.tsx:172",
     "src/resources/build/info.tsx:202"
   ],
   "Stages": [
@@ -2491,7 +2616,7 @@
     "src/resources/stack/executions.tsx:280"
   ],
   "Start Containers": [
-    "src/resources/server/index.tsx:336"
+    "src/resources/server/index.tsx:337"
   ],
   "Start Time": [
     "src/components/maintenance-windows.tsx:104",
@@ -2524,14 +2649,14 @@
     "src/pages/stats.tsx:155"
   ],
   "stderr": [
-    "src/components/updates/details.tsx:212",
+    "src/components/updates/details.tsx:213",
     "src/resources/build/info.tsx:243"
   ],
   "Stderr": [
     "src/resources/action/last-run.tsx:58"
   ],
   "stdout": [
-    "src/components/updates/details.tsx:198",
+    "src/components/updates/details.tsx:199",
     "src/resources/build/info.tsx:229"
   ],
   "Stdout": [
@@ -2543,7 +2668,7 @@
     "src/resources/stack/executions.tsx:293"
   ],
   "Stop Containers": [
-    "src/resources/server/index.tsx:452"
+    "src/resources/server/index.tsx:453"
   ],
   "Stopped": [
     "src/resources/deployment/index.tsx:90",
@@ -2590,20 +2715,20 @@
   ],
   "System": [
     "src/components/alerts/details.tsx:115",
-    "src/components/updates/details.tsx:111",
+    "src/components/updates/details.tsx:112",
     "src/lib/socket.tsx:136",
     "src/pages/dashboard/active.tsx:228",
     "src/pages/updates.tsx:164",
     "src/resources/server/docker/networks.tsx:80"
   ],
   "System Info": [
-    "src/resources/server/stats/system-info.tsx:26"
+    "src/resources/server/stats/system-info.tsx:27"
   ],
   "System stats across all servers.": [
     "src/pages/stats.tsx:157"
   ],
   "System Stats Monitoring": [
-    "src/resources/server/config.tsx:169"
+    "src/resources/server/config.tsx:175"
   ],
   "T": [
     "src/components/template-marker.tsx:9",
@@ -2618,6 +2743,9 @@
   ],
   "Tagging": [
     "src/resources/build/config.tsx:277"
+  ],
+  "Tags": [
+    "src/resources/server/table/standard.tsx:113"
   ],
   "Tags:": [
     "src/pages/resource.tsx:174"
@@ -2728,6 +2856,12 @@
     "src/resources/builder/index.tsx:47",
     "src/resources/server/stats/disks.tsx:73"
   ],
+  "Total Disk Size": [
+    "src/resources/server/stats/system-info.tsx:74"
+  ],
+  "Total Memory": [
+    "src/resources/server/stats/system-info.tsx:70"
+  ],
   "Total:": [
     "src/resources/server/stats/disks.tsx:36"
   ],
@@ -2770,7 +2904,7 @@
   ],
   "Unhealthy": [
     "src/resources/deployment/index.tsx:95",
-    "src/resources/server/index.tsx:70",
+    "src/resources/server/index.tsx:71",
     "src/resources/stack/index.tsx:98",
     "src/resources/swarm/index.tsx:60"
   ],
@@ -2797,7 +2931,7 @@
     "src/resources/build/index.tsx:158"
   ],
   "Unknown IP": [
-    "src/resources/server/index.tsx:185"
+    "src/resources/server/index.tsx:186"
   ],
   "Unlink": [
     "node_modules/mogh_ui/dist/auth/profile/linked-logins.js:127"
@@ -2814,10 +2948,10 @@
     "src/resources/stack/executions.tsx:345"
   ],
   "Unpause Containers": [
-    "src/resources/server/index.tsx:429"
+    "src/resources/server/index.tsx:430"
   ],
   "Unreachable": [
-    "src/resources/server/config.tsx:189",
+    "src/resources/server/config.tsx:195",
     "src/resources/server/stats-card.tsx:149"
   ],
   "Unsaved changes": [
@@ -2885,8 +3019,7 @@
     "src/pages/settings/providers/index.tsx:102"
   ],
   "Used": [
-    "src/resources/server/stats/disks.tsx:66",
-    "src/resources/server/stats/historical.tsx:152"
+    "src/resources/server/stats/disks.tsx:66"
   ],
   "Used ": [
     "src/resources/server/stats/current/ram.tsx:32"
@@ -2958,8 +3091,9 @@
   "Version": [
     "src/resources/build/config.tsx:167",
     "src/resources/build/config.tsx:178",
-    "src/resources/server/config.tsx:199",
-    "src/resources/server/table/standard.tsx:100"
+    "src/resources/server/config.tsx:206",
+    "src/resources/server/table/standard.tsx:100",
+    "src/resources/server/table/stats.tsx:134"
   ],
   "Version the image with major.minor.patch. It can be interpolated using [[$VERSION]].": [
     "src/resources/build/config.tsx:179"
@@ -2976,7 +3110,7 @@
     "src/resources/deployment/config/index.tsx:250"
   ],
   "Warning": [
-    "src/resources/server/index.tsx:65"
+    "src/resources/server/index.tsx:66"
   ],
   "Webhook URL": [
     "src/components/webhook/copy-url.tsx:18"
@@ -3016,7 +3150,13 @@
     "src/app/topbar/websocket-status.tsx:41"
   ],
   "Whether to attempt to connect to this host / send alerts if offline. Disabling will also convert all attached resource's state to 'Unknown'.": [
-    "src/resources/server/config.tsx:69"
+    "src/resources/server/config.tsx:70"
+  ],
+  "Whether to prune unused images every day at UTC 00:00": [
+    "src/resources/server/config.tsx:188"
+  ],
+  "Whether to store historical CPU, RAM, and disk usage.": [
+    "src/resources/server/config.tsx:177"
   ],
   "Whitelist": [
     "src/resources/alerter/config/resources.tsx:166"
@@ -3044,8 +3184,5 @@
     "src/components/docker/batch-executions.tsx:227",
     "src/resources/batch-executions.tsx:197",
     "node_modules/mogh_ui/dist/components/confirm-modal.js:76"
-  ],
-  "ZFS ARC": [
-    "src/resources/server/stats/historical.tsx:167"
   ]
 }

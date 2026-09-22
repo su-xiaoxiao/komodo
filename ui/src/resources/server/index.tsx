@@ -1,3 +1,4 @@
+import { t } from "@/localization/runtime";
 import { serverStateIntention } from "@/lib/color";
 import { useExecute, useListItem, useRead } from "@/lib/hooks";
 import { ICONS } from "@/lib/icons";
@@ -205,7 +206,7 @@ export const ServerComponents: RequiredResourceComponents<
             <Group gap="xs">
               <ICONS.Cpu size="1rem" />
               {coreCount
-                ? `${coreCount} Core${coreCount === 1 ? "" : "s"}`
+                ? t("{0} cores", {0: coreCount})
                 : "N/A"}
             </Group>
           </HoverCard.Target>

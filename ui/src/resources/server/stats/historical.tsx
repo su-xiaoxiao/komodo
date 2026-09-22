@@ -1,3 +1,4 @@
+import { t } from "@/localization/runtime";
 import { fmtSizeBytes, Section } from "mogh_ui";
 import { useStatsGranularity } from "../hooks";
 import { ReactNode, useMemo } from "react";
@@ -77,7 +78,7 @@ export default function ServerHistoricalStats({ id }: { id: string }) {
               Types.Timelength.OneHour,
               Types.Timelength.SixHours,
               Types.Timelength.OneDay,
-            ]}
+            ].map(value => ({ value, label: t(value) }))}
             w={120}
           />
           <ShowHideButton show={show} setShow={setShow} />
@@ -124,7 +125,7 @@ function StatChart({
   );
 
   const seriesData = useMemo(() => {
-    if (!data?.stats) return [] as { label: string; data: StatDatapoint[] }[];
+    if (!data?.stats) return [] as { key: string; data: StatDatapoint[] }[];
     const records = [...data.stats].reverse();
     if (type === "Load Average") {
       const one = records.map((s) => ({
@@ -140,22 +141,22 @@ function StatChart({
         value: s.load_average?.fifteen ?? 0,
       }));
       return [
-        { label: "1m", data: one },
-        { label: "5m", data: five },
-        { label: "15m", data: fifteen },
+        { key: "1m", data: one },
+        { key: "5m", data: five },
+        { key: "15m", data: fifteen },
       ];
     }
     if (type === "Memory") {
       // Stacked GB composition, bottom -> top: Used, then reclaimable bands.
-      const series: { label: string; data: StatDatapoint[] }[] = [
+      const series: { key: string; data: StatDatapoint[] }[] = [
         {
-          label: "Used",
+          key: "Used",
           data: records.map((s) => ({ date: s.ts, value: s.mem_used_gb ?? 0 })),
         },
       ];
       if (records.some((s) => (s.mem_buff_cache_gb ?? 0) > 0)) {
         series.push({
-          label: "Cache/Buffers",
+          key: "Cache/Buffers",
           data: records.map((s) => ({
             date: s.ts,
             value: s.mem_buff_cache_gb ?? 0,
@@ -164,7 +165,7 @@ function StatChart({
       }
       if (records.some((s) => (s.mem_zfs_arc_gb ?? 0) > 0)) {
         series.push({
-          label: "ZFS ARC",
+          key: "ZFS ARC",
           data: records.map((s) => ({
             date: s.ts,
             value: s.mem_zfs_arc_gb ?? 0,
@@ -177,7 +178,7 @@ function StatChart({
       date: stat.ts,
       value: getStat(stat, type),
     }));
-    return [{ label: type, data: single }];
+    return [{ key: type, data: single }];
   }, [data, type]);
 
   const stats = seriesData.flatMap((s) => s.data);
@@ -211,7 +212,7 @@ function StatChart({
     return seriesData[0].data.map((point, i) => {
       const record: Record<string, number> = { date: point.date };
       seriesData.forEach((series) => {
-        record[series.label] = series.data[i]?.value ?? 0;
+        record[series.key] = series.data[i]?.value ?? 0;
       });
       return record;
     });
@@ -264,7 +265,7 @@ function StatChart({
       <Group gap="xs">
         {icon}
         <Text fz="xl" fw={500}>
-          {type}
+          {t(type)}
         </Text>
       </Group>
       {isPending ? (
@@ -280,8 +281,8 @@ function StatChart({
             <defs>
               {seriesData.map((series) => (
                 <linearGradient
-                  key={series.label}
-                  id={gradientId(series.label)}
+                  key={series.key}
+                  id={gradientId(series.key)}
                   x1="0"
                   y1="0"
                   x2="0"
@@ -289,12 +290,12 @@ function StatChart({
                 >
                   <stop
                     offset="5%"
-                    stopColor={colors[series.label]}
+                    stopColor={colors[series.key]}
                     stopOpacity={0.25}
                   />
                   <stop
                     offset="95%"
-                    stopColor={colors[series.label]}
+                    stopColor={colors[series.key]}
                     stopOpacity={0}
                   />
                 </linearGradient>
@@ -340,7 +341,7 @@ function StatChart({
               itemSorter={
                 isMemory
                   ? (item) =>
-                      -seriesData.findIndex((s) => s.label === item.dataKey)
+                      -seriesData.findIndex((s) => s.key === item.dataKey)
                   : undefined
               }
               formatter={(value, name) => {
@@ -352,12 +353,13 @@ function StatChart({
                     : isMemory
                       ? `${v.toFixed(2)} GB`
                       : `${v.toFixed(1)}%`;
-                return [formatted, name];
+                return [formatted, t(String(name))];
               }}
             />
             {(isLoadAvg || isMemory) && (
               <Legend
                 iconType="line"
+                formatter={(value) => t(String(value))}
                 wrapperStyle={{ fontSize: 11, paddingTop: 4 }}
                 // Reversed so the legend reads top-of-stack first, like the chart.
                 content={
@@ -374,7 +376,7 @@ function StatChart({
                                 }}
                               />
                               <Text fz={11} c="dimmed">
-                                {entry.value}
+                                {t(String(entry.value))}
                               </Text>
                             </Group>
                           ))}
@@ -386,16 +388,16 @@ function StatChart({
             )}
             {seriesData.map((series) => (
               <Area
-                key={series.label}
+                key={series.key}
                 type="monotone"
-                dataKey={series.label}
+                dataKey={series.key}
                 // Stack only for Memory; other charts overlay.
                 stackId={isMemory ? "mem" : undefined}
-                stroke={colors[series.label]}
+                stroke={colors[series.key]}
                 fill={
                   isMemory
-                    ? colors[series.label]
-                    : `url(#${gradientId(series.label)})`
+                    ? colors[series.key]
+                    : `url(#${gradientId(series.key)})`
                 }
                 fillOpacity={isMemory ? 0.45 : undefined}
                 strokeWidth={2}
