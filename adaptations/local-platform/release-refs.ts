@@ -26,6 +26,9 @@ if (!result || !["succeeded", "failed", "interrupted"].includes(result.status)) 
   throw new Error(`等待超时，未取到分支列表；核对 Windows 任务 ${id}，不要重复提交`);
 }
 if (result.kind !== "refs") throw new Error(`任务 ${id} 不是分支查询结果，请改用发布入口`);
+// 机器可读行：页面用它直接渲染表格，不必解析人类可读日志；人类可读行照旧保留。
+// 在终态报错之前输出，页面在失败时也能拿到结构化原因。
+console.log("__PLATFORM_JSON__ " + JSON.stringify({ schema: 1, job: id, ...result }));
 const source = result.mode === "remote" ? `远程 ${result.remote}（在 ${result.project} 的 Git 仓库上执行 ls-remote）` : "本机仓库";
 console.log(`来源：${source}`);
 console.log(`已登记分支：${(result.approved ?? []).join(", ") || "（无）"}｜默认：${result.default_ref ?? "（无）"}`);

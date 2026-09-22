@@ -19,6 +19,8 @@ for (let attempt = 0; attempt < 60; attempt++) {
   if (["succeeded", "failed", "interrupted"].includes(result.status)) break;
 }
 if (!result || result.kind !== "versions") throw new Error(`未取到版本信息，核对 Windows 任务 ${id}`);
+// 机器可读行：页面用它渲染版本卡；失败时也要给出结构化原因，因此在状态判断之前输出。
+console.log("__PLATFORM_JSON__ " + JSON.stringify({ schema: 1, job: id, ...result }));
 if (result.status !== "succeeded") throw new Error(result.error ?? result.status);
 const repository = result.repository ?? {};
 const recipe = result.recipe ?? {};
