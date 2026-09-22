@@ -37,8 +37,8 @@ import {
   sourceArgs,
   sourceDefaults,
 } from "@/lib/platform";
-import GroupsSection from "./groups";
 import { parsePlatformPayload, updateText } from "@/lib/platform";
+import { Card as MantineCard, Text as MantineText, Title as MantineTitle } from "@mantine/core";
 import { SectionCard, data, usePlatformRun, type Running } from "./run";
 
 
@@ -92,7 +92,7 @@ export default function Platform() {
         </Alert>
       )}
 
-      <GroupsSection installed={actions} onRun={setRun} />
+      <GroupLinkCard />
 
       {project && (
         <Stack gap="lg">
@@ -703,5 +703,27 @@ function RunPanel({ run, onClose }: { run: { title: string; id: string }; onClos
         )}
       </Text>
     </Card>
+  );
+}
+
+/**
+ * The platform page focuses on repository / branch / build / release / versions. Container and
+ * group lifecycle lives on the containers page, so this is only a link there.
+ */
+function GroupLinkCard() {
+  return (
+    <MantineCard withBorder>
+      <Group justify="space-between">
+        <Stack gap={2}>
+          <MantineTitle order={5}>{t("Containers and groups")}</MantineTitle>
+          <MantineText size="sm" c="dimmed">
+            {t("Group lifecycle, members and health are managed on the containers page, grouped by Compose project.")}
+          </MantineText>
+        </Stack>
+        <Button component={Link} to="/containers" variant="light">
+          {t("Manage groups on the containers page")}
+        </Button>
+      </Group>
+    </MantineCard>
   );
 }

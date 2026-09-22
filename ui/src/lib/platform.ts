@@ -139,30 +139,56 @@ export type PlatformSourceEdit = {
   error?: string;
 };
 
+export type GroupStatus = "running" | "partial" | "stopped" | "abnormal" | "absent";
+
+export type GroupMember = {
+  name: string;
+  container_name: string;
+  state: string;
+  health?: string | null;
+  image_id: string;
+  image_reference?: string;
+  ports?: Record<string, unknown>;
+  drift?: boolean | null;
+};
+
+export type Group = {
+  name: string;
+  services: string[];
+  managed: boolean;
+  status: GroupStatus;
+  running: number;
+  total: number;
+  expected: number;
+  healthy: number;
+  unhealthy: number;
+  starting: number;
+  not_created: number;
+  missing: string[];
+  unexpected: string[];
+  unexpected_states?: string[];
+  projects: { id: string; title?: string }[];
+  containers: GroupMember[];
+};
+
+export type GroupSummaryCounts = {
+  total: number;
+  running: number;
+  partial: number;
+  stopped: number;
+  abnormal: number;
+  absent: number;
+  unmanaged: number;
+  standalone: number;
+};
+
 export type PlatformGroups = {
   schema: number;
   job: string;
-  groups: {
-    name: string;
-    services: string[];
-    managed: boolean;
-    running: number;
-    total: number;
-    expected: number;
-    missing: string[];
-    unexpected: string[];
-    projects: { id: string; title?: string }[];
-    containers: {
-      name: string;
-      container_name: string;
-      state: string;
-      health?: string | null;
-      image_id: string;
-      image_reference?: string;
-      ports?: Record<string, unknown>;
-      drift?: boolean | null;
-    }[];
-  }[];
+  groups: Group[];
+  registered?: Group[];
+  unmanaged?: Group[];
+  summary: GroupSummaryCounts;
   lock: { held: boolean; kind?: string; subject?: string | null; pid?: number | null; started_at?: string | null };
   docker_error?: string | null;
   generated_at: string;

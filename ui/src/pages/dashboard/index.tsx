@@ -5,7 +5,8 @@ import {
   useTagsFilter,
 } from "@/lib/hooks";
 import { ICONS } from "@/lib/icons";
-import { Group } from "@mantine/core";
+import { Group, Stack } from "@mantine/core";
+import { GroupSummary } from "@/components/platform/group-overview";
 import DashboardRecents from "./recents";
 import ExportToml from "@/components/export-toml";
 import ServerShowStats from "@/resources/server/show-stats";
@@ -30,7 +31,10 @@ export default function Dashboard() {
         </Group>
       }
     >
-      {preferences.showTables ? <DashboardTables /> : <DashboardRecents />}
+      <Stack gap="lg">
+        <GroupSummary />
+        {preferences.showTables ? <DashboardTables /> : <DashboardRecents />}
+      </Stack>
     </Page>
   );
 }

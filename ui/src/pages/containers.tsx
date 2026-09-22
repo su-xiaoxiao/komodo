@@ -22,10 +22,13 @@ import TagsFilter from "@/components/tags/filter";
 import ResourceMultiSelector from "@/resources/multi-selector";
 import ListPagination from "@/components/list-pagination";
 import DockerBatchExecutions from "@/components/docker/batch-executions";
+import GroupOverview from "@/components/platform/group-overview";
+import { Accordion, Alert, Card, Text } from "@mantine/core";
+import { t } from "@/localization/runtime";
 
 const CONTAINER_SORT_KEYS = Object.values(Types.ContainerSortBy);
 
-export default function Containers() {
+function RawContainers() {
   const [selectedServers, setSelectedServers] = useState<string[]>([]);
 
   const selectionState = useDockerSelectionState("Container");
@@ -273,5 +276,38 @@ export default function Containers() {
         {Table}
       </Stack>
     </Page>
+  );
+}
+
+/**
+ * Containers page = the unified entry for Compose groups.
+ *
+ * The default view is grouped by Compose project (status, counts, members, and the locked group
+ * lifecycle). The raw per-container table stays below for inspection, clearly marked: its native
+ * single-container / batch operations do NOT take the release lock.
+ */
+export default function Containers() {
+  return (
+    <Stack gap="lg" p="md">
+      <GroupOverview />
+      <Card withBorder>
+        <Accordion variant="contained">
+          <Accordion.Item value="raw">
+            <Accordion.Control>
+              <Text fw={500}>{t("Raw container list and single-container operations")}</Text>
+              <Text size="xs" c="dimmed">
+                {t("Lists single containers with the native start/stop/batch operations. They do not take the release lock; use the grouped view above for whole groups.")}
+              </Text>
+            </Accordion.Control>
+            <Accordion.Panel>
+              <Alert color="yellow" mb="sm">
+                {t("Native single-container operations are not protected by the release lock: do not start or stop containers here while a release runs.")}
+              </Alert>
+              <RawContainers />
+            </Accordion.Panel>
+          </Accordion.Item>
+        </Accordion>
+      </Card>
+    </Stack>
   );
 }

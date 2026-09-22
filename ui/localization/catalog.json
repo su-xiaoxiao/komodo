@@ -148,9 +148,6 @@
   "{0} MB": [
     "src/resources/server/stats/processes.tsx:80"
   ],
-  "{0} of {1} running": [
-    "src/pages/platform/groups.tsx:131"
-  ],
   "{0} physical cores": [
     "src/resources/server/stats/system-info.tsx:67"
   ],
@@ -188,8 +185,17 @@
   "5m": [
     "src/resources/server/table/stats.tsx:214"
   ],
+  "A release or lifecycle operation is in progress ({0}); start and stop are disabled, status and logs remain available.": [
+    "src/components/platform/group-overview.tsx:212"
+  ],
   "A remote name configured on the build host": [
     "src/pages/platform/index.tsx:170"
+  ],
+  "Abnormal": [
+    "src/components/platform/group-overview.tsx:505"
+  ],
+  "Abnormal: {0}": [
+    "src/components/platform/group-overview.tsx:178"
   ],
   "Account": [
     "src/app/topbar/user-dropdown.tsx:113",
@@ -308,7 +314,7 @@
     "src/resources/alerter/config/alert-types.tsx:46"
   ],
   "Alerts": [
-    "src/app/sidebar.tsx:74",
+    "src/app/sidebar.tsx:79",
     "src/pages/alerts.tsx:77",
     "src/resources/server/config.tsx:193",
     "src/resources/swarm/config.tsx:119",
@@ -316,6 +322,12 @@
   ],
   "Alerts ": [
     "src/resources/alerter/config/resources.tsx:113"
+  ],
+  "All running": [
+    "src/components/platform/group-overview.tsx:502"
+  ],
+  "All running: {0}": [
+    "src/components/platform/group-overview.tsx:169"
   ],
   "All services": [
     "src/resources/procedure/config/executions.tsx:381",
@@ -329,6 +341,12 @@
     "src/resources/stack/config/config-files.tsx:92",
     "src/resources/stack/log.tsx:34",
     "src/resources/stack/log.tsx:44"
+  ],
+  "All stopped": [
+    "src/components/platform/group-overview.tsx:504"
+  ],
+  "All stopped: {0}": [
+    "src/components/platform/group-overview.tsx:175"
   ],
   "All users will inherit the permissions in this group.": [
     "src/pages/user-group/index.tsx:126"
@@ -605,6 +623,9 @@
   "Closing or cancelling this view does not stop the Windows transaction; check the task id before resubmitting.": [
     "src/pages/platform/index.tsx:702"
   ],
+  "Collapse": [
+    "src/components/platform/group-overview.tsx:237"
+  ],
   "Combined usage:": [
     "src/resources/server/diskUsage.tsx:35"
   ],
@@ -646,6 +667,9 @@
   ],
   "Compose File": [
     "src/resources/stack/config/index.tsx:938"
+  ],
+  "Compose groups": [
+    "src/components/platform/group-overview.tsx:152"
   ],
   "compose up": [
     "src/resources/stack/config/index.tsx:568"
@@ -747,16 +771,25 @@
     "src/pages/dashboard/no-resources.tsx:16"
   ],
   "Container": [
-    "src/pages/platform/groups.tsx:103",
+    "src/components/platform/group-overview.tsx:347",
     "src/pages/terminals/new.tsx:349"
   ],
+  "Container groups": [
+    "src/components/platform/group-overview.tsx:480"
+  ],
   "Containers": [
-    "src/app/sidebar.tsx:24",
+    "src/app/sidebar.tsx:29",
     "src/app/topbar/omni-search/hooks.tsx:147",
     "src/components/docker/containers-section.tsx:55",
-    "src/pages/containers.tsx:247",
+    "src/pages/containers.tsx:250",
     "src/pages/docker/network.tsx:148",
     "src/resources/server/stats/containers.tsx:38"
+  ],
+  "Containers and groups": [
+    "src/pages/platform/index.tsx:718"
+  ],
+  "Containers grouped by Compose project. Group start/stop take the same lock as a release; single-container operations do not.": [
+    "src/components/platform/group-overview.tsx:154"
   ],
   "Content": [
     "src/resources/swarm/new/config.tsx:42",
@@ -792,6 +825,12 @@
   ],
   "Core Secrets:": [
     "src/pages/settings/variables/index.tsx:177"
+  ],
+  "Could not load the group data": [
+    "src/components/platform/group-overview.tsx:192"
+  ],
+  "Counts come from the platform registry and the actual container state.": [
+    "src/components/platform/group-overview.tsx:529"
   ],
   "CPU": [
     "src/resources/server/config.tsx:217",
@@ -882,9 +921,12 @@
     "src/resources/server/config.tsx:82"
   ],
   "Dashboard": [
-    "src/app/sidebar.tsx:18",
+    "src/app/sidebar.tsx:23",
     "src/app/topbar/omni-search/hooks.tsx:122",
-    "src/pages/dashboard/index.tsx:23"
+    "src/pages/dashboard/index.tsx:24"
+  ],
+  "Data from {0}": [
+    "src/components/platform/group-overview.tsx:417"
   ],
   "Date": [
     "src/components/maintenance-windows.tsx:331"
@@ -1004,11 +1046,11 @@
     "src/pages/docker/network.tsx:196",
     "src/pages/docker/volume.tsx:135"
   ],
+  "Diagnostics only: internal identifiers, not needed for daily work.": [
+    "src/components/platform/group-overview.tsx:425"
+  ],
   "Did not find ": [
     "src/resources/deployment/tasks.tsx:35"
-  ],
-  "Differs from the registered image": [
-    "src/pages/platform/groups.tsx:186"
   ],
   "Disable User": [
     "src/pages/user/index.tsx:85"
@@ -1307,6 +1349,9 @@
     "src/resources/action/config.tsx:164",
     "src/resources/procedure/config/index.tsx:205"
   ],
+  "free": [
+    "src/components/platform/group-overview.tsx:435"
+  ],
   "From config file:": [
     "src/pages/settings/providers/from-config.tsx:34"
   ],
@@ -1363,32 +1408,56 @@
   "Go to Variables": [
     "src/app/topbar/keyboard-shortcuts.tsx:54"
   ],
-  "Group": [
-    "src/pages/platform/groups.tsx:101"
+  "Group data entry": [
+    "src/components/platform/group-overview.tsx:428"
   ],
   "Group Execute - ": [
     "src/components/docker/batch-executions.tsx:204",
     "src/resources/batch-executions.tsx:172"
   ],
+  "Group lifecycle entry": [
+    "src/components/platform/group-overview.tsx:431"
+  ],
+  "Group lifecycle is locked while a release is running": [
+    "src/components/platform/group-overview.tsx:210"
+  ],
+  "Group lifecycle, members and health are managed on the containers page, grouped by Compose project.": [
+    "src/pages/platform/index.tsx:720"
+  ],
+  "Group logs": [
+    "src/components/platform/group-overview.tsx:120"
+  ],
+  "Group status": [
+    "src/components/platform/group-overview.tsx:119"
+  ],
   "group-name": [
     "src/pages/settings/users/new-group.tsx:25"
   ],
   "Groups": [
-    "src/pages/platform/groups.tsx:40",
+    "src/components/platform/group-overview.tsx:501",
     "src/pages/user/member-groups.tsx:28"
   ],
-  "Groups and containers": [
-    "src/pages/platform/groups.tsx:63"
+  "Groups: {0}": [
+    "src/components/platform/group-overview.tsx:167"
   ],
   "HEAD {0}": [
     "src/pages/platform/index.tsx:461"
+  ],
+  "Health": [
+    "src/components/platform/group-overview.tsx:350"
   ],
   "Healthy": [
     "src/resources/server/index.tsx:64",
     "src/resources/swarm/index.tsx:56"
   ],
+  "Healthy {0}": [
+    "src/components/platform/group-overview.tsx:281"
+  ],
   "Hide": [
     "node_modules/mogh_ui/dist/components/show-hide-button.js:17"
+  ],
+  "Hide diagnostics": [
+    "src/components/platform/group-overview.tsx:413"
   ],
   "Hide Server Stats": [
     "src/resources/server/show-stats.tsx:20"
@@ -1400,8 +1469,8 @@
   "History": [
     "src/pages/docker/image.tsx:163"
   ],
-  "Holder: {0} {1} pid={2}": [
-    "src/pages/platform/groups.tsx:81"
+  "holder": [
+    "src/components/platform/group-overview.tsx:435"
   ],
   "Host": [
     "src/resources/deployment/table.tsx:77",
@@ -1454,8 +1523,8 @@
   ],
   "Image": [
     "src/components/docker/containers-section.tsx:126",
-    "src/pages/containers.tsx:152",
-    "src/pages/platform/groups.tsx:105",
+    "src/components/platform/group-overview.tsx:351",
+    "src/pages/containers.tsx:155",
     "src/pages/platform/index.tsx:531",
     "src/resources/deployment/config/index.tsx:140",
     "src/resources/deployment/table.tsx:65",
@@ -1599,9 +1668,6 @@
   "Labels to Remove": [
     "src/resources/swarm/docker/nodes/update.tsx:144"
   ],
-  "Last overview:": [
-    "src/pages/platform/groups.tsx:263"
-  ],
   "Last release": [
     "src/pages/platform/index.tsx:485"
   ],
@@ -1624,9 +1690,6 @@
   "Level:": [
     "src/components/user/header.tsx:28"
   ],
-  "Lifecycle": [
-    "src/pages/platform/groups.tsx:106"
-  ],
   "Link ": [
     "node_modules/mogh_ui/dist/auth/profile/linked-logins.js:135"
   ],
@@ -1648,6 +1711,9 @@
     "src/resources/action/config.tsx:261",
     "src/resources/procedure/config/index.tsx:280"
   ],
+  "Lists single containers with the native start/stop/batch operations. They do not take the release lock; use the grouped view above for whole groups.": [
+    "src/pages/containers.tsx:299"
+  ],
   "Load Average": [
     "src/resources/server/stats/current/load-average.tsx:39"
   ],
@@ -1657,6 +1723,10 @@
   "Load Avg": [
     "src/resources/server/table/stats.tsx:114"
   ],
+  "Loading groups…": [
+    "src/components/platform/group-overview.tsx:244",
+    "src/components/platform/group-overview.tsx:533"
+  ],
   "Local": [
     "src/components/config/image-registry-config.tsx:45"
   ],
@@ -1665,6 +1735,13 @@
   ],
   "Local repository": [
     "src/pages/platform/index.tsx:298"
+  ],
+  "Lock": [
+    "src/components/platform/group-overview.tsx:434"
+  ],
+  "Locked while a release is running": [
+    "src/components/platform/group-overview.tsx:294",
+    "src/components/platform/group-overview.tsx:306"
   ],
   "Log In": [
     "node_modules/mogh_ui/dist/auth/login/header.js:24",
@@ -1687,7 +1764,7 @@
     "src/resources/stack/config/index.tsx:643"
   ],
   "Logs": [
-    "src/pages/platform/groups.tsx:250"
+    "src/components/platform/group-overview.tsx:323"
   ],
   "Logs are not available": [
     "src/components/log-section.tsx:38"
@@ -1705,6 +1782,12 @@
   ],
   "Manage auth request {0} failed": [
     "node_modules/mogh_ui/dist/auth/index.js:66"
+  ],
+  "Manage groups on the containers page": [
+    "src/pages/platform/index.tsx:724"
+  ],
+  "Manage on the containers page": [
+    "src/components/platform/group-overview.tsx:484"
   ],
   "Manage terminals across all servers.": [
     "src/pages/terminals/index.tsx:65"
@@ -1726,6 +1809,9 @@
   ],
   "Managers": [
     "src/resources/swarm/config.tsx:45"
+  ],
+  "Marker": [
+    "src/components/platform/group-overview.tsx:438"
   ],
   "match": [
     "src/resources/server/version.tsx:46"
@@ -1803,9 +1889,6 @@
   "Missing :service in URL": [
     "src/pages/terminal.tsx:56"
   ],
-  "Missing {0}": [
-    "src/pages/platform/groups.tsx:135"
-  ],
   "Missing external address": [
     "src/components/docker/container-ports.tsx:145"
   ],
@@ -1860,7 +1943,7 @@
     "src/components/maintenance-windows.tsx:78",
     "src/components/maintenance-windows.tsx:301",
     "src/components/swarm/services-section.tsx:59",
-    "src/pages/containers.tsx:100",
+    "src/pages/containers.tsx:103",
     "src/pages/dashboard/active.tsx:222",
     "src/pages/docker/network.tsx:156",
     "src/pages/settings/onboarding/index.tsx:44",
@@ -1890,6 +1973,12 @@
     "src/resources/swarm/table.tsx:48",
     "src/resources/sync/table.tsx:48"
   ],
+  "Native single-container operations are not protected by the release lock: do not start or stop containers here while a release runs.": [
+    "src/pages/containers.tsx:304"
+  ],
+  "Needs attention: {0}": [
+    "src/components/platform/group-overview.tsx:522"
+  ],
   "Net": [
     "src/resources/server/table/stats.tsx:127"
   ],
@@ -1908,7 +1997,7 @@
   ],
   "Networks": [
     "src/components/docker/containers-section.tsx:140",
-    "src/pages/containers.tsx:167",
+    "src/pages/containers.tsx:170",
     "src/resources/stack/services.tsx:177"
   ],
   "Never": [
@@ -1965,17 +2054,24 @@
   "No candidate build": [
     "src/pages/platform/index.tsx:517"
   ],
+  "No Compose group is registered on the platform yet.": [
+    "src/components/platform/group-overview.tsx:247"
+  ],
   "No configuration provided for stack. Cannot get stack state. Either paste the compose file contents into the UI, or configure a git repo containing your files.": [
     "src/resources/stack/index.tsx:282"
-  ],
-  "No containers": [
-    "src/pages/platform/groups.tsx:147"
   ],
   "No Dependencies": [
     "src/resources/procedure/config/executions.tsx:946"
   ],
-  "No group overview was returned.": [
-    "src/pages/platform/groups.tsx:94"
+  "No group data has loaded yet; please retry.": [
+    "src/components/platform/group-overview.tsx:198"
+  ],
+  "No group data was returned": [
+    "src/components/platform/group-overview.tsx:99",
+    "src/components/platform/group-overview.tsx:460"
+  ],
+  "No healthcheck": [
+    "src/components/platform/group-overview.tsx:386"
   ],
   "No log.": [
     "src/components/log-viewer.tsx:111"
@@ -2046,14 +2142,17 @@
     "node_modules/mogh_ui/dist/components/config/confirm.js:154",
     "node_modules/mogh_ui/dist/components/config/confirm.js:158"
   ],
+  "Not created": [
+    "src/components/platform/group-overview.tsx:506"
+  ],
+  "Not created: {0}": [
+    "src/components/platform/group-overview.tsx:181"
+  ],
   "Not Deployed": [
     "src/resources/deployment/index.tsx:84"
   ],
-  "Not in the registry: {0}": [
-    "src/pages/platform/groups.tsx:140"
-  ],
   "Not registered": [
-    "src/pages/platform/groups.tsx:126"
+    "src/components/platform/group-overview.tsx:271"
   ],
   "Not Scheduled": [
     "src/resources/action/index.tsx:118",
@@ -2069,7 +2168,7 @@
     "src/app/topbar/omni-search/index.tsx:87"
   ],
   "Notifications": [
-    "src/app/sidebar.tsx:66"
+    "src/app/sidebar.tsx:71"
   ],
   "of": [
     "src/resources/server/diskUsage.tsx:59"
@@ -2140,7 +2239,10 @@
     "src/resources/stack/info.tsx:206"
   ],
   "Partially running": [
-    "src/pages/platform/groups.tsx:150"
+    "src/components/platform/group-overview.tsx:503"
+  ],
+  "Partially running: {0}": [
+    "src/components/platform/group-overview.tsx:172"
   ],
   "Pass extra arguments to '": [
     "src/resources/deployment/config/index.tsx:369"
@@ -2228,7 +2330,7 @@
     "src/resources/server/stats/containers.tsx:107"
   ],
   "Platform": [
-    "src/app/sidebar.tsx:89",
+    "src/app/sidebar.tsx:94",
     "src/pages/platform/index.tsx:59"
   ],
   "Please enter ": [
@@ -2245,7 +2347,7 @@
   ],
   "Ports": [
     "src/components/docker/containers-section.tsx:184",
-    "src/pages/containers.tsx:212",
+    "src/pages/containers.tsx:215",
     "src/resources/deployment/config/index.tsx:205",
     "src/resources/stack/services.tsx:210"
   ],
@@ -2299,6 +2401,9 @@
   ],
   "Project Name": [
     "src/resources/stack/config/index.tsx:465"
+  ],
+  "Projects: {0}": [
+    "src/components/platform/group-overview.tsx:400"
   ],
   "Provide a custom webhook secret for this resource, or use the global default.": [
     "src/resources/action/config.tsx:294",
@@ -2382,6 +2487,9 @@
   "RAM Usage": [
     "src/resources/server/stats/current/ram.tsx:26"
   ],
+  "Raw container list and single-container operations": [
+    "src/pages/containers.tsx:297"
+  ],
   "Read API": [
     "src/resources/action/config.tsx:70",
     "src/resources/action/config.tsx:74"
@@ -2410,7 +2518,7 @@
     "src/resources/stack/update-available.tsx:114"
   ],
   "Refresh": [
-    "src/pages/platform/groups.tsx:69",
+    "src/components/platform/group-overview.tsx:160",
     "src/pages/platform/index.tsx:288",
     "src/pages/platform/run.tsx:77",
     "src/resources/batch-executions.tsx:90",
@@ -2438,6 +2546,9 @@
   ],
   "Registered refs {0}": [
     "src/pages/platform/index.tsx:475"
+  ],
+  "Registered services not created yet: {0}": [
+    "src/components/platform/group-overview.tsx:335"
   ],
   "Registry": [
     "src/resources/build/config.tsx:223"
@@ -2543,7 +2654,7 @@
     "src/components/permissions/base-section.tsx:106"
   ],
   "Resources": [
-    "src/app/sidebar.tsx:44",
+    "src/app/sidebar.tsx:49",
     "src/resources/server/table/standard.tsx:83"
   ],
   "Restart": [
@@ -2572,6 +2683,10 @@
   ],
   "Restores the previous verified image set for this project and checks health. Business data is not touched.": [
     "src/pages/platform/index.tsx:606"
+  ],
+  "Retry": [
+    "src/components/platform/group-overview.tsx:202",
+    "src/components/platform/group-overview.tsx:493"
   ],
   "Role": [
     "src/resources/swarm/docker/nodes/index.tsx:81",
@@ -2620,11 +2735,13 @@
     "src/resources/action/config.tsx:236"
   ],
   "Running": [
-    "src/pages/platform/groups.tsx:149",
     "src/resources/action/index.tsx:52",
     "src/resources/deployment/index.tsx:88",
     "src/resources/procedure/index.tsx:54",
     "src/resources/stack/index.tsx:89"
+  ],
+  "Running {0}/{1}": [
+    "src/components/platform/group-overview.tsx:277"
   ],
   "Runtime": [
     "src/resources/stack/services.tsx:89"
@@ -2685,7 +2802,7 @@
     "src/components/maintenance-windows.tsx:310"
   ],
   "Schedules": [
-    "src/app/sidebar.tsx:95",
+    "src/app/sidebar.tsx:100",
     "src/app/topbar/omni-search/hooks.tsx:165",
     "src/pages/schedules.tsx:70"
   ],
@@ -2740,7 +2857,7 @@
     "src/pages/schedules.tsx:71"
   ],
   "See containers across all servers.": [
-    "src/pages/containers.tsx:249"
+    "src/pages/containers.tsx:252"
   ],
   "See docker docs.": [
     "src/resources/build/config.tsx:364",
@@ -2940,7 +3057,7 @@
     "src/resources/server/config.tsx:210"
   ],
   "Server": [
-    "src/pages/containers.tsx:126",
+    "src/pages/containers.tsx:129",
     "src/pages/terminals/new.tsx:269",
     "src/pages/terminals/new.tsx:336",
     "src/resources/builder/config/server.tsx:36",
@@ -2967,6 +3084,7 @@
     "src/pages/stats.tsx:225"
   ],
   "Service": [
+    "src/components/platform/group-overview.tsx:348",
     "src/components/swarm/tasks-section.tsx:107",
     "src/pages/platform/index.tsx:529",
     "src/pages/terminals/new.tsx:433",
@@ -2984,6 +3102,9 @@
   ],
   "Services listed here are skipped only during Global Auto Update checks. Manual checks still include all services.": [
     "src/resources/stack/config/index.tsx:406"
+  ],
+  "Services not in the registry: {0}": [
+    "src/components/platform/group-overview.tsx:340"
   ],
   "Set description": [
     "src/pages/settings/variables/index.tsx:145"
@@ -3017,7 +3138,7 @@
     "src/pages/settings/variables/index.tsx:108"
   ],
   "Settings": [
-    "src/app/sidebar.tsx:101",
+    "src/app/sidebar.tsx:106",
     "src/pages/resource.tsx:73",
     "src/pages/user-group/index.tsx:77",
     "src/pages/user/index.tsx:59"
@@ -3042,11 +3163,17 @@
   "Show Dashboard": [
     "src/pages/dashboard/show-tables.tsx:20"
   ],
+  "Show diagnostics": [
+    "src/components/platform/group-overview.tsx:413"
+  ],
   "Show Server Stats": [
     "src/resources/server/show-stats.tsx:20"
   ],
   "Show Tables": [
     "src/pages/dashboard/show-tables.tsx:20"
+  ],
+  "Showing the last successfully loaded data ({0}).": [
+    "src/components/platform/group-overview.tsx:197"
   ],
   "Sign Up": [
     "node_modules/mogh_ui/dist/auth/login/index.js:178"
@@ -3108,19 +3235,13 @@
     "src/resources/procedure/config/index.tsx:80"
   ],
   "Start": [
+    "src/components/platform/group-overview.tsx:302",
     "src/pages/docker/container/executions.tsx:113",
-    "src/pages/platform/groups.tsx:214",
     "src/resources/deployment/executions.tsx:241",
     "src/resources/stack/executions.tsx:280"
   ],
   "Start All Containers": [
     "src/resources/procedure/config/execution-labels.tsx:50"
-  ],
-  "Start and stop are disabled until it is released.": [
-    "src/pages/platform/groups.tsx:87"
-  ],
-  "Start and stop go through the installed <group>-stack entry, which shares releases/.release.lock with releases, so the two can never overlap. These buttons replace Komodo's native Stack buttons.": [
-    "src/pages/platform/groups.tsx:76"
   ],
   "Start Container": [
     "src/resources/procedure/config/execution-labels.tsx:44"
@@ -3134,12 +3255,18 @@
   "Start Stack": [
     "src/resources/procedure/config/execution-labels.tsx:29"
   ],
-  "Start the group through the locked entry": [
-    "src/pages/platform/groups.tsx:205"
+  "Start the group": [
+    "src/components/platform/group-overview.tsx:117"
+  ],
+  "Start the whole group through the locked entry": [
+    "src/components/platform/group-overview.tsx:294"
   ],
   "Start Time": [
     "src/components/maintenance-windows.tsx:104",
     "src/components/maintenance-windows.tsx:346"
+  ],
+  "Starting {0}": [
+    "src/components/platform/group-overview.tsx:283"
   ],
   "Startup": [
     "src/resources/action/config.tsx:230"
@@ -3147,8 +3274,7 @@
   "State": [
     "src/components/docker/containers-section.tsx:111",
     "src/components/swarm/tasks-section.tsx:121",
-    "src/pages/containers.tsx:136",
-    "src/pages/platform/groups.tsx:104",
+    "src/pages/containers.tsx:139",
     "src/pages/platform/index.tsx:530",
     "src/resources/action/table.tsx:54",
     "src/resources/build/table.tsx:72",
@@ -3164,17 +3290,14 @@
     "src/resources/swarm/table.tsx:56",
     "src/resources/sync/table.tsx:73"
   ],
-  "state {0}": [
-    "src/pages/platform/groups.tsx:265"
-  ],
   "Stats": [
-    "src/app/sidebar.tsx:36",
+    "src/app/sidebar.tsx:41",
     "src/app/topbar/omni-search/hooks.tsx:159",
     "src/pages/stats.tsx:155"
   ],
   "Status": [
-    "src/pages/platform/groups.tsx:102",
-    "src/pages/platform/groups.tsx:242"
+    "src/components/platform/group-overview.tsx:320",
+    "src/components/platform/group-overview.tsx:349"
   ],
   "stderr": [
     "src/components/updates/details.tsx:213",
@@ -3191,8 +3314,8 @@
     "src/resources/action/last-run.tsx:41"
   ],
   "Stop": [
+    "src/components/platform/group-overview.tsx:315",
     "src/pages/docker/container/executions.tsx:126",
-    "src/pages/platform/groups.tsx:233",
     "src/resources/deployment/executions.tsx:298",
     "src/resources/stack/executions.tsx:293"
   ],
@@ -3211,8 +3334,11 @@
   "Stop Stack": [
     "src/resources/procedure/config/execution-labels.tsx:33"
   ],
-  "Stop the group through the locked entry": [
-    "src/pages/platform/groups.tsx:223"
+  "Stop the group": [
+    "src/components/platform/group-overview.tsx:118"
+  ],
+  "Stop the whole group through the locked entry": [
+    "src/components/platform/group-overview.tsx:306"
   ],
   "Stopped": [
     "src/resources/deployment/index.tsx:90",
@@ -3338,7 +3464,7 @@
     "src/pages/terminals/new.tsx:142"
   ],
   "Terminals": [
-    "src/app/sidebar.tsx:30",
+    "src/app/sidebar.tsx:35",
     "src/app/topbar/omni-search/hooks.tsx:153",
     "src/pages/terminals/index.tsx:63"
   ],
@@ -3361,13 +3487,11 @@
   "The executions in a stage are all run in parallel. The stages themselves are run sequentially.": [
     "src/resources/procedure/config/index.tsx:82"
   ],
-  "The release lock is held": [
-    "src/pages/platform/groups.tsx:80",
-    "src/pages/platform/groups.tsx:204",
-    "src/pages/platform/groups.tsx:222"
-  ],
   "The secret will not be shown again.": [
     "src/components/api-keys/new.tsx:131"
+  ],
+  "The task was not accepted (no task id returned)": [
+    "src/components/platform/group-overview.tsx:65"
   ],
   "ThemeToggle": [
     "node_modules/mogh_ui/dist/components/theme-toggle.js:12"
@@ -3381,9 +3505,11 @@
   "This ": [
     "src/components/template-marker.tsx:14"
   ],
-  "This group has no locked lifecycle entry": [
-    "src/pages/platform/groups.tsx:202",
-    "src/pages/platform/groups.tsx:220"
+  "This group has no container yet.": [
+    "src/components/platform/group-overview.tsx:359"
+  ],
+  "This project is not registered on the platform, so there is no controlled group lifecycle entry.": [
+    "src/components/platform/group-overview.tsx:328"
   ],
   "This ref cannot be resolved to a commit": [
     "src/pages/platform/index.tsx:364"
@@ -3408,6 +3534,9 @@
   ],
   "time in seconds": [
     "src/resources/deployment/config/termination.tsx:52"
+  ],
+  "Timed out waiting for the task; check the task log": [
+    "src/components/platform/group-overview.tsx:71"
   ],
   "Timestamps": [
     "src/components/log-section.tsx:180"
@@ -3489,6 +3618,9 @@
     "src/resources/stack/index.tsx:98",
     "src/resources/swarm/index.tsx:60"
   ],
+  "Unhealthy {0}": [
+    "src/components/platform/group-overview.tsx:282"
+  ],
   "unknown": [
     "src/resources/server/version.tsx:38"
   ],
@@ -3547,6 +3679,9 @@
     "src/resources/server/config.tsx:195",
     "src/resources/server/stats-card.tsx:149"
   ],
+  "Unregistered projects: {0}": [
+    "src/components/platform/group-overview.tsx:185"
+  ],
   "Unsaved changes": [
     "node_modules/mogh_ui/dist/components/config/unsaved-changes.js:14"
   ],
@@ -3601,7 +3736,7 @@
     "src/resources/swarm/docker/secrets.tsx:95"
   ],
   "Updates": [
-    "src/app/sidebar.tsx:80",
+    "src/app/sidebar.tsx:85",
     "src/components/updates/section.tsx:17",
     "src/pages/updates.tsx:58"
   ],
@@ -3711,7 +3846,7 @@
   ],
   "Volumes": [
     "src/components/docker/containers-section.tsx:196",
-    "src/pages/containers.tsx:225",
+    "src/pages/containers.tsx:228",
     "src/resources/deployment/config/index.tsx:250"
   ],
   "Warning": [
