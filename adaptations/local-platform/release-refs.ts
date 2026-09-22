@@ -29,6 +29,10 @@ if (result.kind !== "refs") throw new Error(`任务 ${id} 不是分支查询结�
 const source = result.mode === "remote" ? `远程 ${result.remote}（在 ${result.project} 的 Git 仓库上执行 ls-remote）` : "本机仓库";
 console.log(`来源：${source}`);
 console.log(`已登记分支：${(result.approved ?? []).join(", ") || "（无）"}｜默认：${result.default_ref ?? "（无）"}`);
+for (const [name, sha] of Object.entries(result.approved_ref_tips ?? {})) {
+  const same = result.released_commit ? (sha === result.released_commit ? "就是已发布提交" : "与已发布提交不同（远端有新内容）") : "尚无发布记录";
+  console.log(`分支 ${name} 当前指向 ${sha}（${same}）`);
+}
 console.log(`远程分支 ${result.branch_count ?? 0} 个：${(result.branches ?? []).join(", ") || "（无）"}`);
 console.log(`标签 ${result.tag_count ?? 0} 个：${(result.tags ?? []).join(", ") || "（无）"}`);
 if (result.resolution_error) console.log(`解析失败：${result.resolution_error}`);
