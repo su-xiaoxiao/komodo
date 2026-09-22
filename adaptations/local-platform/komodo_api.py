@@ -56,8 +56,21 @@ def default_refs(platform_root):
     return refs
 
 
-def install(api, refs=None):
-    from project_registry import load_projects, render_action
+def platform_groups(platform_root):
+    """Read the platform's group registry: the authority for which groups may be operated."""
+    path = Path(platform_root) / 'config/compose-groups.json'
+    try:
+        registry = json.loads(path.read_text(encoding='utf-8-sig'))
+    except (OSError, ValueError):
+        raise ValueError('Platform group registry not found under ' + str(platform_root))
+    groups = registry.get('groups')
+    if not isinstance(groups, dict) or not groups:
+        raise ValueError('Platform group registry has no groups')
+    return sorted(groups)
+
+
+def install(api, refs=None, groups=None):
+    from project_registry import load_projects, render_action, render_stack_action
     refs = refs or {}
     actions = {item['name']: item for item in api.call('read/ListActions', {})}
     procedures = {item['name']: item for item in api.call('read/ListProcedures', {})}
@@ -106,6 +119,21 @@ def install(api, refs=None):
             else:
                 result = api.call('write/CreateProcedure', {'name':name,'config':config})
             print(name, result.get('_id', result.get('id')))
+    for group in groups or []:
+        name = group + '-stack'
+        body = render_stack_action(group, 'status')
+        config = dict(file_contents=body, arguments=json.dumps({'operation':'status'}), arguments_format='json',
+                      run_at_startup=False, schedule_enabled=False, webhook_enabled=False)
+        if name in actions:
+            # Keep the operator's chosen operation across adapter upgrades.
+            config.pop('arguments')
+            config.pop('arguments_format')
+            result = api.call('write/UpdateAction', {'id':actions[name]['id'],'config':config})
+        else:
+            result = api.call('write/CreateAction', {'name':name,'config':config})
+            api.call('write/UpdateResourceMeta', {'target':{'type':'Action','id':name},
+                                                  'description':'整组启停/状态（与发布事务共用 releases/.release.lock，二者互斥）；操作填 start/stop/status/logs'})
+        print(name, result.get('_id', result.get('id')))
 
 
 if __name__ == '__main__':
@@ -113,4 +141,4 @@ if __name__ == '__main__':
     parser.add_argument('--platform-root', type=Path, default=Path('E:/jvjv/local-platform'),
                         help='Platform checkout holding config/project-console.json')
     options = parser.parse_args()
-    install(Komodo(), default_refs(options.platform_root))
+    install(Komodo(), default_refs(options.platform_root), platform_groups(options.platform_root))

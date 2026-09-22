@@ -5,7 +5,9 @@ import json
 import os
 from pathlib import Path
 import re
+import subprocess
 import sys
+import threading
 import time
 import uuid
 from project_registry import load_projects
@@ -45,17 +47,28 @@ def validate(body, identity, projects=None, *, admission=True):
             or body['id'] != identity or not isinstance(body['project'], str)
             or not re.fullmatch(r'[a-z][a-z0-9-]{0,79}',body['project'])):
         raise ValueError('Invalid request identity or project')
-    if admission and body['project'] not in projects:
+    if admission and body['project'] not in projects and body.get('action') != 'stack':
+        # Lifecycle requests name a Compose group, not a registered project; which groups
+        # exist is decided by the platform group registry, not by this approval list.
         raise ValueError('Unregistered project')
-    allowed = {'build-deploy': {'ref'}, 'deploy': {'version'}, 'rollback': set(), 'list-refs': {'ref'}}
+    allowed = {'build-deploy': {'ref'}, 'deploy': {'version'}, 'rollback': set(), 'list-refs': {'ref'},
+               'stack': {'operation', 'group'}}
     action, options = body['action'], body['options']
     policy = projects.get(body['project'], {})
     if not isinstance(action, str) or action not in allowed or not isinstance(options, dict) or set(options) != allowed[action]:
         raise ValueError('Unsupported action or options')
-    if admission and action not in policy['actions'] and action != 'list-refs':
+    if admission and action not in ('list-refs', 'stack') and action not in policy['actions']:
         # list-refs only reveals refs of a source the recipe already declares, so it
         # needs no separate approval; every action that executes does.
         raise ValueError('This project has no approved adapter for the requested action')
+    if action == 'stack':
+        # Lifecycle requests carry the *group* in the project field; the platform's
+        # compose-groups.json is the authority for which groups exist, and the shared
+        # release lock is what keeps start/stop exclusive with a release transaction.
+        if (options['operation'] not in ('start', 'stop', 'status', 'logs')
+                or not re.fullmatch(r'[a-z][a-z0-9-]{0,63}', options['group'])
+                or body['project'] != options['group']):
+            raise ValueError('Invalid stack operation or group')
     if action == 'list-refs' and (not isinstance(options['ref'], str) or len(options['ref']) > 256
             or (options['ref'] and (options['ref'].startswith('-') or not re.fullmatch(r'[A-Za-z0-9_./-]+', options['ref'])))):
         raise ValueError('Invalid ref')
@@ -76,6 +89,7 @@ class Bridge:
         self.home, self.pipeline = Path(home), pipeline
         self.root = Path(root) if root else None
         self.projects = load_projects()
+        self.stack_runs = {}
         for name in ('requests', 'responses', 'claims'):
             (self.home/name).mkdir(parents=True, exist_ok=True)
 
@@ -104,6 +118,11 @@ class Bridge:
                         raise ValueError('Request expired or invalid deadline')
                     self.answer_refs(identity, request, target)
                     continue
+                if intent['action'] == 'stack' and not claim.exists():
+                    if not time.time() < request['expires_at'] <= time.time()+120:
+                        raise ValueError('Request expired or invalid deadline')
+                    self.answer_stack(identity, request, target)
+                    continue
                 if claim.exists():
                     saved = read(claim)
                     if saved and saved != intent:
@@ -125,6 +144,16 @@ class Bridge:
                 else:
                     if not time.time() < request['expires_at'] <= time.time()+120:
                         raise ValueError('Request expired or invalid deadline')
+                    if intent['action'] in ('build-deploy', 'deploy', 'rollback'):
+                        # Real mutual exclusion, both directions: a release never starts
+                        # while a lifecycle operation holds the shared lock, and a
+                        # lifecycle operation never starts while a release holds it
+                        # (stack_groups takes the same lock).
+                        holder = self.lifecycle_lock()
+                        if holder:
+                            raise ValueError('Another operation holds the release lock (' + holder + '); wait for it to finish')
+                        if any(state['status'] == 'running' for state in self.stack_runs.values()):
+                            raise ValueError('A stack lifecycle operation is in progress; wait for it to finish before releasing')
                     # Claim is durable BEFORE enqueue. A crash here must never replay automatically.
                     write(claim, intent)
                     job = self.pipeline.submit_once(identity, request['project'], request['action'], **request['options'])
@@ -172,6 +201,66 @@ class Bridge:
             return
         result = dict(id=identity, status='succeeded', kind='refs', stage='refs', project=request['project'],
                       observed_at=time.time(), **refs)
+        write(target, result)
+
+    def lifecycle_lock(self):
+        """Describe whoever holds the shared release/lifecycle lock, if anyone does."""
+        if self.root is None:
+            return None
+        try:
+            body = (self.root / 'releases/.release.lock').read_text(encoding='utf-8').strip()
+        except OSError:
+            return None
+        try:
+            data = json.loads(body)
+            if isinstance(data, dict):
+                subject = data.get('project') or ','.join(data.get('groups') or []) or data.get('services') or ''
+                return '{0} {1} pid={2}'.format(data.get('kind'), subject, data.get('pid')).strip()
+        except ValueError:
+            pass
+        return 'legacy holder ' + (body or '?')
+
+    def stack_runner(self, identity, request):
+        """Run a lifecycle operation on its own thread so heartbeats keep flowing."""
+        state = self.stack_runs.get(identity)
+        if state:
+            return state
+        operation, group = request['options']['operation'], request['options']['group']
+        state = {'status': 'running', 'stage': 'stack-' + operation, 'output': [], 'error': None, 'started_at': time.time()}
+        self.stack_runs[identity] = state
+        if self.root is None:
+            state.update(status='failed', stage='error', error='A platform root is required for lifecycle operations')
+            return state
+        sys.path.insert(0, str(self.root / 'scripts'))
+        import stack_groups
+
+        def run(command):
+            state['output'].append(' '.join(str(item) for item in command))
+            result = subprocess.run(command, capture_output=True, text=True, encoding='utf-8', errors='replace', shell=False)
+            tail = (result.stdout or '') + (result.stderr or '')
+            if tail.strip():
+                state['output'].extend(line for line in tail.strip().splitlines()[-20:])
+            if result.returncode:
+                raise stack_groups.StackError('docker compose exited {0}: {1}'.format(result.returncode, tail.strip()[-300:]))
+            return result
+
+        def work():
+            try:
+                stack_groups.Stack(self.root, run=run).execute(operation.capitalize(), groups=[group])
+                state.update(status='succeeded', stage='done')
+            except Exception as error:  # noqa: BLE001 - reported to the operator, never raised into the tick loop
+                state.update(status='failed', stage='error', error=str(error)[:500])
+
+        threading.Thread(target=work, daemon=True, name='komodo-stack-' + identity[:8]).start()
+        return state
+
+    def answer_stack(self, identity, request, target):
+        state = self.stack_runner(identity, request)
+        result = {'id': identity, 'kind': 'stack', 'project': request['project'], 'group': request['options']['group'],
+                  'operation': request['options']['operation'], 'status': state['status'], 'stage': state['stage'],
+                  'observed_at': time.time(), 'output': state['output'][-40:]}
+        if state['error']:
+            result['error'] = state['error']
         write(target, result)
 
     def active(self):

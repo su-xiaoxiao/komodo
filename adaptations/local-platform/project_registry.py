@@ -39,12 +39,22 @@ def load_projects(path=None, *, data=None):
     return data['projects']
 
 
+def render_template(template, values):
+    """Substitute the tokens a template declares; missing tokens are simply absent."""
+    source=Path(__file__).with_name(template).read_text(encoding='utf-8')
+    return re.sub('|'.join(map(re.escape,values)),
+                  lambda match: json.dumps(values[match.group()],ensure_ascii=False),source)
+
+
 def render_action(project, config, default_ref=None, template='release-action.ts', target=None):
     """Render an Action template. `default_ref` comes from the platform authority."""
-    source=Path(__file__).with_name(template).read_text(encoding='utf-8')
     if target is None:
         target={'type':'Procedure','id':config['prefix']+'-release'} if 'build-deploy' in config['actions'] else {'type':'Action','id':config['prefix']+'-deploy-version'}
     values={'__PROJECT__':project,'__TITLE__':config['title'],'__DEFAULT_REF__':default_ref,
             '__NOTE__':config.get('note',''),'__METADATA_TARGET__':target}
-    return re.sub('|'.join(map(re.escape,values)),
-                  lambda match: json.dumps(values[match.group()],ensure_ascii=False),source)
+    return render_template(template, values)
+
+
+def render_stack_action(group, operation):
+    """Render the lifecycle Action for one Compose group."""
+    return render_template('release-stack.ts', {'__GROUP__':group,'__OPERATION__':operation})

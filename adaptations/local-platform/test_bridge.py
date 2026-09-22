@@ -1,9 +1,35 @@
 import json
 from pathlib import Path
+import sys
 import tempfile
 import time
 import unittest
 from bridge import Bridge
+
+
+def bridge_stack_calls():
+    return sys.modules['stack_groups'].CALLS
+
+STACK_STUB = '''
+import time
+CALLS = []
+BLOCK = {'event': None}
+
+class StackError(RuntimeError):
+    pass
+
+class Stack:
+    def __init__(self, root, run=None):
+        self.root, self.run = root, run
+
+    def execute(self, action, groups=(), services=()):
+        CALLS.append((action, list(groups)))
+        if BLOCK['event'] is not None:
+            BLOCK['event'].wait(10)
+        if BLOCK.get('fail'):
+            raise StackError('已有操作持有 releases/.release.lock（发布事务；项目 spec；pid 1）')
+        return []
+'''
 
 
 class Pipeline:
@@ -48,9 +74,17 @@ class BridgeTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
-        self.home = Path(self.temp.name)
+        self.home = Path(self.temp.name) / 'queue'
+        self.home.mkdir(parents=True)
+        self.root = Path(self.temp.name) / 'platform'
+        (self.root / 'scripts').mkdir(parents=True)
+        (self.root / 'releases').mkdir(parents=True)
+        (self.root / 'scripts/stack_groups.py').write_text(STACK_STUB, encoding='utf-8')
+        sys.path.insert(0, str(self.root / 'scripts'))
+        sys.modules.pop('stack_groups', None)
+        (self.root / 'releases/current.compose.json').write_text(json.dumps({'services': {}, 'x-release-state': {}}), encoding='utf-8')
         self.pipeline = Pipeline()
-        self.bridge = Bridge(self.home, self.pipeline)
+        self.bridge = Bridge(self.home, self.pipeline, self.root)
         self.identity = 'a' * 32
 
     def request(self, **changes):
@@ -62,7 +96,7 @@ class BridgeTests(unittest.TestCase):
         return path
 
     def response(self):
-        return json.loads((self.home/'responses'/ (self.identity+'.json')).read_text())
+        return json.loads((self.home/'responses'/ (self.identity+'.json')).read_text(encoding='utf-8-sig'))
 
     def test_repeat_request_reconciles_same_job(self):
         self.request()
@@ -218,6 +252,103 @@ class BridgeTests(unittest.TestCase):
         self.bridge.tick()
         self.assertEqual(self.pipeline.calls, 1)
         self.assertEqual(self.response()['status'], 'failed')
+
+    def stack_request(self, **changes):
+        body = dict(id=self.identity, project='spec', action='stack',
+                    options={'operation': 'status', 'group': 'spec'}, expires_at=time.time() + 60)
+        body.update(changes)
+        path = self.home / 'requests' / (self.identity + '.json')
+        path.write_text(json.dumps(body))
+        return path
+
+    def test_changed_request_identity_rejected(self):
+        self.request()
+        self.bridge.tick()
+        self.request(action='rollback', options={})
+        self.bridge.tick()
+        self.assertEqual(self.pipeline.calls, 1)
+        self.assertEqual(self.response()['status'], 'failed')
+
+    def stack_request(self, **changes):
+        body = dict(id=self.identity, project='spec', action='stack',
+                    options={'operation': 'status', 'group': 'spec'}, expires_at=time.time() + 60)
+        body.update(changes)
+        path = self.home / 'requests' / (self.identity + '.json')
+        path.write_text(json.dumps(body))
+        return path
+
+    def test_stack_operation_runs_on_the_platform_engine(self):
+        self.stack_request()
+        self.bridge.tick()
+        deadline = time.time() + 5
+        while time.time() < deadline and self.response()['status'] == 'running':
+            time.sleep(0.05)
+            self.bridge.tick()
+        result = self.response()
+        self.assertEqual(result['status'], 'succeeded')
+        self.assertEqual(result['kind'], 'stack')
+        self.assertEqual(result['stage'], 'done')
+        stack = self.bridge.stack_runs[self.identity]
+        self.assertIn(('Status', ['spec']), bridge_stack_calls())
+        self.assertEqual(self.pipeline.calls, 0, 'a lifecycle request must never become a release job')
+        self.assertFalse((self.home / 'claims' / (self.identity + '.json')).exists())
+
+    def test_stack_rejection_is_reported_and_not_retried(self):
+        import importlib
+        stub = importlib.import_module('stack_groups')
+        stub.BLOCK['fail'] = True
+        try:
+            self.stack_request()
+            self.bridge.tick()
+            deadline = time.time() + 5
+            while time.time() < deadline and self.response()['status'] == 'running':
+                time.sleep(0.05)
+                self.bridge.tick()
+            result = self.response()
+            self.assertEqual(result['status'], 'failed')
+            self.assertIn('release.lock', result['error'])
+            self.bridge.tick()
+            self.assertEqual(self.response(), result)
+        finally:
+            stub.BLOCK['fail'] = False
+
+    def test_release_submission_is_refused_while_a_lifecycle_runs(self):
+        import importlib, threading
+        stub = importlib.import_module('stack_groups')
+        stub.BLOCK['event'] = threading.Event()
+        try:
+            self.stack_request()
+            self.bridge.tick()
+            self.assertEqual(self.response()['status'], 'running')
+            self.request()  # build-deploy for mqtt-sandbox while the lifecycle holds the stage
+            self.bridge.tick()
+            self.assertEqual(self.pipeline.calls, 0)
+            self.assertIn('lifecycle operation is in progress', self.response()['error'])
+        finally:
+            stub.BLOCK['event'].set()
+            stub.BLOCK['event'] = None
+
+    def test_release_submission_is_refused_while_the_shared_lock_is_held(self):
+        (self.root / 'releases/.release.lock').write_text(json.dumps({'kind': 'stack', 'groups': ['spec'], 'pid': 4242}))
+        self.request()
+        self.bridge.tick()
+        self.assertEqual(self.pipeline.calls, 0)
+        error = self.response()['error']
+        self.assertIn('release lock', error)
+        self.assertIn('4242', error)
+
+    def test_stack_requests_are_validated(self):
+        for changes in ({'options': {'operation': 'restart', 'group': 'spec'}},
+                        {'options': {'operation': 'status', 'group': 'Spec'}},
+                        {'options': {'operation': 'status', 'group': 'spec', 'service': 'x'}},
+                        {'project': 'mqtt-sandbox', 'options': {'operation': 'status', 'group': 'spec'}}):
+            with self.subTest(changes=changes):
+                self.stack_request(**changes)
+                self.bridge.tick()
+                self.assertEqual(self.response()['status'], 'failed')
+                self.assertEqual(self.pipeline.calls, 0)
+                self.assertEqual(self.bridge.stack_runs, {})
+                (self.home / 'responses' / (self.identity + '.json')).unlink()
 
     def test_other_projects_and_command_injection_rejected(self):
         for changes in ({'project':'docforge'}, {'options':{'command':'whoami'}},
